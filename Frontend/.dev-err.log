@@ -1,0 +1,50 @@
+RangeError: Array buffer allocation failed
+    at new Promise (<anonymous>)
+ ⨯ unhandledRejection: RangeError: Array buffer allocation failed
+    at new Promise (<anonymous>)
+ ⨯ unhandledRejection:  RangeError: Array buffer allocation failed
+    at new Promise (<anonymous>)
+RangeError: Array buffer allocation failed
+    at new Promise (<anonymous>)
+ ⨯ unhandledRejection: RangeError: Array buffer allocation failed
+    at new Promise (<anonymous>)
+ ⨯ unhandledRejection:  RangeError: Array buffer allocation failed
+    at new Promise (<anonymous>)
+RangeError: Array buffer allocation failed
+    at new Promise (<anonymous>)
+ ⨯ unhandledRejection: RangeError: Array buffer allocation failed
+    at new Promise (<anonymous>)
+ ⨯ unhandledRejection:  RangeError: Array buffer allocation failed
+    at new Promise (<anonymous>)
+RangeError: Array buffer allocation failed
+    at new Promise (<anonymous>)
+ ⨯ unhandledRejection: RangeError: Array buffer allocation failed
+    at new Promise (<anonymous>)
+ ⨯ unhandledRejection:  RangeError: Array buffer allocation failed
+    at new Promise (<anonymous>)
+
+<--- Last few GCs --->
+
+[21744:000001C0EA170080]   215491 ms: Mark-Compact 710.4 (738.4) -> 710.4 (738.4) MB, 174.75 / 0.00 ms  (average mu = 0.058, current mu = 0.001) external memory pressure; GC in old space requested
+[21744:000001C0EA170080]   215763 ms: Mark-Compact (reduce) 710.4 (738.4) -> 710.4 (734.9) MB, 271.86 / 0.00 ms  (average mu = 0.027, current mu = 0.001) external memory pressure; GC in old space requested
+
+
+<--- JS stacktrace --->
+
+FATAL ERROR: Committing semi space failed. Allocation failed - JavaScript heap out of memory
+----- Native stack trace -----
+
+ 1: 00007FF76FCBC23B 
+ 2: 00007FF76FC2B1B8 
+ 3: 00007FF7706A51D1 
+ 4: 00007FF77068E858 
+ 5: 00007FF7704F0490 
+ 6: 00007FF7704A8293 
+ 7: 00007FF7704F9AF0 
+ 8: 00007FF7704ED1B0 
+ 9: 00007FF7704EC3C0 
+10: 00007FF7704EAD33 
+11: 00007FF7703EC622 
+12: 00007FF7706A0C11 
+13: 00007FF76FC555BC 
+14: 00007FF71068D8C8 
