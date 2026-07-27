@@ -1,10 +1,16 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { CircleCheck } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/motion/reveal";
 import { ROUTES } from "@/constants/routes";
 import { CONTACT_EMAIL } from "@/constants/site";
+
+export const metadata: Metadata = {
+  title: "Order Confirmed",
+  robots: { index: false, follow: true },
+};
 
 export default async function OrderSuccessPage({
   params,

@@ -9,6 +9,7 @@ import { ROUTES } from "@/constants/routes";
 
 export const metadata: Metadata = {
   title: "Order History",
+  robots: { index: false, follow: true },
 };
 
 export default function OrdersPage() {

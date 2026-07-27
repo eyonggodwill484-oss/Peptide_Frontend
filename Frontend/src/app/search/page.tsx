@@ -7,6 +7,7 @@ import { getProducts } from "@/lib/data/products";
 export const metadata: Metadata = {
   title: "Search",
   description: `Search the ${SITE_NAME} catalog.`,
+  robots: { index: false, follow: true },
 };
 
 export default async function SearchPage({

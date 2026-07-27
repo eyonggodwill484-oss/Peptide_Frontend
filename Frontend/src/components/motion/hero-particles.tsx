@@ -13,15 +13,28 @@ type Particle = {
   drift: number;
 };
 
+/** Deterministic PRNG (mulberry32) so server and client render identical particles. */
+function createRandom(seed: number) {
+  let state = seed;
+  return () => {
+    state |= 0;
+    state = (state + 0x6d2b79f5) | 0;
+    let t = Math.imul(state ^ (state >>> 15), 1 | state);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
 function makeParticles(count: number): Particle[] {
+  const random = createRandom(count * 9301 + 49297);
   return Array.from({ length: count }, (_, i) => ({
     id: i,
-    left: `${Math.round(Math.random() * 100)}%`,
-    top: `${Math.round(Math.random() * 100)}%`,
-    size: 3 + Math.round(Math.random() * 5),
-    duration: 10 + Math.random() * 10,
-    delay: Math.random() * 6,
-    drift: 14 + Math.random() * 18,
+    left: `${Math.round(random() * 100)}%`,
+    top: `${Math.round(random() * 100)}%`,
+    size: 3 + Math.round(random() * 5),
+    duration: 10 + random() * 10,
+    delay: random() * 6,
+    drift: 14 + random() * 18,
   }));
 }
 
