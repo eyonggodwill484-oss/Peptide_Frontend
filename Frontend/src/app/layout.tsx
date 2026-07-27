@@ -9,6 +9,7 @@ import { SiteJsonLd } from "@/components/structured-data";
 import { LenisProvider } from "@/components/motion/lenis-provider";
 import { SITE_DESCRIPTION, SITE_LOCALE, SITE_NAME, SITE_URL } from "@/constants/site";
 import { getFeaturedCategories } from "@/lib/data/categories";
+import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -58,6 +59,7 @@ export default async function RootLayout({
           <SiteFooter />
           <Toaster position="bottom-right" />
         </LenisProvider>
+        <Analytics />
       </body>
     </html>
   );
