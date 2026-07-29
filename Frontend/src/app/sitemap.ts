@@ -6,6 +6,8 @@ import { ARTICLES } from "@/lib/data/content";
 import { getCategories } from "@/lib/data/categories";
 import { getProducts } from "@/lib/data/products";
 
+export const revalidate = 60;
+
 const STATIC_ROUTES: { path: string; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"]; priority: number }[] = [
   { path: ROUTES.home, changeFrequency: "daily", priority: 1 },
   { path: ROUTES.shop, changeFrequency: "daily", priority: 0.9 },

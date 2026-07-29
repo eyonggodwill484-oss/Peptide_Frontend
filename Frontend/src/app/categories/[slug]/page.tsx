@@ -8,6 +8,8 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { getCategories, getCategoryBySlug } from "@/lib/data/categories";
 import { getProductsByCategory } from "@/lib/data/products";
 
+export const revalidate = 60;
+
 export async function generateStaticParams() {
   const categories = await getCategories();
   return categories.map((c) => ({ slug: c.slug }));

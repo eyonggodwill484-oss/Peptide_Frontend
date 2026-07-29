@@ -8,6 +8,8 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { getProductBySlug, getProducts, getRelatedProducts } from "@/lib/data/products";
 import { ProductDetail } from "./product-detail";
 
+export const revalidate = 60;
+
 export async function generateStaticParams() {
   const products = await getProducts();
   return products.map((p) => ({ slug: p.slug }));

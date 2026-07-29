@@ -7,6 +7,8 @@ import { RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { ROUTES } from "@/constants/routes";
 import { getCategories } from "@/lib/data/categories";
 
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title: "Categories",
   description: "Browse research peptide categories including growth factor, metabolic, cognitive, and recovery research compounds.",

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 import { SiteHeader } from "@/components/site-header";
@@ -19,6 +20,8 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: {
@@ -58,6 +61,7 @@ export default async function RootLayout({
           <SiteFooter />
           <Toaster position="bottom-right" />
         </LenisProvider>
+        <Analytics />
       </body>
     </html>
   );

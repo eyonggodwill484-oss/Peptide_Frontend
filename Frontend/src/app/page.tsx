@@ -16,6 +16,8 @@ import { HeroBackground, HeroEntrance, HeroEntranceItem } from "@/components/mot
 import { TestimonialsCarousel } from "@/components/testimonials-carousel";
 import { CountUpStat } from "@/components/motion/count-up-stat";
 
+export const revalidate = 60;
+
 const OG_TITLE = `${SITE_NAME} | Research-Grade Peptides`;
 const OG_IMAGE = { url: "/images/hero/hero-lab-vials.png", width: 2048, height: 1152 };
 
