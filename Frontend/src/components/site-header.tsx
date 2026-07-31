@@ -21,6 +21,7 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { ThemeToggle } from "@/components/theme-toggle";
 import type { Category } from "@/types";
 
 function Logo() {
@@ -166,6 +167,8 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
               )}
             </AnimatePresence>
           </div>
+
+          <ThemeToggle />
 
           <Button variant="ghost" size="icon" asChild className="relative">
             <Link href={ROUTES.cart} aria-label="Cart">

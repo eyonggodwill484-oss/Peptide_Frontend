@@ -8,6 +8,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { Toaster } from "@/components/ui/sonner";
 import { SiteJsonLd } from "@/components/structured-data";
 import { LenisProvider } from "@/components/motion/lenis-provider";
+import { ThemeProvider } from "@/components/theme-provider";
 import { SITE_DESCRIPTION, SITE_LOCALE, SITE_NAME, SITE_URL } from "@/constants/site";
 import { getFeaturedCategories } from "@/lib/data/categories";
 
@@ -52,16 +53,19 @@ export default async function RootLayout({
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
-        <LenisProvider>
-          <SiteJsonLd />
-          <SiteHeader categories={categories} />
-          <main className="flex-1">{children}</main>
-          <SiteFooter />
-          <Toaster position="bottom-right" />
-        </LenisProvider>
-        <Analytics />
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <LenisProvider>
+            <SiteJsonLd />
+            <SiteHeader categories={categories} />
+            <main className="flex-1">{children}</main>
+            <SiteFooter />
+            <Toaster position="bottom-right" />
+          </LenisProvider>
+          <Analytics />
+        </ThemeProvider>
       </body>
     </html>
   );

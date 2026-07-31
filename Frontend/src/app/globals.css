@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* Site is light-mode only — dark: utility classes stay inert since .dark is never applied. */
+/* Dark mode is toggled by next-themes adding/removing .dark on <html>. */
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
@@ -41,6 +41,40 @@
   --ring: #10adad;
 }
 
+.dark {
+  --brand: #10adad;
+  --brand-dark: #0c918e;
+  --brand-light: #4fd8d4;
+
+  --background: #0a0f0f;
+  --foreground: #ecf5f4;
+
+  --card: #101817;
+  --card-foreground: #ecf5f4;
+
+  --popover: #101817;
+  --popover-foreground: #ecf5f4;
+
+  --primary: var(--brand);
+  --primary-foreground: #04211f;
+
+  --secondary: #142020;
+  --secondary-foreground: #b9d8d6;
+
+  --muted: #131c1b;
+  --muted-foreground: #8fa6a4;
+
+  --accent: #17302e;
+  --accent-foreground: #baf1ec;
+
+  --destructive: #f87171;
+  --destructive-foreground: #450a0a;
+
+  --border: #1f2b2a;
+  --input: #1f2b2a;
+  --ring: #10adad;
+}
+
 @theme inline {
   --color-brand: var(--brand);
   --color-brand-dark: var(--brand-dark);
@@ -75,6 +109,18 @@
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
+  background-image:
+    radial-gradient(1100px circle at 12% -15%, color-mix(in oklch, var(--brand) 10%, transparent), transparent 60%),
+    radial-gradient(900px circle at 92% 8%, color-mix(in oklch, var(--brand-light) 9%, transparent), transparent 55%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   color: var(--foreground);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dark body {
+  background-image:
+    radial-gradient(1100px circle at 12% -15%, color-mix(in oklch, var(--brand) 20%, transparent), transparent 60%),
+    radial-gradient(900px circle at 92% 8%, color-mix(in oklch, var(--brand-light) 16%, transparent), transparent 55%);
 }
