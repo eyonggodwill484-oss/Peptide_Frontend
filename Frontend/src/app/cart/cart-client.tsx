@@ -38,42 +38,55 @@ export function CartClient() {
           <Reveal className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_320px]">
             <div className="flex flex-col divide-y divide-border rounded-xl border border-border">
               {items.map((item) => (
-                <div key={item.productId} className="flex items-center gap-4 p-4">
-                  <div className="relative size-20 shrink-0 overflow-hidden rounded-lg bg-muted">
-                    {item.image.src && <Image src={item.image.src} alt={item.image.alt} fill sizes="80px" className="object-cover" />}
+                <div key={item.productId} className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:gap-4">
+                  <div className="flex items-center gap-4">
+                    <div className="relative size-20 shrink-0 overflow-hidden rounded-lg bg-muted">
+                      {item.image.src && <Image src={item.image.src} alt={item.image.alt} fill sizes="80px" className="object-cover" />}
+                    </div>
+                    <div className="flex flex-1 flex-col gap-1 sm:hidden">
+                      <Link href={ROUTES.product(item.slug)} className="text-sm font-medium text-foreground hover:underline">
+                        {item.name}
+                      </Link>
+                      <span className="text-xs text-muted-foreground">SKU: {item.sku}</span>
+                      <span className="text-sm font-semibold text-foreground">${item.price.toFixed(2)}</span>
+                    </div>
                   </div>
-                  <div className="flex flex-1 flex-col gap-1">
+
+                  <div className="hidden flex-1 flex-col gap-1 sm:flex">
                     <Link href={ROUTES.product(item.slug)} className="text-sm font-medium text-foreground hover:underline">
                       {item.name}
                     </Link>
                     <span className="text-xs text-muted-foreground">SKU: {item.sku}</span>
                     <span className="text-sm font-semibold text-foreground">${item.price.toFixed(2)}</span>
                   </div>
-                  <div className="flex items-center rounded-lg border border-input">
-                    <Button
-                      variant="ghost"
-                      size="icon-sm"
-                      onClick={() => setQuantity(item.productId, item.quantity - 1)}
-                      aria-label="Decrease quantity"
-                    >
-                      <Minus />
-                    </Button>
-                    <span className="w-6 text-center text-sm font-medium">{item.quantity}</span>
-                    <Button
-                      variant="ghost"
-                      size="icon-sm"
-                      onClick={() => setQuantity(item.productId, item.quantity + 1)}
-                      aria-label="Increase quantity"
-                    >
-                      <Plus />
+
+                  <div className="flex items-center justify-between gap-3 sm:justify-end sm:gap-4">
+                    <div className="flex items-center rounded-lg border border-input">
+                      <Button
+                        variant="ghost"
+                        size="icon-sm"
+                        onClick={() => setQuantity(item.productId, item.quantity - 1)}
+                        aria-label="Decrease quantity"
+                      >
+                        <Minus />
+                      </Button>
+                      <span className="w-6 text-center text-sm font-medium">{item.quantity}</span>
+                      <Button
+                        variant="ghost"
+                        size="icon-sm"
+                        onClick={() => setQuantity(item.productId, item.quantity + 1)}
+                        aria-label="Increase quantity"
+                      >
+                        <Plus />
+                      </Button>
+                    </div>
+                    <span className="w-16 shrink-0 text-right text-sm font-semibold text-foreground">
+                      ${(item.price * item.quantity).toFixed(2)}
+                    </span>
+                    <Button variant="ghost" size="icon" onClick={() => removeItem(item.productId)} aria-label="Remove item">
+                      <Trash2 className="text-destructive" />
                     </Button>
                   </div>
-                  <span className="w-16 shrink-0 text-right text-sm font-semibold text-foreground">
-                    ${(item.price * item.quantity).toFixed(2)}
-                  </span>
-                  <Button variant="ghost" size="icon" onClick={() => removeItem(item.productId)} aria-label="Remove item">
-                    <Trash2 className="text-destructive" />
-                  </Button>
                 </div>
               ))}
             </div>

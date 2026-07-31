@@ -224,9 +224,15 @@ export default async function Home() {
           {CERTIFICATES.map((certificate) => (
             <RevealItem
               key={certificate.id}
-              className="flex flex-col items-center gap-3 rounded-xl bg-card p-6 text-center ring-1 ring-foreground/10"
+              className="group flex flex-col items-center gap-3 rounded-xl bg-card p-6 text-center ring-1 ring-foreground/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-brand/10 hover:ring-brand/30"
             >
-              <Image src={certificate.image.src} alt={certificate.image.alt} width={64} height={64} className="size-16 object-contain" />
+              <Image
+                src={certificate.image.src}
+                alt={certificate.image.alt}
+                width={64}
+                height={64}
+                className="size-16 object-contain transition-transform duration-300 ease-out group-hover:scale-110"
+              />
               <h3 className="text-sm font-semibold text-foreground">{certificate.name}</h3>
               <p className="text-xs leading-relaxed text-muted-foreground">{certificate.description}</p>
             </RevealItem>
