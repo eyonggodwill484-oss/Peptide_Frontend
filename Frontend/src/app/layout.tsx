@@ -6,6 +6,7 @@ import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Toaster } from "@/components/ui/sonner";
+import { TawkChatWidget } from "@/components/tawk-chat-widget";
 import { SiteJsonLd } from "@/components/structured-data";
 import { LenisProvider } from "@/components/motion/lenis-provider";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -64,6 +65,7 @@ export default async function RootLayout({
             <SiteFooter />
             <Toaster position="bottom-right" />
           </LenisProvider>
+          <TawkChatWidget />
           <Analytics />
         </ThemeProvider>
       </body>

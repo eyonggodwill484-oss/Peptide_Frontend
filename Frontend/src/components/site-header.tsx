@@ -4,12 +4,13 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, Search, ShoppingBag } from "lucide-react";
+import { LogOut, Menu, Package, Search, ShoppingBag, User as UserIcon } from "lucide-react";
 
 import { ROUTES } from "@/constants/routes";
-import { MAIN_NAV, SHOP_MEGA_MENU } from "@/constants/navigation";
+import { MAIN_NAV } from "@/constants/navigation";
 import { SITE_SHORT_NAME } from "@/constants/site";
 import { useCartCount } from "@/lib/store/cart-store";
+import { useAuthUser } from "@/lib/supabase/use-auth-user";
 import { EASE, staggerContainer } from "@/lib/motion/variants";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,15 +21,24 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ThemeToggle } from "@/components/theme-toggle";
 import type { Category } from "@/types";
 
 function Logo() {
   return (
     <Link href={ROUTES.home} className="flex items-center gap-2 text-foreground">
-      <img src="/logo.svg" alt={SITE_SHORT_NAME} className="size-9 rounded-lg" />
-      <span className="text-lg font-semibold tracking-tight">{SITE_SHORT_NAME}</span>
+      <img src="/logo.svg" alt={SITE_SHORT_NAME} className="size-12 rounded-lg" />
+      <span className="text-xl font-semibold tracking-tight">{SITE_SHORT_NAME}</span>
     </Link>
   );
 }
@@ -47,6 +57,14 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
   const cartCount = useCartCount();
   const pathname = usePathname();
   const router = useRouter();
+  const { user, loading: authLoading, supabase } = useAuthUser();
+
+  async function handleLogout() {
+    await supabase.auth.signOut();
+    setMobileOpen(false);
+    router.push(ROUTES.home);
+    router.refresh();
+  }
 
   useEffect(() => setMounted(true), []);
 
@@ -66,17 +84,9 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
     router.push(trimmed ? `${ROUTES.search}?q=${encodeURIComponent(trimmed)}` : ROUTES.search);
   }
 
-  const megaMenuColumns = [
-    ...(categories.length > 0
-      ? [
-          {
-            heading: "By Category",
-            links: categories.slice(0, 4).map((c) => ({ label: c.name, href: `/categories/${c.slug}` })),
-          },
-        ]
-      : []),
-    ...SHOP_MEGA_MENU,
-  ];
+  const categoryLinks = categories
+    .slice(0, 8)
+    .map((c) => ({ label: c.name, href: `/shop?category=${c.slug}` }));
 
   return (
     <header
@@ -93,26 +103,29 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
 
         <NavigationMenu className="hidden lg:flex" viewport={false}>
           <NavigationMenuList>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Shop</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <div className="grid w-[560px] grid-cols-3 gap-6 p-4">
-                  {megaMenuColumns.map((column) => (
-                    <div key={column.heading} className="flex flex-col gap-1">
-                      <span className="px-2 pb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                        {column.heading}
-                      </span>
-                      {column.links.map((link) => (
-                        <NavigationMenuLink key={link.href} asChild>
-                          <Link href={link.href}>{link.label}</Link>
+            {MAIN_NAV.map((link) => {
+              if (link.label === "Categories") {
+                return (
+                  <NavigationMenuItem key={link.href}>
+                    <NavigationMenuTrigger>Categories</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <div className="flex w-[240px] flex-col gap-1 p-4">
+                        {categoryLinks.map((catLink) => (
+                          <NavigationMenuLink key={catLink.href} asChild>
+                            <Link href={catLink.href}>{catLink.label}</Link>
+                          </NavigationMenuLink>
+                        ))}
+                        <NavigationMenuLink asChild>
+                          <Link href="/categories" className="font-medium text-primary">
+                            View All Categories
+                          </Link>
                         </NavigationMenuLink>
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-            {MAIN_NAV.filter((link) => link.label !== "Shop").map((link) => {
+                      </div>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                );
+              }
+
               const isActive = pathname === link.href;
               return (
                 <NavigationMenuItem key={link.href}>
@@ -170,6 +183,43 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
 
           <ThemeToggle />
 
+          <div className="hidden items-center gap-1.5 sm:flex">
+            {!authLoading &&
+              (user ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="icon" aria-label="Account">
+                      <UserIcon />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuLabel className="truncate">
+                      {typeof user.user_metadata?.full_name === "string" ? user.user_metadata.full_name : user.email}
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link href={ROUTES.account}>
+                        <UserIcon /> My Account
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/account/orders">
+                        <Package /> Order History
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onSelect={handleLogout}>
+                      <LogOut /> Log Out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Button size="sm" asChild>
+                  <Link href={ROUTES.login}>Log In</Link>
+                </Button>
+              ))}
+          </div>
+
           <Button variant="ghost" size="icon" asChild className="relative">
             <Link href={ROUTES.cart} aria-label="Cart">
               <motion.span whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.92 }} className="flex">
@@ -208,17 +258,87 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
                 animate="show"
                 variants={staggerContainer(0.06, 0.1)}
               >
-                {MAIN_NAV.map((link) => (
-                  <motion.div key={link.href} variants={mobileItemVariants}>
-                    <Link
-                      href={link.href}
-                      onClick={() => setMobileOpen(false)}
-                      className="block rounded-lg px-2 py-2.5 text-sm font-medium text-foreground hover:bg-muted"
-                    >
-                      {link.label}
-                    </Link>
-                  </motion.div>
-                ))}
+                {MAIN_NAV.map((link) => {
+                  if (link.label === "Categories") {
+                    return (
+                      <motion.div key={link.href} variants={mobileItemVariants}>
+                        <Accordion type="single" collapsible>
+                          <AccordionItem value="categories" className="border-b-0">
+                            <AccordionTrigger className="rounded-lg px-2 py-2.5 text-sm font-medium text-foreground hover:bg-muted hover:no-underline">
+                              Categories
+                            </AccordionTrigger>
+                            <AccordionContent className="flex flex-col gap-1 pl-2 [&_a]:no-underline">
+                              {categoryLinks.map((catLink) => (
+                                <Link
+                                  key={catLink.href}
+                                  href={catLink.href}
+                                  onClick={() => setMobileOpen(false)}
+                                  className="block rounded-lg px-2 py-2 text-sm text-muted-foreground hover:bg-muted hover:text-foreground"
+                                >
+                                  {catLink.label}
+                                </Link>
+                              ))}
+                              <Link
+                                href="/categories"
+                                onClick={() => setMobileOpen(false)}
+                                className="block rounded-lg px-2 py-2 text-sm font-medium text-primary hover:bg-muted"
+                              >
+                                View All Categories
+                              </Link>
+                            </AccordionContent>
+                          </AccordionItem>
+                        </Accordion>
+                      </motion.div>
+                    );
+                  }
+
+                  return (
+                    <motion.div key={link.href} variants={mobileItemVariants}>
+                      <Link
+                        href={link.href}
+                        onClick={() => setMobileOpen(false)}
+                        className="block rounded-lg px-2 py-2.5 text-sm font-medium text-foreground hover:bg-muted"
+                      >
+                        {link.label}
+                      </Link>
+                    </motion.div>
+                  );
+                })}
+
+                <div className="my-2 h-px bg-border" />
+
+                {!authLoading &&
+                  (user ? (
+                    <>
+                      <motion.div variants={mobileItemVariants}>
+                        <Link
+                          href={ROUTES.account}
+                          onClick={() => setMobileOpen(false)}
+                          className="block rounded-lg px-2 py-2.5 text-sm font-medium text-foreground hover:bg-muted"
+                        >
+                          My Account
+                        </Link>
+                      </motion.div>
+                      <motion.div variants={mobileItemVariants}>
+                        <button
+                          onClick={handleLogout}
+                          className="block w-full rounded-lg px-2 py-2.5 text-left text-sm font-medium text-foreground hover:bg-muted"
+                        >
+                          Log Out
+                        </button>
+                      </motion.div>
+                    </>
+                  ) : (
+                    <motion.div variants={mobileItemVariants}>
+                      <Link
+                        href={ROUTES.login}
+                        onClick={() => setMobileOpen(false)}
+                        className="block rounded-lg px-2 py-2.5 text-sm font-medium text-foreground hover:bg-muted"
+                      >
+                        Log In
+                      </Link>
+                    </motion.div>
+                  ))}
               </motion.nav>
             </SheetContent>
           </Sheet>

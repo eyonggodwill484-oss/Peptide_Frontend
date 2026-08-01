@@ -9,32 +9,12 @@ export interface MegaMenuColumn {
 }
 
 export const MAIN_NAV: NavLink[] = [
+  { label: "Home", href: "/" },
   { label: "Shop", href: "/shop" },
   { label: "Categories", href: "/categories" },
   { label: "Research", href: "/research" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
-];
-
-/** Static columns for the Shop mega menu. The "By Category" column is built at render time from live category data — see SiteHeader. */
-export const SHOP_MEGA_MENU: MegaMenuColumn[] = [
-  {
-    heading: "Collections",
-    links: [
-      { label: "All Products", href: "/shop" },
-      { label: "Best Sellers", href: "/shop?sort=rating" },
-      { label: "New Arrivals", href: "/shop?sort=newest" },
-    ],
-  },
-  {
-    heading: "Resources",
-    links: [
-      { label: "Certificates of Analysis", href: "/research#certificates" },
-      { label: "Quality Standards", href: "/research#quality" },
-      { label: "Storage Guidelines", href: "/research#storage" },
-      { label: "FAQ", href: "/faq" },
-    ],
-  },
 ];
 
 export const FOOTER_LINKS: MegaMenuColumn[] = [

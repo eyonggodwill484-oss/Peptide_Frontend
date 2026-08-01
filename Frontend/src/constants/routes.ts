@@ -18,4 +18,7 @@ export const ROUTES = {
   search: "/search",
   articles: "/articles",
   article: (slug: string) => `/articles/${slug}`,
+  login: "/login",
+  signup: "/signup",
+  account: "/account",
 } as const;
