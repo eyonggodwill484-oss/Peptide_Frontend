@@ -85,7 +85,7 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
   }
 
   const categoryLinks = categories
-    .slice(0, 8)
+    .slice(0, 4)
     .map((c) => ({ label: c.name, href: `/shop?category=${c.slug}` }));
 
   return (

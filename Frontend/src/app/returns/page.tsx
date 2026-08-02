@@ -47,6 +47,19 @@ export default function ReturnsPage() {
             </p>
           </RevealItem>
           <RevealItem as="section">
+            <h2 className="mb-2 text-base font-semibold text-foreground">EU / UK Right of Withdrawal</h2>
+            <p>
+              Customers ordering from the European Union or United Kingdom have the right to withdraw from an order
+              within 14 calendar days of delivery without giving a reason, provided the item is unopened, unused, and
+              in its original sealed packaging. As with all orders, this right does not apply once temperature-sensitive
+              or reconstituted products have been opened or removed from their sealed packaging, consistent with the
+              Non-Returnable Items policy above, since these goods cannot be resold once their cold-chain seal is
+              broken. To withdraw from an eligible order, contact us using the details below within the 14-day window;
+              approved withdrawals are refunded to the original payment method within 14 days of receiving the
+              returned item.
+            </p>
+          </RevealItem>
+          <RevealItem as="section">
             <h2 className="mb-2 text-base font-semibold text-foreground">Filing a Claim</h2>
             <p>
               Email{" "}

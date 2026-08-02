@@ -55,6 +55,20 @@ export default function PrivacyPage() {
               .
             </p>
           </RevealItem>
+          <RevealItem as="section">
+            <h2 className="mb-2 text-base font-semibold text-foreground">EU / UK Residents (GDPR)</h2>
+            <p>
+              If you are located in the European Economic Area or United Kingdom, we process your personal data
+              under the following legal bases: performance of a contract (fulfilling and shipping your order),
+              legitimate interest (fraud prevention and site security), and consent (marketing communications, where
+              applicable). In addition to the rights described above, you have the right to restrict or object to
+              certain processing, the right to data portability, and the right to lodge a complaint with your local
+              data protection supervisory authority. Because {SITE_NAME} is based in the United States, personal
+              data collected from EU/UK residents is transferred to and processed in the United States; we rely on
+              appropriate safeguards for these transfers and limit data collection to what is necessary to fulfill
+              your order and provide support.
+            </p>
+          </RevealItem>
         </RevealGroup>
       </div>
     </>

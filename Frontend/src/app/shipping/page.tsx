@@ -52,6 +52,16 @@ export default function ShippingPage() {
               or fees assessed by their local authorities upon arrival.
             </p>
           </RevealItem>
+          <RevealItem as="section">
+            <h2 className="mb-2 text-base font-semibold text-foreground">Shipping to the European Union</h2>
+            <p>
+              EU orders typically arrive within 5–10 business days via tracked international courier, cold-chain
+              packed the same as domestic shipments. As with all imports into the EU, orders are subject to import
+              VAT and may be subject to customs duties, which are assessed and collected by the courier or local
+              customs authority on delivery rather than prepaid at checkout. Customs processing times vary by country
+              and can add to the delivery estimate above.
+            </p>
+          </RevealItem>
         </RevealGroup>
       </div>
     </>
