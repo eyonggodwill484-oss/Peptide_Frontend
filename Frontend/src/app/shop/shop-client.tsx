@@ -4,8 +4,9 @@ import { useMemo, useState } from "react";
 import { SlidersHorizontal, X } from "lucide-react";
 
 import { PageHeader } from "@/components/page-header";
-import { ProductCard } from "@/components/product-card";
+import { ProductGroupCard } from "@/components/product-group-card";
 import { RevealGroup, RevealItem } from "@/components/motion/reveal";
+import { groupProductsByLine } from "@/lib/product-grouping";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -61,6 +62,11 @@ export function ShopClient({
       }),
     [products, selectedCategories, query, sortBy, inStockOnly]
   );
+
+  // Same drug at different dosages shares a name prefix and photo — group
+  // those into one card (with a "from $X" price) instead of showing a wall
+  // of near-identical cards.
+  const productGroups = useMemo(() => groupProductsByLine(filteredProducts), [filteredProducts]);
 
   function toggleCategory(slug: string) {
     setSelectedCategories((prev) => (prev.includes(slug) ? prev.filter((s) => s !== slug) : [...prev, slug]));
@@ -126,7 +132,7 @@ export function ShopClient({
                 <Button variant="outline" size="sm" className="lg:hidden" onClick={() => setFiltersOpen((v) => !v)}>
                   <SlidersHorizontal /> Filters
                 </Button>
-                <span className="text-sm text-muted-foreground">{filteredProducts.length} products</span>
+                <span className="text-sm text-muted-foreground">{productGroups.length} products</span>
               </div>
               <Select value={sortBy} onValueChange={(v) => setSortBy(v as never)}>
                 <SelectTrigger>
@@ -144,11 +150,11 @@ export function ShopClient({
 
             {filtersOpen && <div className="mb-6 rounded-xl border border-border p-4 lg:hidden">{filtersPanel}</div>}
 
-            {filteredProducts.length > 0 ? (
+            {productGroups.length > 0 ? (
               <RevealGroup className="grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-4">
-                {filteredProducts.map((product) => (
-                  <RevealItem key={product.id}>
-                    <ProductCard product={product} />
+                {productGroups.map((group) => (
+                  <RevealItem key={group.key}>
+                    <ProductGroupCard group={group} />
                   </RevealItem>
                 ))}
               </RevealGroup>

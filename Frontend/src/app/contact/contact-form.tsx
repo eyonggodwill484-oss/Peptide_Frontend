@@ -11,14 +11,26 @@ import { Textarea } from "@/components/ui/textarea";
 export function ContactForm() {
   const [submitting, setSubmitting] = useState(false);
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.currentTarget;
+    const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
+
     setSubmitting(true);
-    setTimeout(() => {
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error("Request failed");
       toast.success("Message sent", { description: "Our research support team will respond within a few hours." });
-      e.currentTarget.reset();
+      form.reset();
+    } catch {
+      toast.error("Couldn't send your message", { description: "Please try again in a moment." });
+    } finally {
       setSubmitting(false);
-    }, 600);
+    }
   }
 
   return (

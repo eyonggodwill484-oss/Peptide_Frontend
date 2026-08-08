@@ -31,7 +31,7 @@ export default function TermsPage() {
           <RevealItem as="section">
             <h2 className="mb-2 text-base font-semibold text-foreground">Orders and Payment</h2>
             <p>
-              All prices are listed in USD and are subject to change without notice. We reserve the right to refuse
+              All prices are listed in EUR and are subject to change without notice. We reserve the right to refuse
               or cancel any order at our discretion, including orders that appear to violate our research-use
               policy.
             </p>

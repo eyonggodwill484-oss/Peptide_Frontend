@@ -3,10 +3,11 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { PageHeader } from "@/components/page-header";
-import { ProductCard } from "@/components/product-card";
+import { ProductGroupCard } from "@/components/product-group-card";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { getCategories, getCategoryBySlug } from "@/lib/data/categories";
 import { getProductsByCategory } from "@/lib/data/products";
+import { groupProductsByLine } from "@/lib/product-grouping";
 
 export const revalidate = 60;
 
@@ -42,6 +43,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
   if (!category) notFound();
 
   const products = await getProductsByCategory(category.slug);
+  const productGroups = groupProductsByLine(products);
 
   return (
     <>
@@ -56,11 +58,11 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
           <Image src={category.image.src} alt={category.image.alt} fill sizes="100vw" className="object-cover" />
         </Reveal>
 
-        {products.length > 0 ? (
+        {productGroups.length > 0 ? (
           <RevealGroup className="grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-4">
-            {products.map((product) => (
-              <RevealItem key={product.id}>
-                <ProductCard product={product} />
+            {productGroups.map((group) => (
+              <RevealItem key={group.key}>
+                <ProductGroupCard group={group} />
               </RevealItem>
             ))}
           </RevealGroup>

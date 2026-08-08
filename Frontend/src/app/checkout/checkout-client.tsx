@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ROUTES } from "@/constants/routes";
+import { formatPrice } from "@/lib/format-currency";
 import { useCartStore, useCartSummary } from "@/lib/store/cart-store";
 
 export function CheckoutClient() {
@@ -131,25 +132,25 @@ export function CheckoutClient() {
                   <span className="text-foreground">
                     {item.name} <span className="text-muted-foreground">× {item.quantity}</span>
                   </span>
-                  <span className="shrink-0 font-medium text-foreground">${(item.price * item.quantity).toFixed(2)}</span>
+                  <span className="shrink-0 font-medium text-foreground">{formatPrice(item.price * item.quantity)}</span>
                 </div>
               ))}
             </div>
             <div className="flex justify-between border-t border-border pt-3 text-sm">
               <span className="text-muted-foreground">Subtotal</span>
-              <span className="font-medium text-foreground">${summary.subtotal.toFixed(2)}</span>
+              <span className="font-medium text-foreground">{formatPrice(summary.subtotal)}</span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground">Shipping</span>
-              <span className="font-medium text-foreground">{summary.shipping === 0 ? "Free" : `$${summary.shipping.toFixed(2)}`}</span>
+              <span className="font-medium text-foreground">{summary.shipping === 0 ? "Free" : formatPrice(summary.shipping)}</span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground">Estimated Tax</span>
-              <span className="font-medium text-foreground">${summary.tax.toFixed(2)}</span>
+              <span className="font-medium text-foreground">{formatPrice(summary.tax)}</span>
             </div>
             <div className="flex justify-between border-t border-border pt-3 text-base font-semibold text-foreground">
               <span>Total</span>
-              <span>${summary.total.toFixed(2)}</span>
+              <span>{formatPrice(summary.total)}</span>
             </div>
             <Button size="lg" type="submit" className="mt-2" disabled={submitting}>
               {submitting ? "Placing Order…" : "Place Order"}

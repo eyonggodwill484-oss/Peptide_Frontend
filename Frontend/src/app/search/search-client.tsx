@@ -4,10 +4,11 @@ import { useMemo, useState } from "react";
 import { SearchIcon } from "lucide-react";
 
 import { PageHeader } from "@/components/page-header";
-import { ProductCard } from "@/components/product-card";
+import { ProductGroupCard } from "@/components/product-group-card";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { Input } from "@/components/ui/input";
 import { filterProducts } from "@/services/product-service";
+import { groupProductsByLine } from "@/lib/product-grouping";
 import type { Product } from "@/types";
 
 export function SearchClient({ initialQuery, products }: { initialQuery: string; products: Product[] }) {
@@ -17,6 +18,7 @@ export function SearchClient({ initialQuery, products }: { initialQuery: string;
     () => (query.trim() ? filterProducts(products, { query: query.trim() }) : []),
     [products, query]
   );
+  const resultGroups = useMemo(() => groupProductsByLine(results), [results]);
 
   return (
     <>
@@ -36,15 +38,15 @@ export function SearchClient({ initialQuery, products }: { initialQuery: string;
 
         {query.trim() === "" ? (
           <p className="text-center text-sm text-muted-foreground">Start typing to search the catalog.</p>
-        ) : results.length > 0 ? (
+        ) : resultGroups.length > 0 ? (
           <>
             <p className="mb-4 text-sm text-muted-foreground">
-              {results.length} result{results.length === 1 ? "" : "s"} for &ldquo;{query}&rdquo;
+              {resultGroups.length} result{resultGroups.length === 1 ? "" : "s"} for &ldquo;{query}&rdquo;
             </p>
             <RevealGroup className="grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-4">
-              {results.map((product) => (
-                <RevealItem key={product.id}>
-                  <ProductCard product={product} />
+              {resultGroups.map((group) => (
+                <RevealItem key={group.key}>
+                  <ProductGroupCard group={group} />
                 </RevealItem>
               ))}
             </RevealGroup>

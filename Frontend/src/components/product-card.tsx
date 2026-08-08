@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { ROUTES } from "@/constants/routes";
 import { cn } from "@/lib/utils";
 import { EASE } from "@/lib/motion/variants";
+import { formatPrice } from "@/lib/format-currency";
 import { useCartStore } from "@/lib/store/cart-store";
 import type { Product } from "@/types";
 import { Badge } from "@/components/ui/badge";
@@ -95,10 +96,10 @@ export function ProductCard({ product }: { product: Product }) {
           </div>
 
           <div className="mt-auto flex items-center gap-2 pt-2">
-            <span className="text-base font-semibold text-foreground">${product.price.toFixed(2)}</span>
+            <span className="text-base font-semibold text-foreground">{formatPrice(product.price)}</span>
             {onSale && (
               <span className="text-sm text-muted-foreground line-through">
-                ${product.compareAtPrice!.toFixed(2)}
+                {formatPrice(product.compareAtPrice!)}
               </span>
             )}
           </div>

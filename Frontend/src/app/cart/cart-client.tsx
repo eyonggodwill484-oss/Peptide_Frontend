@@ -9,6 +9,7 @@ import { PageHeader } from "@/components/page-header";
 import { Reveal } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants/routes";
+import { formatPrice } from "@/lib/format-currency";
 import { useCartStore, useCartSummary } from "@/lib/store/cart-store";
 
 export function CartClient() {
@@ -48,7 +49,7 @@ export function CartClient() {
                         {item.name}
                       </Link>
                       <span className="text-xs text-muted-foreground">SKU: {item.sku}</span>
-                      <span className="text-sm font-semibold text-foreground">${item.price.toFixed(2)}</span>
+                      <span className="text-sm font-semibold text-foreground">{formatPrice(item.price)}</span>
                     </div>
                   </div>
 
@@ -57,7 +58,7 @@ export function CartClient() {
                       {item.name}
                     </Link>
                     <span className="text-xs text-muted-foreground">SKU: {item.sku}</span>
-                    <span className="text-sm font-semibold text-foreground">${item.price.toFixed(2)}</span>
+                    <span className="text-sm font-semibold text-foreground">{formatPrice(item.price)}</span>
                   </div>
 
                   <div className="flex items-center justify-between gap-3 sm:justify-end sm:gap-4">
@@ -81,7 +82,7 @@ export function CartClient() {
                       </Button>
                     </div>
                     <span className="w-16 shrink-0 text-right text-sm font-semibold text-foreground">
-                      ${(item.price * item.quantity).toFixed(2)}
+                      {formatPrice(item.price * item.quantity)}
                     </span>
                     <Button variant="ghost" size="icon" onClick={() => removeItem(item.productId)} aria-label="Remove item">
                       <Trash2 className="text-destructive" />
@@ -95,28 +96,28 @@ export function CartClient() {
               <h2 className="text-base font-semibold text-foreground">Order Summary</h2>
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Subtotal</span>
-                <span className="font-medium text-foreground">${summary.subtotal.toFixed(2)}</span>
+                <span className="font-medium text-foreground">{formatPrice(summary.subtotal)}</span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Shipping</span>
                 <span className="font-medium text-foreground">
-                  {summary.shipping === 0 ? "Free" : `$${summary.shipping.toFixed(2)}`}
+                  {summary.shipping === 0 ? "Free" : formatPrice(summary.shipping)}
                 </span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Estimated Tax</span>
-                <span className="font-medium text-foreground">${summary.tax.toFixed(2)}</span>
+                <span className="font-medium text-foreground">{formatPrice(summary.tax)}</span>
               </div>
               <div className="flex justify-between border-t border-border pt-3 text-base font-semibold text-foreground">
                 <span>Total</span>
-                <span>${summary.total.toFixed(2)}</span>
+                <span>{formatPrice(summary.total)}</span>
               </div>
               <Button size="lg" className="mt-2" asChild>
                 <Link href={ROUTES.checkout}>Proceed to Checkout</Link>
               </Button>
               {summary.subtotal < 150 && summary.subtotal > 0 && (
                 <p className="text-center text-xs text-muted-foreground">
-                  Add ${(150 - summary.subtotal).toFixed(2)} more for free shipping
+                  Add {formatPrice(150 - summary.subtotal)} more for free shipping
                 </p>
               )}
             </div>

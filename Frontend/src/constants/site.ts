@@ -5,18 +5,18 @@ export const SITE_DESCRIPTION =
   "Wardiere Peptide Sciences supplies third-party verified, research-grade peptides for laboratory use, backed by full certificates of analysis and cold-chain fulfillment.";
 export const SITE_URL = "https://www.wardierepeptidesciences.com";
 export const SITE_LOCALE = "en_US";
-export const SITE_CURRENCY = "USD";
+export const SITE_CURRENCY = "EUR";
 
-export const CONTACT_EMAIL = "research@wardierepeptidesciences.com";
+export const CONTACT_EMAIL = "sales@wardierepeptidesciences.com";
 export const CONTACT_PHONE = "+1 (800) 555-0142";
 export const SUPPORT_HOURS = "Mon–Fri, 8:00 AM – 6:00 PM EST";
 
 export const COMPANY_ADDRESS = {
-  line1: "1180 Innovation Parkway, Suite 400",
-  city: "Cambridge",
-  state: "MA",
-  postalCode: "02142",
-  country: "United States",
+  line1: "Maximilianstraße 24",
+  city: "München",
+  state: "Bayern",
+  postalCode: "80539",
+  country: "Germany",
 };
 
 export const SOCIAL_LINKS = {

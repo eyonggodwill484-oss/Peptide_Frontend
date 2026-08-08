@@ -10,9 +10,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCartStore } from "@/lib/store/cart-store";
+import { formatPrice } from "@/lib/format-currency";
 import { cn } from "@/lib/utils";
 import type { Product } from "@/types";
 import { Reveal } from "@/components/motion/reveal";
+import { ReadMore } from "@/components/read-more";
 
 const BADGE_LABELS: Record<Product["badges"][number], string> = {
   new: "New",
@@ -93,8 +95,8 @@ export function ProductDetail({ product }: { product: Product }) {
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="text-3xl font-semibold text-foreground">${product.price.toFixed(2)}</span>
-          {onSale && <span className="text-lg text-muted-foreground line-through">${product.compareAtPrice!.toFixed(2)}</span>}
+          <span className="text-3xl font-semibold text-foreground">{formatPrice(product.price)}</span>
+          {onSale && <span className="text-lg text-muted-foreground line-through">{formatPrice(product.compareAtPrice!)}</span>}
           {product.badges.length > 0 && (
             <div className="flex gap-1.5">
               {product.badges.map((badge) => (
@@ -161,7 +163,7 @@ export function ProductDetail({ product }: { product: Product }) {
             <TabsTrigger value="reviews">Reviews ({product.reviews.length})</TabsTrigger>
           </TabsList>
           <TabsContent value="description" className="pt-3 leading-relaxed text-muted-foreground">
-            {product.description}
+            <ReadMore text={product.description} collapsedLines={6} />
           </TabsContent>
           <TabsContent value="specs" className="pt-3">
             <dl className="divide-y divide-border">

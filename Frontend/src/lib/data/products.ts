@@ -1,6 +1,7 @@
 import { cache } from "react";
 
 import { supabase } from "@/lib/supabase/client";
+import { SITE_CURRENCY } from "@/constants/site";
 import type { Product, ProductBadge, ProductImage, StockStatus } from "@/types";
 
 const FALLBACK_IMAGE: ProductImage = {
@@ -73,7 +74,7 @@ function mapProduct(row: ProductRow, reviewCount: number): Product {
     categoryName: row.category?.name ?? "Uncategorized",
     price: onSale ? row.discount_price! : row.price,
     compareAtPrice: onSale ? row.price : undefined,
-    currency: "USD",
+    currency: SITE_CURRENCY,
     purity: "—",
     concentration: "—",
     images,
@@ -153,8 +154,20 @@ export async function getBestSellers(): Promise<Product[]> {
   return (await getProducts()).filter((p) => p.bestSeller);
 }
 
+function productLineName(name: string): string {
+  return name.split(" - ")[0]?.trim().toLowerCase() || name.toLowerCase();
+}
+
 export async function getRelatedProducts(product: Product, limit = 4): Promise<Product[]> {
+  const currentLine = productLineName(product.name);
+  // Exclude other dosages/sizes of the same product — those aren't useful
+  // "you might also like" suggestions, they're the thing already being viewed.
   return (await getProducts())
-    .filter((p) => p.categorySlug === product.categorySlug && p.id !== product.id)
-    .slice(0, limit);
+    .filter(
+      (p) =>
+        p.categorySlug === product.categorySlug &&
+        p.id !== product.id &&
+        productLineName(p.name) !== currentLine
+    )
+    .slice(0, limit * 3); // over-fetch; caller groups remaining sibling sets down to `limit`
 }

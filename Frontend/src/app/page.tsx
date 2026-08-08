@@ -13,6 +13,8 @@ import { ProductCard } from "@/components/product-card";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { HeroSlideshow } from "@/components/motion/hero-slideshow";
 import { HeroBackground, HeroEntrance, HeroEntranceItem } from "@/components/motion/hero-entrance";
+import { AnimatedHeroHeadline } from "@/components/motion/animated-hero-headline";
+import { HeroScrollDemo } from "@/components/hero-scroll-demo";
 import { TestimonialsCarousel } from "@/components/testimonials-carousel";
 import { CountUpStat } from "@/components/motion/count-up-stat";
 
@@ -57,8 +59,12 @@ export default async function Home() {
         <HeroSlideshow
           images={[
             {
-              src: "/images/black-lab-scientist-monitoring-chemical-reaction-compound-molecules-working-rd-strategy.jpg",
-              alt: "Lab scientist monitoring a chemical reaction during R&D research",
+              src: "/images/female-researcher-laboratory-with-safety-glasses-test-tubes.jpg",
+              alt: "Female researcher in safety glasses working with test tubes",
+            },
+            {
+              src: "/images/laboratory-supplies-medical-work.jpg",
+              alt: "Laboratory supplies used in research and medical work",
             },
             {
               src: "/images/microscope-dna.jpg",
@@ -75,18 +81,27 @@ export default async function Home() {
 
         <div className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
           <HeroEntrance className="flex max-w-2xl flex-col gap-6">
-            <HeroEntranceItem>
+            <HeroEntranceItem className="flex flex-wrap items-center gap-2">
               <span className="w-fit rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white ring-1 ring-white/20 backdrop-blur">
                 Research Use Only
+              </span>
+              <span className="w-fit rounded-full bg-primary/20 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary-foreground ring-1 ring-primary/40 backdrop-blur">
+                Trusted Quality Since 2014
               </span>
             </HeroEntranceItem>
             <HeroEntranceItem>
               <h1 className="text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">
-                {SITE_NAME.split(" ")[0]} Peptide Sciences
+                <AnimatedHeroHeadline
+                  phrases={["Premium Peptides, Tested for Quality", "Quality You Can Trust."]}
+                />
               </h1>
             </HeroEntranceItem>
             <HeroEntranceItem>
-              <p className="max-w-lg text-lg leading-relaxed text-white/85">{SITE_DESCRIPTION}</p>
+              <p className="max-w-lg text-lg leading-relaxed text-white/85">
+                Discover a carefully selected range of high-quality peptides and specialized compounds. Every
+                product is sourced and handled with a strong focus on quality, consistency, and reliable
+                standards.
+              </p>
             </HeroEntranceItem>
             <HeroEntranceItem className="flex flex-wrap items-center gap-3">
               <Button size="lg" className="h-11 px-6 text-base" asChild>
@@ -107,6 +122,9 @@ export default async function Home() {
           </HeroEntrance>
         </div>
       </section>
+
+      {/* Scroll-reveal showcase */}
+      <HeroScrollDemo />
 
       {/* Featured categories */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">

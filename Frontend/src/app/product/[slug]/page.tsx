@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { PageHeader } from "@/components/page-header";
-import { ProductCard } from "@/components/product-card";
+import { ProductGroupCard } from "@/components/product-group-card";
 import { ProductJsonLd } from "@/components/structured-data";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { getProductBySlug, getProducts, getRelatedProducts } from "@/lib/data/products";
+import { groupProductsByLine } from "@/lib/product-grouping";
 import { ProductDetail } from "./product-detail";
 
 export const revalidate = 60;
@@ -50,6 +51,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   if (!product) notFound();
 
   const related = await getRelatedProducts(product);
+  const relatedGroups = groupProductsByLine(related).slice(0, 4);
 
   return (
     <>
@@ -66,15 +68,15 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <ProductDetail product={product} />
 
-        {related.length > 0 && (
+        {relatedGroups.length > 0 && (
           <div className="mt-16">
             <Reveal>
               <h2 className="mb-6 text-2xl font-semibold tracking-tight text-foreground">Related Products</h2>
             </Reveal>
             <RevealGroup className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-              {related.map((p) => (
-                <RevealItem key={p.id}>
-                  <ProductCard product={p} />
+              {relatedGroups.map((group) => (
+                <RevealItem key={group.key}>
+                  <ProductGroupCard group={group} />
                 </RevealItem>
               ))}
             </RevealGroup>
