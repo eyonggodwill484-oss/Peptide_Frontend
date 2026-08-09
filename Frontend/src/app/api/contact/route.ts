@@ -3,8 +3,6 @@ import { Resend } from "resend";
 
 import { CONTACT_EMAIL } from "@/constants/site";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function escapeHtml(value: string): string {
@@ -26,6 +24,13 @@ export async function POST(request: Request) {
   if (!name || !email || !subject || !message || !EMAIL_RE.test(email)) {
     return NextResponse.json({ error: "Missing or invalid fields." }, { status: 400 });
   }
+
+  if (!process.env.RESEND_API_KEY) {
+    console.error("RESEND_API_KEY is not configured.");
+    return NextResponse.json({ error: "Failed to send message." }, { status: 502 });
+  }
+
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
   const { error } = await resend.emails.send({
     from: "onboarding@resend.dev",
