@@ -9,6 +9,8 @@ import { getProductBySlug, getProducts, getRelatedProducts } from "@/lib/data/pr
 import { groupProductsByLine } from "@/lib/product-grouping";
 import { ProductDetail } from "./product-detail";
 
+import { getServerLocale, getServerTranslations, localizeProduct } from "@/lib/i18n";
+
 export const revalidate = 60;
 
 export async function generateStaticParams() {
@@ -22,9 +24,13 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const product = await getProductBySlug(slug);
-  if (!product) return {};
+  const rawProduct = await getProductBySlug(slug);
+  if (!rawProduct) return {};
+
+  const locale = await getServerLocale();
+  const product = localizeProduct(rawProduct, locale);
   const image = product.images[0];
+
   return {
     title: product.name,
     description: product.shortDescription,
@@ -47,11 +53,26 @@ export async function generateMetadata({
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const product = await getProductBySlug(slug);
-  if (!product) notFound();
+  const rawProduct = await getProductBySlug(slug);
+  if (!rawProduct) notFound();
+
+  const locale = await getServerLocale();
+  const t = await getServerTranslations();
+  const product = localizeProduct(rawProduct, locale);
 
   const related = await getRelatedProducts(product);
-  const relatedGroups = groupProductsByLine(related).slice(0, 4);
+  const localizedRelated = related.map((p) => localizeProduct(p, locale));
+  const relatedGroups = groupProductsByLine(localizedRelated).slice(0, 4);
+
+  // Localize category name in breadcrumbs if mapped
+  const rawCategoryName = product.categoryName;
+  let categoryName = rawCategoryName;
+  if (locale === "de") {
+    if (product.categorySlug === "healing-recovery") categoryName = "Heilung & Regeneration";
+    else if (product.categorySlug === "weight-management") categoryName = "Gewichtsmanagement & Stoffwechsel";
+    else if (product.categorySlug === "cognitive-health") categoryName = "Kognitive Gesundheit";
+    else if (product.categorySlug === "anti-aging-longevity") categoryName = "Langlebigkeit & Anti-Aging";
+  }
 
   return (
     <>
@@ -59,8 +80,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       <PageHeader
         title={product.name}
         crumbs={[
-          { label: "Shop", href: "/shop" },
-          { label: product.categoryName, href: `/categories/${product.categorySlug}` },
+          { label: t.nav.shop, href: "/shop" },
+          { label: categoryName, href: `/categories/${product.categorySlug}` },
           { label: product.name },
         ]}
       />
@@ -71,7 +92,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         {relatedGroups.length > 0 && (
           <div className="mt-16">
             <Reveal>
-              <h2 className="mb-6 text-2xl font-semibold tracking-tight text-foreground">Related Products</h2>
+              <h2 className="mb-6 text-2xl font-semibold tracking-tight text-foreground">
+                {locale === "de" ? "Ähnliche Produkte" : "Related Products"}
+              </h2>
             </Reveal>
             <RevealGroup className="grid grid-cols-2 gap-4 sm:grid-cols-4">
               {relatedGroups.map((group) => (

@@ -1,17 +1,20 @@
 "use client";
 import Image from "next/image";
 import { ContainerScroll } from "./ui/container-scroll-animation";
+import { useLocale } from "@/lib/i18n-client";
 
 export function HeroScrollDemo() {
+  const locale = useLocale();
+
   return (
     <div className="flex flex-col overflow-hidden bg-background">
       <ContainerScroll
         titleComponent={
           <>
             <h2 className="text-4xl font-semibold text-foreground">
-              See the research behind <br />
+              {locale === "de" ? "Erkunden Sie die Forschung hinter" : "See the research behind"} <br />
               <span className="mt-1 text-4xl font-bold leading-none text-foreground md:text-[6rem]">
-                every verified peptide
+                {locale === "de" ? "jedem verifizierten Peptid" : "every verified peptide"}
               </span>
             </h2>
           </>

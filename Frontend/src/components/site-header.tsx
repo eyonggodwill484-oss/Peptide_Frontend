@@ -1,18 +1,20 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import Link from "@/components/ui/localized-link";
+import NextLink from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { LogOut, Menu, Package, Search, ShoppingBag, User as UserIcon } from "lucide-react";
 
 import { ROUTES } from "@/constants/routes";
 import { MAIN_NAV } from "@/constants/navigation";
-import { SITE_SHORT_NAME } from "@/constants/site";
+import { SITE_SHORT_NAME, CONTACT_PHONE, SUPPORT_HOURS } from "@/constants/site";
 import { useCartCount } from "@/lib/store/cart-store";
 import { useAuthUser } from "@/lib/supabase/use-auth-user";
 import { EASE, staggerContainer } from "@/lib/motion/variants";
 import { Button } from "@/components/ui/button";
+import { useLocale, useTranslations } from "@/lib/i18n-client";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -48,6 +50,40 @@ const mobileItemVariants = {
   show: { opacity: 1, x: 0, transition: { duration: 0.35, ease: EASE } },
 };
 
+function LanguageSwitcher() {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const locale = useLocale();
+
+  const queryString = searchParams?.toString();
+  const suffix = queryString ? `?${queryString}` : "";
+
+  const deHref = (pathname.replace(/^\/en/, "") || "/") + suffix;
+  const enHref = (pathname.startsWith("/en") ? pathname : (pathname === "/" ? "/en" : `/en${pathname}`)) + suffix;
+
+  return (
+    <div className="flex items-center gap-1 text-[11px] font-semibold px-2 py-1 rounded-full border border-border bg-muted/40 mr-1">
+      <NextLink
+        href={deHref}
+        className={`px-1.5 py-0.5 rounded-full transition-colors ${
+          locale === "de" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+        }`}
+      >
+        DE
+      </NextLink>
+      <span className="text-muted-foreground/30">|</span>
+      <NextLink
+        href={enHref}
+        className={`px-1.5 py-0.5 rounded-full transition-colors ${
+          locale === "en" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+        }`}
+      >
+        EN
+      </NextLink>
+    </div>
+  );
+}
+
 export function SiteHeader({ categories }: { categories: Category[] }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -58,6 +94,8 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
   const pathname = usePathname();
   const router = useRouter();
   const { user, loading: authLoading, supabase } = useAuthUser();
+  const t = useTranslations();
+  const locale = useLocale();
 
   async function handleLogout() {
     await supabase.auth.signOut();
@@ -88,12 +126,42 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
     .slice(0, 4)
     .map((c) => ({ label: c.name, href: `/shop?category=${c.slug}` }));
 
+  const getNavLabel = (label: string) => {
+    switch (label) {
+      case "Home": return t.nav.home;
+      case "Shop": return t.nav.shop;
+      case "Categories": return t.nav.categories;
+      case "Research": return t.nav.research;
+      case "About": return t.nav.about;
+      case "Contact": return t.nav.contact;
+      default: return label;
+    }
+  };
+
   return (
-    <header
-      className={`sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur transition-[height] duration-300 supports-backdrop-filter:bg-background/80 ${
-        scrolled ? "shadow-sm" : ""
-      }`}
-    >
+    <div className="w-full">
+      {/* Top Banner */}
+      <div className="bg-brand-dark text-white/80 text-[11px] font-medium py-1.5 px-4 sm:px-6 lg:px-8 border-b border-white/10 hidden md:block">
+        <div className="mx-auto max-w-7xl flex justify-between items-center">
+          <div className="flex gap-4">
+            <span>{locale === "de" ? "📞 Support: " : "📞 Support: "}{CONTACT_PHONE}</span>
+            <span className="text-white/40">|</span>
+            <span>{locale === "de" ? "🕒 " : "🕒 "}{SUPPORT_HOURS}</span>
+          </div>
+          <div className="flex gap-4 items-center">
+            <span>{locale === "de" ? "🚚 Gekühlter & diskreter Versand" : "🚚 Cold-Chain & Discreet Shipping"}</span>
+            <span className="text-white/40">|</span>
+            <Link href="/quality-documentation" className="underline hover:text-white transition-colors">
+              {locale === "de" ? "Analysezertifikate (CoA)" : "Certificates of Analysis (CoA)"}
+            </Link>
+          </div>
+        </div>
+      </div>
+      <header
+        className={`sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur transition-[height] duration-300 supports-backdrop-filter:bg-background/80 ${
+          scrolled ? "shadow-sm" : ""
+        }`}
+      >
       <div
         className={`mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 transition-[height] duration-300 sm:px-6 lg:px-8 ${
           scrolled ? "h-14" : "h-16"
@@ -107,7 +175,7 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
               if (link.label === "Categories") {
                 return (
                   <NavigationMenuItem key={link.href}>
-                    <NavigationMenuTrigger>Categories</NavigationMenuTrigger>
+                    <NavigationMenuTrigger>{t.nav.categories}</NavigationMenuTrigger>
                     <NavigationMenuContent>
                       <div className="flex w-[240px] flex-col gap-1 p-4">
                         {categoryLinks.map((catLink) => (
@@ -117,7 +185,7 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
                         ))}
                         <NavigationMenuLink asChild>
                           <Link href="/categories" className="font-medium text-primary">
-                            View All Categories
+                            {t.common.viewAllCategories}
                           </Link>
                         </NavigationMenuLink>
                       </div>
@@ -126,12 +194,12 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
                 );
               }
 
-              const isActive = pathname === link.href;
+              const isActive = pathname === link.href || pathname === `/en${link.href}`;
               return (
                 <NavigationMenuItem key={link.href}>
                   <NavigationMenuLink asChild>
                     <Link href={link.href} className="relative px-2.5 py-1.5 text-sm font-medium">
-                      {link.label}
+                      {getNavLabel(link.label)}
                       {isActive && (
                         <motion.span
                           layoutId="nav-active-indicator"
@@ -166,14 +234,14 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
                     value={searchValue}
                     onChange={(event) => setSearchValue(event.target.value)}
                     onBlur={() => !searchValue && setSearchOpen(false)}
-                    placeholder="Search peptides..."
-                    aria-label="Search"
+                    placeholder={t.common.searchPlaceholder}
+                    aria-label={t.common.searchLabel}
                     className="h-9 w-[220px] rounded-full border border-border bg-muted/40 px-3.5 text-sm outline-none ring-primary/30 focus:ring-2"
                   />
                 </motion.form>
               ) : (
                 <motion.div key="search-icon" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                  <Button variant="ghost" size="icon" aria-label="Search" onClick={() => setSearchOpen(true)}>
+                  <Button variant="ghost" size="icon" aria-label={t.common.searchLabel} onClick={() => setSearchOpen(true)}>
                     <Search />
                   </Button>
                 </motion.div>
@@ -181,6 +249,7 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
             </AnimatePresence>
           </div>
 
+          <LanguageSwitcher />
           <ThemeToggle />
 
           <div className="hidden items-center gap-1.5 sm:flex">
@@ -199,29 +268,29 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
                     <DropdownMenuSeparator />
                     <DropdownMenuItem asChild>
                       <Link href={ROUTES.account}>
-                        <UserIcon /> My Account
+                        <UserIcon /> {t.nav.myAccount}
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
                       <Link href="/account/orders">
-                        <Package /> Order History
+                        <Package /> {t.nav.orderHistory}
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onSelect={handleLogout}>
-                      <LogOut /> Log Out
+                      <LogOut /> {t.nav.logout}
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               ) : (
                 <Button size="sm" asChild>
-                  <Link href={ROUTES.login}>Log In</Link>
+                  <Link href={ROUTES.login}>{t.nav.login}</Link>
                 </Button>
               ))}
           </div>
 
           <Button variant="ghost" size="icon" asChild className="relative">
-            <Link href={ROUTES.cart} aria-label="Cart">
+            <Link href={ROUTES.cart} aria-label={t.common.cart}>
               <motion.span whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.92 }} className="flex">
                 <ShoppingBag />
               </motion.span>
@@ -250,7 +319,7 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
             </SheetTrigger>
             <SheetContent side="right">
               <SheetHeader>
-                <SheetTitle>Menu</SheetTitle>
+                <SheetTitle>{t.nav.menu}</SheetTitle>
               </SheetHeader>
               <motion.nav
                 className="flex flex-col gap-1 px-4"
@@ -265,7 +334,7 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
                         <Accordion type="single" collapsible>
                           <AccordionItem value="categories" className="border-b-0">
                             <AccordionTrigger className="rounded-lg px-2 py-2.5 text-sm font-medium text-foreground hover:bg-muted hover:no-underline">
-                              Categories
+                              {t.nav.categories}
                             </AccordionTrigger>
                             <AccordionContent className="flex flex-col gap-1 pl-2 [&_a]:no-underline">
                               {categoryLinks.map((catLink) => (
@@ -283,7 +352,7 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
                                 onClick={() => setMobileOpen(false)}
                                 className="block rounded-lg px-2 py-2 text-sm font-medium text-primary hover:bg-muted"
                               >
-                                View All Categories
+                                {t.common.viewAllCategories}
                               </Link>
                             </AccordionContent>
                           </AccordionItem>
@@ -299,7 +368,7 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
                         onClick={() => setMobileOpen(false)}
                         className="block rounded-lg px-2 py-2.5 text-sm font-medium text-foreground hover:bg-muted"
                       >
-                        {link.label}
+                        {getNavLabel(link.label)}
                       </Link>
                     </motion.div>
                   );
@@ -316,7 +385,7 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
                           onClick={() => setMobileOpen(false)}
                           className="block rounded-lg px-2 py-2.5 text-sm font-medium text-foreground hover:bg-muted"
                         >
-                          My Account
+                          {t.nav.myAccount}
                         </Link>
                       </motion.div>
                       <motion.div variants={mobileItemVariants}>
@@ -324,7 +393,7 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
                           onClick={handleLogout}
                           className="block w-full rounded-lg px-2 py-2.5 text-left text-sm font-medium text-foreground hover:bg-muted"
                         >
-                          Log Out
+                          {t.nav.logout}
                         </button>
                       </motion.div>
                     </>
@@ -335,7 +404,7 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
                         onClick={() => setMobileOpen(false)}
                         className="block rounded-lg px-2 py-2.5 text-sm font-medium text-foreground hover:bg-muted"
                       >
-                        Log In
+                        {t.nav.login}
                       </Link>
                     </motion.div>
                   ))}
@@ -345,5 +414,6 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
         </div>
       </div>
     </header>
+    </div>
   );
 }

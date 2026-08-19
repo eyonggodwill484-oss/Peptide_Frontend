@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/ui/localized-link";
 
 import { ROUTES } from "@/constants/routes";
 import { FOOTER_LINKS } from "@/constants/navigation";
@@ -9,6 +9,7 @@ import {
   SITE_TAGLINE,
   SOCIAL_LINKS,
 } from "@/constants/site";
+import { getServerLocale, getServerTranslations } from "@/lib/i18n";
 
 function XIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -34,7 +35,53 @@ function InstagramIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-export function SiteFooter() {
+export async function SiteFooter() {
+  const locale = await getServerLocale();
+  const t = await getServerTranslations();
+
+  // Localize footer links headings and labels
+  const localizedFooterLinks = FOOTER_LINKS.map((column) => {
+    let heading = column.heading;
+    if (column.heading === "Shop") heading = t.nav.shop;
+    else if (column.heading === "Company") heading = t.nav.about;
+    else if (column.heading === "Support") heading = "Support";
+    else if (column.heading === "Legal") heading = "Legal";
+
+    const links = column.links.map((link) => {
+      let label = link.label;
+      if (link.label === "All Products") label = t.nav.allProducts;
+      else if (link.label === "Categories") label = t.nav.categories;
+      else if (link.label === "Best Sellers") label = t.nav.bestSellers;
+      else if (link.label === "New Arrivals") label = t.nav.newArrivals;
+      else if (link.label === "About Us") label = t.nav.about;
+      else if (link.label === "Research Information") label = t.nav.research;
+      else if (link.label === "Latest Articles") label = locale === "de" ? "Neueste Artikel" : "Latest Articles";
+      else if (link.label === "Customer Reviews") label = t.nav.reviewsNav;
+      else if (link.label === "Contact") label = t.nav.contact;
+      else if (link.label === "FAQ") label = t.nav.faq;
+      else if (link.label === "Shipping Policy") label = t.nav.shipping;
+      else if (link.label === "Returns Policy") label = t.nav.returns;
+      else if (link.label === "Quality Documentation") label = t.nav.qualityDocsNav;
+      else if (link.label === "Ireland Research Support") label = t.nav.irelandSupplierNav;
+      else if (link.label === "Track Order") label = t.nav.trackOrder;
+      else if (link.label === "Privacy Policy") label = t.nav.privacy;
+      else if (link.label === "Terms of Service") label = t.nav.terms;
+      else if (link.label === "Research Use Disclaimer") label = t.nav.disclaimer;
+
+      return { ...link, label };
+    });
+
+    return { heading, links };
+  });
+
+  const localizedDisclaimer = locale === "de"
+    ? "Alle Produkte sind ausschließlich für Laboruntersuchungen und Forschungszwecke bestimmt. Nicht für den menschlichen Verzehr, die medizinische Diagnose oder therapeutische Zwecke."
+    : RESEARCH_USE_DISCLAIMER;
+
+  const rightsReserved = locale === "de"
+    ? `Alle Rechte vorbehalten.`
+    : `All rights reserved.`;
+
   return (
     <footer className="border-t border-brand-dark bg-brand-dark">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
@@ -44,7 +91,7 @@ export function SiteFooter() {
               <img src="/logo.svg" alt={SITE_SHORT_NAME} className="size-9 rounded-lg" />
               <span className="text-lg font-semibold tracking-tight">{SITE_SHORT_NAME}</span>
             </Link>
-            <p className="max-w-xs text-sm text-white/70">{SITE_TAGLINE}</p>
+            <p className="max-w-xs text-sm text-white/70">{t.meta.tagline}</p>
             <div className="mt-1 flex items-center gap-3">
               <a
                 href={SOCIAL_LINKS.twitter}
@@ -76,7 +123,7 @@ export function SiteFooter() {
             </div>
           </div>
 
-          {FOOTER_LINKS.map((column) => (
+          {localizedFooterLinks.map((column) => (
             <div key={column.heading} className="flex flex-col gap-2.5">
               <span className="text-sm font-semibold text-white">{column.heading}</span>
               {column.links.map((link) => (
@@ -93,10 +140,10 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-10 border-t border-white/15 pt-6">
-          <p className="text-xs leading-relaxed text-white/60">{RESEARCH_USE_DISCLAIMER}</p>
+          <p className="text-xs leading-relaxed text-white/60">{localizedDisclaimer}</p>
           <div className="mt-4 flex flex-col gap-2 text-xs text-white/60 sm:flex-row sm:items-center sm:justify-between">
             <span>
-              © {new Date().getFullYear()} {SITE_SHORT_NAME} Peptide Sciences. All rights reserved.
+              © {new Date().getFullYear()} {SITE_SHORT_NAME} Peptide Sciences. {rightsReserved}
             </span>
             <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-white">
               {CONTACT_EMAIL}

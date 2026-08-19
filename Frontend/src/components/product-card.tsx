@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/ui/localized-link";
 import { motion } from "framer-motion";
 import { Plus, Star } from "lucide-react";
 import { toast } from "sonner";
@@ -13,26 +13,30 @@ import { formatPrice } from "@/lib/format-currency";
 import { useCartStore } from "@/lib/store/cart-store";
 import type { Product } from "@/types";
 import { Badge } from "@/components/ui/badge";
-
-const BADGE_LABELS: Record<Product["badges"][number], string> = {
-  new: "New",
-  "best-seller": "Best Seller",
-  limited: "Limited",
-  sale: "Sale",
-  "coa-verified": "CoA Verified",
-};
+import { useLocale } from "@/lib/i18n-client";
 
 export function ProductCard({ product }: { product: Product }) {
   const image = product.images[0];
   const onSale = typeof product.compareAtPrice === "number" && product.compareAtPrice > product.price;
   const canAddToCart = product.stock !== "out-of-stock";
   const addItem = useCartStore((state) => state.addItem);
+  const locale = useLocale();
+
+  const BADGE_LABELS: Record<Product["badges"][number], string> = {
+    new: locale === "de" ? "Neu" : "New",
+    "best-seller": locale === "de" ? "Bestseller" : "Best Seller",
+    limited: locale === "de" ? "Limitiert" : "Limited",
+    sale: locale === "de" ? "Angebot" : "Sale",
+    "coa-verified": locale === "de" ? "CoA Verifiziert" : "CoA Verified",
+  };
 
   function handleAddToCart(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
     event.stopPropagation();
     addItem(product, 1);
-    toast.success(`${product.name} added to cart`);
+    toast.success(
+      locale === "de" ? `${product.name} zum Warenkorb hinzugefügt` : `${product.name} added to cart`
+    );
   }
 
   return (
@@ -74,11 +78,11 @@ export function ProductCard({ product }: { product: Product }) {
             <button
               type="button"
               onClick={handleAddToCart}
-              aria-label={`Add ${product.name} to cart`}
+              aria-label={locale === "de" ? `${product.name} in den Warenkorb` : `Add ${product.name} to cart`}
               className="absolute inset-x-2 bottom-2 z-10 flex translate-y-14 items-center justify-center gap-1.5 rounded-lg bg-brand py-2 text-sm font-semibold text-white opacity-0 shadow-lg shadow-brand/30 transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100 hover:bg-brand-dark focus-visible:translate-y-0 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-light"
             >
               <Plus className="size-4" />
-              Add to Cart
+              {locale === "de" ? "In den Warenkorb" : "Add to Cart"}
             </button>
           )}
         </div>
