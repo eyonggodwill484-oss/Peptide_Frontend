@@ -7,10 +7,11 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Toaster } from "@/components/ui/sonner";
 import { TawkChatWidget } from "@/components/tawk-chat-widget";
+import { FomoSalesPopup } from "@/components/fomo-sales-popup";
 import { SiteJsonLd } from "@/components/structured-data";
 import { LenisProvider } from "@/components/motion/lenis-provider";
 import { ThemeProvider } from "@/components/theme-provider";
-import { SITE_DESCRIPTION, SITE_LOCALE, SITE_NAME, SITE_URL } from "@/constants/site";
+import { SITE_NAME, SITE_URL } from "@/constants/site";
 import { getFeaturedCategories } from "@/lib/data/categories";
 
 import { getServerLocale, getServerTranslations } from "@/lib/i18n";
@@ -90,6 +91,7 @@ export default async function RootLayout({
             <SiteFooter />
             <Toaster position="bottom-right" />
           </LenisProvider>
+          <FomoSalesPopup locale={locale} />
           <TawkChatWidget />
           <Analytics />
         </ThemeProvider>

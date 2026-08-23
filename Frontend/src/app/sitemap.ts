@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 import { SITE_URL } from "@/constants/site";
 import { ROUTES } from "@/constants/routes";
-import { ARTICLES } from "@/lib/data/content";
+import { BLOG_POSTS } from "@/lib/data/blog-posts";
 import { getCategories } from "@/lib/data/categories";
 import { getProducts } from "@/lib/data/products";
 
@@ -12,9 +12,12 @@ const STATIC_ROUTES: { path: string; changeFrequency: MetadataRoute.Sitemap[numb
   { path: ROUTES.home, changeFrequency: "daily", priority: 1 },
   { path: ROUTES.shop, changeFrequency: "daily", priority: 0.9 },
   { path: ROUTES.categories, changeFrequency: "weekly", priority: 0.8 },
+  { path: ROUTES.blog, changeFrequency: "daily", priority: 0.8 },
   { path: ROUTES.articles, changeFrequency: "weekly", priority: 0.7 },
+  { path: ROUTES.reviews, changeFrequency: "weekly", priority: 0.7 },
   { path: ROUTES.about, changeFrequency: "monthly", priority: 0.5 },
   { path: ROUTES.research, changeFrequency: "monthly", priority: 0.6 },
+  { path: ROUTES.qualityDocumentation, changeFrequency: "monthly", priority: 0.6 },
   { path: ROUTES.contact, changeFrequency: "yearly", priority: 0.4 },
   { path: ROUTES.faq, changeFrequency: "monthly", priority: 0.4 },
   { path: ROUTES.shipping, changeFrequency: "yearly", priority: 0.3 },
@@ -45,12 +48,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  const articleEntries: MetadataRoute.Sitemap = ARTICLES.map((article) => ({
-    url: `${SITE_URL}${ROUTES.article(article.slug)}`,
-    lastModified: article.updatedAt ?? article.publishedAt,
-    changeFrequency: "monthly",
-    priority: 0.6,
+  const blogEntries: MetadataRoute.Sitemap = BLOG_POSTS.map((post) => ({
+    url: `${SITE_URL}/blog/${post.slug}`,
+    lastModified: post.updatedAt,
+    changeFrequency: "weekly",
+    priority: 0.7,
   }));
 
-  return [...staticEntries, ...categoryEntries, ...productEntries, ...articleEntries];
+  return [...staticEntries, ...categoryEntries, ...productEntries, ...blogEntries];
 }

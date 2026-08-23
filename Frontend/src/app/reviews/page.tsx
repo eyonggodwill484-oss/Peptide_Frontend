@@ -3,6 +3,7 @@ import { Star, ShieldCheck, CheckCircle2 } from "lucide-react";
 
 import { PageHeader } from "@/components/page-header";
 import { RevealGroup, RevealItem } from "@/components/motion/reveal";
+import { GoogleReviewsSection } from "@/components/google-reviews-section";
 import { getServerLocale } from "@/lib/i18n";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -210,6 +211,9 @@ export default async function ReviewsPage() {
           ))}
         </RevealGroup>
       </div>
+
+      {/* 60 Verified Google Customer Reviews */}
+      <GoogleReviewsSection locale={locale} />
     </>
   );
 }

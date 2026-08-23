@@ -132,6 +132,7 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
       case "Shop": return t.nav.shop;
       case "Categories": return t.nav.categories;
       case "Research": return t.nav.research;
+      case "Blog": return t.nav.blog;
       case "About": return t.nav.about;
       case "Contact": return t.nav.contact;
       default: return label;

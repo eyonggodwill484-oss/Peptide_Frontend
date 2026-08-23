@@ -7,7 +7,7 @@ import { ROUTES } from "@/constants/routes";
 import { SITE_NAME } from "@/constants/site";
 import { getBestSellers, getFeaturedProducts } from "@/lib/data/products";
 import { getFeaturedCategories } from "@/lib/data/categories";
-import { CERTIFICATES, COMPANY_STATS, TESTIMONIALS } from "@/lib/data/content";
+import { CERTIFICATES, COMPANY_STATS } from "@/lib/data/content";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/product-card";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal";
@@ -15,8 +15,9 @@ import { HeroSlideshow } from "@/components/motion/hero-slideshow";
 import { HeroBackground, HeroEntrance, HeroEntranceItem } from "@/components/motion/hero-entrance";
 import { AnimatedHeroHeadline } from "@/components/motion/animated-hero-headline";
 import { HeroScrollDemo } from "@/components/hero-scroll-demo";
-import { TestimonialsCarousel } from "@/components/testimonials-carousel";
 import { CountUpStat } from "@/components/motion/count-up-stat";
+import { GoogleReviewsSection } from "@/components/google-reviews-section";
+import { TrustBadgesGrid } from "@/components/trust-badges-grid";
 import { getServerLocale, getServerTranslations } from "@/lib/i18n";
 import { PRODUCT_TRANSLATIONS, CATEGORY_TRANSLATIONS } from "@/constants/translations";
 import type { Product, Category } from "@/types";
@@ -118,33 +119,6 @@ export default async function Home() {
       }
     }
     return { ...cert, name, description };
-  });
-
-  const localizedTestimonials = TESTIMONIALS.map((t) => {
-    let content = t.content;
-    let role = t.role;
-    if (locale === "de") {
-      if (t.id === "reviewer-1") {
-        role = "Postdoktorand";
-        content = "Die Konsistenz zwischen den Chargen ist bemerkenswert. Jedes Analyzertifikat, das wir mit unseren eigenen HPLC-Läufen abgeglichen haben, stimmte bis auf einen Bruchteil eines Prozents überein.";
-      } else if (t.id === "reviewer-2") {
-        role = "Laborleiter";
-        content = "Die Kühlkettenverpackung hat uns in zwei Jahren mit zweiwöchentlichen Bestellungen noch nie im Stich gelassen. Die Dokumentation ist gründlich und der Support antwortet innerhalb von Stunden.";
-      } else if (t.id === "reviewer-3") {
-        role = "Hauptforscher (PI)";
-        content = "Wir haben unsere gesamte Neuropeptid-Forschungspipeline nach einem einzigen vergleichenden Reinheitsaudit mit drei anderen Anbietern auf Wardiere standardisiert.";
-      } else if (t.id === "reviewer-4") {
-        role = "Doktorand";
-        content = "Als Doktorand mit knappem Budget machten es mir die Bundle-Kits möglich, eine vollständige Vergleichsstudie durchzuführen, ohne Kompromisse bei der Reinheit einzugehen.";
-      } else if (t.id === "reviewer-5") {
-        role = "Forschungswissenschaftler";
-        content = "Ihr Rekonstitutionskit allein hat den Großteil unserer Kontaminationsvarianz beseitigt. Ein kleines Detail, das für unsere Datenqualität jedoch enorm wichtig war.";
-      } else if (t.id === "reviewer-6") {
-        role = "Leiter des Laborbetriebs";
-        content = "Die Bestellverfolgung und der Support-Kontakt sind die besten, die wir je bei einem Forschungslieferanten erlebt haben.";
-      }
-    }
-    return { ...t, content, role };
   });
 
   return (
@@ -260,6 +234,9 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* Golden Trust Badges (Fast Shipping, 5-Star Reviews, 100% Satisfaction, Lab Tested) */}
+      <TrustBadgesGrid locale={locale} />
+
       {/* Scroll-reveal showcase */}
       <HeroScrollDemo />
 
@@ -374,20 +351,8 @@ export default async function Home() {
         </RevealGroup>
       </section>
 
-      {/* Testimonials */}
-      <section className="border-t border-border bg-muted/30">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-          <Reveal className="mb-8 max-w-xl">
-            <h2 className="text-2xl font-semibold tracking-tight text-foreground">{t.home.trustedByLabs}</h2>
-            <p className="mt-1 text-sm text-muted-foreground">
-              {t.home.trustedByLabsDesc}
-            </p>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <TestimonialsCarousel testimonials={localizedTestimonials} />
-          </Reveal>
-        </div>
-      </section>
+      {/* Google Reviews - 60 Verified Reviews */}
+      <GoogleReviewsSection locale={locale} />
 
       {/* Certificates */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
