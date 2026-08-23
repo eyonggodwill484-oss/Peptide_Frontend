@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/ui/localized-link";
 import { useState } from "react";
 import { toast } from "sonner";
 import { FileText, Minus, Plus, ShieldCheck, Star } from "lucide-react";
@@ -15,26 +15,29 @@ import { cn } from "@/lib/utils";
 import type { Product } from "@/types";
 import { Reveal } from "@/components/motion/reveal";
 import { ReadMore } from "@/components/read-more";
-
-const BADGE_LABELS: Record<Product["badges"][number], string> = {
-  new: "New",
-  "best-seller": "Best Seller",
-  limited: "Limited",
-  sale: "Sale",
-  "coa-verified": "CoA Verified",
-};
-
-const STOCK_LABELS: Record<Product["stock"], { label: string; className: string }> = {
-  "in-stock": { label: "In Stock", className: "text-emerald-600 dark:text-emerald-400" },
-  "low-stock": { label: "Low Stock", className: "text-amber-600 dark:text-amber-400" },
-  "out-of-stock": { label: "Out of Stock", className: "text-destructive" },
-  preorder: { label: "Available for Preorder", className: "text-primary" },
-};
+import { useLocale, useTranslations } from "@/lib/i18n-client";
 
 export function ProductDetail({ product }: { product: Product }) {
   const [activeImage, setActiveImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const addItem = useCartStore((state) => state.addItem);
+  const locale = useLocale();
+  const t = useTranslations();
+
+  const BADGE_LABELS: Record<Product["badges"][number], string> = {
+    new: locale === "de" ? "Neu" : "New",
+    "best-seller": locale === "de" ? "Bestseller" : "Best Seller",
+    limited: locale === "de" ? "Limitiert" : "Limited",
+    sale: locale === "de" ? "Angebot" : "Sale",
+    "coa-verified": locale === "de" ? "CoA Verifiziert" : "CoA Verified",
+  };
+
+  const STOCK_LABELS: Record<Product["stock"], { label: string; className: string }> = {
+    "in-stock": { label: t.products.inStock, className: "text-emerald-600 dark:text-emerald-400" },
+    "low-stock": { label: t.products.lowStock, className: "text-amber-600 dark:text-amber-400" },
+    "out-of-stock": { label: t.products.outOfStock, className: "text-destructive" },
+    preorder: { label: locale === "de" ? "Vorbestellbar" : "Available for Preorder", className: "text-primary" },
+  };
 
   const image = product.images[activeImage] ?? product.images[0];
   const onSale = typeof product.compareAtPrice === "number" && product.compareAtPrice > product.price;
@@ -43,10 +46,23 @@ export function ProductDetail({ product }: { product: Product }) {
 
   function handleAddToCart() {
     addItem(product, quantity);
-    toast.success(`${product.name} added to cart`, {
-      description: `Quantity: ${quantity}`,
+    toast.success(locale === "de" ? `${product.name} zum Warenkorb hinzugefügt` : `${product.name} added to cart`, {
+      description: locale === "de" ? `Menge: ${quantity}` : `Quantity: ${quantity}`,
     });
   }
+
+  // Translate product specification labels if mapped
+  const localizedSpecifications = product.specifications.map((spec) => {
+    let label = spec.label;
+    if (locale === "de") {
+      if (spec.label === "Formula") label = "Formel";
+      else if (spec.label === "Molecular Weight") label = "Molekulargewicht";
+      else if (spec.label === "Sequence") label = "Sequenz";
+      else if (spec.label === "Source") label = "Quelle";
+      else if (spec.label === "Purity") label = "Reinheit";
+    }
+    return { ...spec, label };
+  });
 
   return (
     <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
@@ -91,7 +107,9 @@ export function ProductDetail({ product }: { product: Product }) {
             ))}
           </div>
           <span className="text-sm font-medium text-foreground">{product.rating.toFixed(1)}</span>
-          <span className="text-sm text-muted-foreground">({product.reviewCount} reviews)</span>
+          <span className="text-sm text-muted-foreground">
+            ({product.reviewCount} {locale === "de" ? "Bewertungen" : "reviews"})
+          </span>
         </div>
 
         <div className="flex items-center gap-3">
@@ -112,25 +130,25 @@ export function ProductDetail({ product }: { product: Product }) {
 
         <div className="grid grid-cols-2 gap-3 rounded-xl bg-muted/50 p-4 text-sm">
           <div>
-            <span className="text-muted-foreground">Purity</span>
+            <span className="text-muted-foreground">{locale === "de" ? "Reinheit" : "Purity"}</span>
             <p className="font-medium text-foreground">{product.purity}</p>
           </div>
           <div>
-            <span className="text-muted-foreground">Concentration</span>
+            <span className="text-muted-foreground">{locale === "de" ? "Konzentration" : "Concentration"}</span>
             <p className="font-medium text-foreground">{product.concentration}</p>
           </div>
           <div>
-            <span className="text-muted-foreground">Availability</span>
+            <span className="text-muted-foreground">{locale === "de" ? "Verfügbarkeit" : "Availability"}</span>
             <p className={cn("font-medium", stock.className)}>{stock.label}</p>
           </div>
           {product.certificateOfAnalysisUrl && (
             <div>
-              <span className="text-muted-foreground">Documentation</span>
+              <span className="text-muted-foreground">{locale === "de" ? "Dokumentation" : "Documentation"}</span>
               <a
                 href={product.certificateOfAnalysisUrl}
                 className="flex items-center gap-1 font-medium text-primary hover:underline"
               >
-                <FileText className="size-3.5" /> View CoA
+                <FileText className="size-3.5" /> {locale === "de" ? "CoA ansehen" : "View CoA"}
               </a>
             </div>
           )}
@@ -147,27 +165,29 @@ export function ProductDetail({ product }: { product: Product }) {
             </Button>
           </div>
           <Button size="lg" className="h-9 flex-1" disabled={!canAddToCart} onClick={handleAddToCart}>
-            {canAddToCart ? "Add to Cart" : "Out of Stock"}
+            {canAddToCart ? t.products.addToCart : t.products.outOfStock}
           </Button>
         </div>
 
         <div className="flex items-center gap-2 text-xs text-muted-foreground">
           <ShieldCheck className="size-4 text-primary" />
-          Verified by independent third-party HPLC analysis
+          {locale === "de"
+            ? "Verifiziert durch unabhängige HPLC-Analysen von Drittanbietern"
+            : "Verified by independent third-party HPLC analysis"}
         </div>
 
         <Tabs defaultValue="description" className="mt-4">
           <TabsList>
-            <TabsTrigger value="description">Description</TabsTrigger>
-            <TabsTrigger value="specs">Specifications</TabsTrigger>
-            <TabsTrigger value="reviews">Reviews ({product.reviews.length})</TabsTrigger>
+            <TabsTrigger value="description">{locale === "de" ? "Beschreibung" : "Description"}</TabsTrigger>
+            <TabsTrigger value="specs">{locale === "de" ? "Spezifikationen" : "Specifications"}</TabsTrigger>
+            <TabsTrigger value="reviews">{locale === "de" ? "Bewertungen" : "Reviews"} ({product.reviews.length})</TabsTrigger>
           </TabsList>
           <TabsContent value="description" className="pt-3 leading-relaxed text-muted-foreground">
             <ReadMore text={product.description} collapsedLines={6} />
           </TabsContent>
           <TabsContent value="specs" className="pt-3">
             <dl className="divide-y divide-border">
-              {product.specifications.map((spec) => (
+              {localizedSpecifications.map((spec) => (
                 <div key={spec.label} className="flex justify-between gap-4 py-2 text-sm">
                   <dt className="text-muted-foreground">{spec.label}</dt>
                   <dd className="font-medium text-foreground">{spec.value}</dd>
@@ -187,13 +207,13 @@ export function ProductDetail({ product }: { product: Product }) {
                   <p className="mt-1.5 text-sm font-medium text-foreground">{review.title}</p>
                   <p className="mt-1 text-sm text-muted-foreground">{review.content}</p>
                   <p className="mt-2 text-xs text-muted-foreground">
-                    {review.author} · {new Date(review.date).toLocaleDateString()}
-                    {review.verified && " · Verified Purchase"}
+                    {review.author} · {new Date(review.date).toLocaleDateString(locale === "de" ? "de-DE" : "en-US")}
+                    {review.verified && (locale === "de" ? " · Verifizierter Kauf" : " · Verified Purchase")}
                   </p>
                 </div>
               ))
             ) : (
-              <p className="text-sm text-muted-foreground">No reviews yet for this product.</p>
+              <p className="text-sm text-muted-foreground">{t.products.noReviews}</p>
             )}
           </TabsContent>
         </Tabs>

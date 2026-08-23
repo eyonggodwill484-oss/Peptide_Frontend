@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/ui/localized-link";
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 
@@ -12,18 +12,20 @@ import { formatPrice } from "@/lib/format-currency";
 import type { ProductGroup } from "@/lib/product-grouping";
 import type { ProductBadge } from "@/types";
 import { Badge } from "@/components/ui/badge";
-
-const BADGE_LABELS: Record<ProductBadge, string> = {
-  new: "New",
-  "best-seller": "Best Seller",
-  limited: "Limited",
-  sale: "Sale",
-  "coa-verified": "CoA Verified",
-};
+import { useLocale } from "@/lib/i18n-client";
 
 export function ProductGroupCard({ group }: { group: ProductGroup }) {
   const image = group.image;
   const isRange = group.priceTo > group.priceFrom;
+  const locale = useLocale();
+
+  const BADGE_LABELS: Record<ProductBadge, string> = {
+    new: locale === "de" ? "Neu" : "New",
+    "best-seller": locale === "de" ? "Bestseller" : "Best Seller",
+    limited: locale === "de" ? "Limitiert" : "Limited",
+    sale: locale === "de" ? "Angebot" : "Sale",
+    "coa-verified": locale === "de" ? "CoA Verifiziert" : "CoA Verified",
+  };
 
   return (
     <motion.div whileHover={{ y: -6 }} whileTap={{ y: -2 }} transition={{ duration: 0.25, ease: EASE }} className="group h-full">
@@ -53,7 +55,7 @@ export function ProductGroupCard({ group }: { group: ProductGroup }) {
           {group.optionCount > 1 && (
             <div className="absolute right-2 top-2">
               <Badge variant="secondary" className="bg-background/90 text-foreground">
-                {group.optionCount} options
+                {group.optionCount} {locale === "de" ? "Optionen" : "options"}
               </Badge>
             </div>
           )}
@@ -71,7 +73,7 @@ export function ProductGroupCard({ group }: { group: ProductGroup }) {
 
           <div className="mt-auto flex items-center gap-2 pt-2">
             <span className="text-base font-semibold text-foreground">
-              {isRange && <span className="font-normal text-muted-foreground">From </span>}
+              {isRange && <span className="font-normal text-muted-foreground">{locale === "de" ? "Ab " : "From "}</span>}
               {formatPrice(group.priceFrom)}
             </span>
           </div>

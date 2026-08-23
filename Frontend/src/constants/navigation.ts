@@ -13,6 +13,7 @@ export const MAIN_NAV: NavLink[] = [
   { label: "Shop", href: "/shop" },
   { label: "Categories", href: "/categories" },
   { label: "Research", href: "/research" },
+  { label: "Blog", href: "/blog" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
@@ -32,7 +33,8 @@ export const FOOTER_LINKS: MegaMenuColumn[] = [
     links: [
       { label: "About Us", href: "/about" },
       { label: "Research Information", href: "/research" },
-      { label: "Latest Articles", href: "/articles" },
+      { label: "Blog & Articles", href: "/blog" },
+      { label: "Customer Reviews", href: "/reviews" },
       { label: "Contact", href: "/contact" },
     ],
   },
@@ -42,6 +44,8 @@ export const FOOTER_LINKS: MegaMenuColumn[] = [
       { label: "FAQ", href: "/faq" },
       { label: "Shipping Policy", href: "/shipping" },
       { label: "Returns Policy", href: "/returns" },
+      { label: "Quality Documentation", href: "/quality-documentation" },
+      { label: "Ireland Research Support", href: "/research-peptides-ireland" },
       { label: "Track Order", href: "/account/orders" },
     ],
   },
