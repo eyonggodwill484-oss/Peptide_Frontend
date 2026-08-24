@@ -20,6 +20,8 @@ export const ROUTES = {
   article: (slug: string) => `/blog/${slug}`,
   blog: "/blog",
   blogPost: (slug: string) => `/blog/${slug}`,
+  reviews: "/reviews",
+  qualityDocumentation: "/quality-documentation",
   login: "/login",
   signup: "/signup",
   account: "/account",
