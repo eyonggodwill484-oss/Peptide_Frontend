@@ -91,9 +91,10 @@ export async function SiteFooter() {
       else if (link.label === "Categories") label = t.nav.categories;
       else if (link.label === "Best Sellers") label = t.nav.bestSellers;
       else if (link.label === "New Arrivals") label = t.nav.newArrivals;
+      else if (link.label === "Bulk Wholesale (B2B)") label = locale === "de" ? "B2B Großhandel & Rabatte" : "Bulk Wholesale (B2B)";
       else if (link.label === "About Us") label = t.nav.about;
       else if (link.label === "Research Information") label = t.nav.research;
-      else if (link.label === "Latest Articles") label = locale === "de" ? "Neueste Artikel" : "Latest Articles";
+      else if (link.label === "Blog & Articles" || link.label === "Latest Articles") label = locale === "de" ? "Wissenschaftlicher Blog" : "Research Articles";
       else if (link.label === "Customer Reviews") label = t.nav.reviewsNav;
       else if (link.label === "Contact") label = t.nav.contact;
       else if (link.label === "FAQ") label = t.nav.faq;
@@ -130,6 +131,11 @@ export async function SiteFooter() {
               <span className="text-lg font-semibold tracking-tight">{SITE_SHORT_NAME}</span>
             </Link>
             <p className="max-w-xs text-sm text-white/70">{t.meta.tagline}</p>
+            <div className="text-xs text-white/60 space-y-0.5">
+              <p className="font-semibold text-white/90">📍 Wardiere Peptide Sciences GmbH</p>
+              <p>Maximilianstraße 24, 80539 München, Deutschland</p>
+              <p className="text-amber-400/90 font-medium">❄️ Kühlketten-Logistikzentrum Bayern</p>
+            </div>
             <div className="mt-1 flex items-center gap-3">
               <a
                 href={SOCIAL_LINKS.twitter}

@@ -25,6 +25,7 @@ export function ProductGroupCard({ group }: { group: ProductGroup }) {
     limited: locale === "de" ? "Limitiert" : "Limited",
     sale: locale === "de" ? "Angebot" : "Sale",
     "coa-verified": locale === "de" ? "CoA Verifiziert" : "CoA Verified",
+    featured: locale === "de" ? "Empfohlen" : "Featured",
   };
 
   return (

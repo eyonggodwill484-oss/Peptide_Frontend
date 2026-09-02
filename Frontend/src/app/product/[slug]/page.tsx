@@ -5,8 +5,9 @@ import { PageHeader } from "@/components/page-header";
 import { ProductGroupCard } from "@/components/product-group-card";
 import { ProductJsonLd } from "@/components/structured-data";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal";
-import { getProductBySlug, getProducts, getRelatedProducts } from "@/lib/data/products";
+import { getProductBySlug, getProducts, getRelatedProducts, getSiblingVariants } from "@/lib/data/products";
 import { groupProductsByLine } from "@/lib/product-grouping";
+import type { Product } from "@/types";
 import { ProductDetail } from "./product-detail";
 
 import { getServerLocale, getServerTranslations, localizeProduct } from "@/lib/i18n";
@@ -64,6 +65,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const localizedRelated = related.map((p) => localizeProduct(p, locale));
   const relatedGroups = groupProductsByLine(localizedRelated).slice(0, 4);
 
+  const siblingVariants = await getSiblingVariants(rawProduct);
+  const localizedVariants = siblingVariants.map((v: Product) => localizeProduct(v, locale));
+
   // Localize category name in breadcrumbs if mapped
   const rawCategoryName = product.categoryName;
   let categoryName = rawCategoryName;
@@ -87,7 +91,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       />
 
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-        <ProductDetail product={product} />
+        <ProductDetail product={product} variants={localizedVariants} />
 
         {relatedGroups.length > 0 && (
           <div className="mt-16">

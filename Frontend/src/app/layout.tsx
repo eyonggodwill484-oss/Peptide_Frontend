@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
@@ -11,21 +10,15 @@ import { FomoSalesPopup } from "@/components/fomo-sales-popup";
 import { SiteJsonLd } from "@/components/structured-data";
 import { LenisProvider } from "@/components/motion/lenis-provider";
 import { ThemeProvider } from "@/components/theme-provider";
+import { PostHogProvider } from "@/components/posthog-provider";
 import { SITE_NAME, SITE_URL } from "@/constants/site";
 import { getFeaturedCategories } from "@/lib/data/categories";
 
 import { getServerLocale, getServerTranslations } from "@/lib/i18n";
 import { CATEGORY_TRANSLATIONS } from "@/constants/translations";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const geistSans = { variable: "--font-geist-sans" };
+const geistMono = { variable: "--font-geist-mono" };
 
 export const revalidate = 60;
 
@@ -83,18 +76,20 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <body suppressHydrationWarning className="min-h-full flex flex-col bg-background text-foreground">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <LenisProvider>
-            <SiteJsonLd />
-            <SiteHeader categories={categories} />
-            <main className="flex-1">{children}</main>
-            <SiteFooter />
-            <Toaster position="bottom-right" />
-          </LenisProvider>
-          <FomoSalesPopup locale={locale} />
-          <TawkChatWidget />
-          <Analytics />
-        </ThemeProvider>
+        <PostHogProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+            <LenisProvider>
+              <SiteJsonLd />
+              <SiteHeader categories={categories} />
+              <main className="flex-1">{children}</main>
+              <SiteFooter />
+              <Toaster position="bottom-right" />
+            </LenisProvider>
+            <FomoSalesPopup locale={locale} />
+            <TawkChatWidget />
+            <Analytics />
+          </ThemeProvider>
+        </PostHogProvider>
       </body>
     </html>
   );

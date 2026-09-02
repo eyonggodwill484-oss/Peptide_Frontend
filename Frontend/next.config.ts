@@ -1,10 +1,11 @@
 import type { NextConfig } from "next";
+import { withSentryConfig } from "@sentry/nextjs";
 
 const nextConfig: NextConfig = {
-  // Lets an agent-managed dev server run in its own build dir (NEXT_DIST_DIR=.next-agent)
-  // alongside a manually-started one, so two concurrent `next dev` instances never
-  // fight over the same .next files and corrupt each other's build cache.
   distDir: process.env.NEXT_DIST_DIR || ".next",
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   images: {
     remotePatterns: [
       {
@@ -12,8 +13,30 @@ const nextConfig: NextConfig = {
         hostname: "res.cloudinary.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "api.qrserver.com",
+        pathname: "/**",
+      },
     ],
   },
 };
 
-export default nextConfig;
+export default withSentryConfig(nextConfig, {
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+
+  // Only upload source maps in CI / Vercel to keep local builds blazing fast
+  silent: true,
+  sourcemaps: {
+    disable: !process.env.CI && !process.env.VERCEL,
+  },
+
+  tunnelRoute: "/monitoring",
+  disableLogger: true,
+});

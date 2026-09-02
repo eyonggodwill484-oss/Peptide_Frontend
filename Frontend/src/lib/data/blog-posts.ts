@@ -1,3 +1,12 @@
+import { BLOG_POSTS_SEMRUSH_BATCH_9 } from "./blog-posts-semrush-batch9";
+import { BLOG_POSTS_SEMRUSH_BATCH_8 } from "./blog-posts-semrush-batch8";
+import { BLOG_POSTS_SEMRUSH_BATCH_7 } from "./blog-posts-semrush-batch7";
+import { BLOG_POSTS_SEMRUSH_BATCH_6 } from "./blog-posts-semrush-batch6";
+import { BLOG_POSTS_SEMRUSH_BATCH_5 } from "./blog-posts-semrush-batch5";
+import { BLOG_POSTS_SEMRUSH_BATCH_4 } from "./blog-posts-semrush-batch4";
+import { BLOG_POSTS_SEMRUSH_BATCH_3 } from "./blog-posts-semrush-batch3";
+import { BLOG_POSTS_SEMRUSH_BATCH_2 } from "./blog-posts-semrush-batch2";
+import { BLOG_POSTS_SEMRUSH_BATCH_1 } from "./blog-posts-semrush-batch1";
 import { BLOG_POSTS_PART1 } from "./blog-posts-part1";
 import { BLOG_POSTS_PART2 } from "./blog-posts-part2";
 import { BLOG_POSTS_PART3 } from "./blog-posts-part3";
@@ -345,6 +354,15 @@ GHK-Cu stimulates extracellular matrix remodeling and antioxidant defenses.
 ];
 
 export const BLOG_POSTS: BlogPost[] = [
+  ...BLOG_POSTS_SEMRUSH_BATCH_9,
+  ...BLOG_POSTS_SEMRUSH_BATCH_8,
+  ...BLOG_POSTS_SEMRUSH_BATCH_7,
+  ...BLOG_POSTS_SEMRUSH_BATCH_6,
+  ...BLOG_POSTS_SEMRUSH_BATCH_5,
+  ...BLOG_POSTS_SEMRUSH_BATCH_4,
+  ...BLOG_POSTS_SEMRUSH_BATCH_3,
+  ...BLOG_POSTS_SEMRUSH_BATCH_2,
+  ...BLOG_POSTS_SEMRUSH_BATCH_1,
   ...BLOG_POSTS_PEPTIDES_US,
   ...BLOG_POSTS_PEPTIDES_BATCH1,
   ...BLOG_POSTS_PEPTIDES_BATCH2,

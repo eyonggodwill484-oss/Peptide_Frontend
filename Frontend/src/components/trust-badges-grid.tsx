@@ -372,8 +372,8 @@ export function TrustBadgesGrid({ locale = "en" }: TrustBadgesGridProps) {
       badge: <FastShippingBadge />,
       title: isDe ? "Schneller & Kostenloser Versand" : "Fast Free Shipping",
       description: isDe
-        ? "Wir versenden werktäglich (Mo–Fr) am selben Tag bei Bestellung & Zahlung bis 14:00 Uhr. Kostenloser Express-Versand bei Bestellungen ab 150 €."
-        : "We ship daily M–F the next business day or the same day if order is paid by 2pm. Free Express Shipping on orders over €150 ($150).",
+        ? "Wir versenden werktäglich (Mo–Fr) am selben Tag bei Bestellung & Zahlung bis 14:00 Uhr. Zuverlässiger Express-Kühlkettenversand aus München."
+        : "We ship daily M–F the next business day or same day if order is paid by 2pm. Reliable cold-chain express dispatch from Munich, Germany.",
       highlight: isDe ? "Mo–Fr Versand bis 14:00 Uhr" : "Same-day dispatch by 2pm",
     },
     {

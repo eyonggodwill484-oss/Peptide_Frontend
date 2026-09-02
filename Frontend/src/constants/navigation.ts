@@ -1,4 +1,4 @@
-export interface NavLink {
+﻿export interface NavLink {
   label: string;
   href: string;
 }
@@ -12,6 +12,7 @@ export const MAIN_NAV: NavLink[] = [
   { label: "Home", href: "/" },
   { label: "Shop", href: "/shop" },
   { label: "Categories", href: "/categories" },
+  { label: "Wholesale", href: "/wholesale" },
   { label: "Research", href: "/research" },
   { label: "Blog", href: "/blog" },
   { label: "About", href: "/about" },
@@ -26,6 +27,7 @@ export const FOOTER_LINKS: MegaMenuColumn[] = [
       { label: "Categories", href: "/categories" },
       { label: "Best Sellers", href: "/shop?sort=rating" },
       { label: "New Arrivals", href: "/shop?sort=newest" },
+      { label: "Bulk Wholesale (B2B)", href: "/wholesale" },
     ],
   },
   {
