@@ -60,9 +60,9 @@ export default async function ShippingPage() {
             </h2>
             <p>
               {locale === "de" ? (
-                "Bestellungen, die vor 14:00 Uhr eingehen, werden noch am selben Werktag bearbeitet. Sendungen innerhalb Deutschlands und Zentraleuropas kommen in der Regel innerhalb von 1–3 Werktagen per Express-Kurier an. Internationale Sendungen dauern je nach Zollabwicklung 5–10 Werktage."
+                "Bestellungen, die vor 14:00 Uhr MEZ eingehen und bezahlt werden, werden noch am selben Werktag aus unserem Distributionszentrum in München versendet. Express-Sendungen innerhalb Deutschlands und Zentraleuropas werden im 24h-Kühlketten-Verfahren zugestellt. Standard-Lieferungen dauern 3–4 Werktage. Internationale Sendungen dauern je nach Land und Zollabwicklung 5–8 Werktage."
               ) : (
-                "Orders placed before 2:00 PM EST ship the same business day. Central European orders typically arrive within 1–3 business days via tracked overnight or express courier. International shipments arrive within 5–10 business days depending on customs processing."
+                "Orders placed and confirmed before 2:00 PM CET dispatch the same business day directly from our logistics hub in Munich, Germany. Express 24-Hour shipments within Germany and Central Europe arrive next-day under active temperature control. Standard deliveries arrive in 3–4 business days, and international shipments arrive in 5–8 business days."
               )}
             </p>
           </RevealItem>
@@ -70,13 +70,13 @@ export default async function ShippingPage() {
           {/* Shipping Rates */}
           <RevealItem as="section">
             <h2 className="mb-2 text-base font-semibold text-foreground">
-              {locale === "de" ? "Versandkosten" : "Shipping Rates"}
+              {locale === "de" ? "Versandoptionen & Tarife" : "Shipping Options & Rates"}
             </h2>
             <p>
               {locale === "de" ? (
-                "Die Standardversandkosten werden an der Kasse basierend auf Gewicht und Lieferadresse berechnet. Ab einem Bestellwert von 150 € bieten wir kostenlosen Standardversand an."
+                "Wir bieten 3 transparente Versandstufen an der Kasse: Express 24h Priority mit Kühlkettenverpackung (90,00 €), Standardversand 3–4 Werktage (45,00 €) und Internationaler Priority-Versand (75,00 €). Der Mindestbestellwert im Shop beträgt 200,00 €."
               ) : (
-                "Standard shipping is calculated at checkout based on order weight and destination. Orders over €150 qualify for free standard shipping."
+                "We provide 3 transparent fulfillment tiers at checkout: Express 24-Hour Cold-Chain Delivery (€90.00), Standard Tracked Courier in 3–4 days (€45.00), and International Priority Shipping (€75.00). A storewide minimum order of €200.00 applies to guarantee temperature-controlled packaging integrity."
               )}
             </p>
           </RevealItem>

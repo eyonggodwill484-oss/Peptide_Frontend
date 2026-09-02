@@ -148,6 +148,13 @@ export function ShopClient({
               </Select>
             </div>
 
+            {/* Minimum Order Announcement Banner */}
+            <div className="mb-6 rounded-2xl border border-primary/30 bg-primary/5 px-6 py-3.5 text-center shadow-xs">
+              <p className="text-sm sm:text-base font-extrabold text-foreground tracking-wide">
+                A Minimum of €200.00 is required before checking out.
+              </p>
+            </div>
+
             {filtersOpen && <div className="mb-6 rounded-xl border border-border p-4 lg:hidden">{filtersPanel}</div>}
 
             {productGroups.length > 0 ? (

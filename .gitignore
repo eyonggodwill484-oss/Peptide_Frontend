@@ -1,3 +1,7 @@
 .next/
 .scratch/
 node_modules/
+Frontend/.next/
+Frontend/node_modules/
+.env*
+Frontend/.env*

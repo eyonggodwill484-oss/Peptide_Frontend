@@ -1,13 +1,6 @@
 import type { Product, ProductBadge, StockStatus } from "@/types";
+import { extractBaseName } from "@/lib/variant-parser";
 
-/**
- * A "product line" — one or more Products that are really the same item at
- * different dosages/sizes (e.g. "Semaglutide - 5mg", "Semaglutide - 10mg").
- * Those got split into separate DB rows because the schema has no variant
- * table, but showing each as its own near-identical card (same name prefix,
- * same photo) makes the grid look repetitive. Grouping them back together
- * for display fixes that without touching the underlying data.
- */
 export interface ProductGroup {
   key: string;
   name: string;
@@ -34,10 +27,6 @@ const STOCK_RANK: Record<StockStatus, number> = {
   "out-of-stock": 3,
 };
 
-function baseName(name: string): string {
-  return name.split(" - ")[0]?.trim() || name;
-}
-
 function bestStock(items: Product[]): StockStatus {
   return items.reduce<StockStatus>(
     (best, p) => (STOCK_RANK[p.stock] < STOCK_RANK[best] ? p.stock : best),
@@ -46,16 +35,13 @@ function bestStock(items: Product[]): StockStatus {
 }
 
 /**
- * Groups products that share a category and base name. Each variant's photo
- * was uploaded to Cloudinary separately during import, so even variants that
- * are visually the same picture end up with different URLs — matching on
- * the image would fail to merge them. Base name is the reliable signal.
+ * Groups products that share a category and base name.
  */
 export function groupProductsByLine(products: Product[]): ProductGroup[] {
   const byKey = new Map<string, Product[]>();
 
   for (const product of products) {
-    const key = `${product.categorySlug}::${baseName(product.name).toLowerCase()}`;
+    const key = `${product.categorySlug}::${extractBaseName(product.name).toLowerCase()}`;
     const existing = byKey.get(key);
     if (existing) existing.push(product);
     else byKey.set(key, [product]);
@@ -68,8 +54,8 @@ export function groupProductsByLine(products: Product[]): ProductGroup[] {
     const priceTo = sorted[sorted.length - 1].price;
 
     return {
-      key: `${cheapest.categorySlug}::${baseName(cheapest.name).toLowerCase()}`,
-      name: baseName(cheapest.name),
+      key: `${cheapest.categorySlug}::${extractBaseName(cheapest.name).toLowerCase()}`,
+      name: extractBaseName(cheapest.name),
       categorySlug: cheapest.categorySlug,
       categoryName: cheapest.categoryName,
       image: cheapest.images[0],
@@ -87,3 +73,4 @@ export function groupProductsByLine(products: Product[]): ProductGroup[] {
     };
   });
 }
+

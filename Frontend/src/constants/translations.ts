@@ -316,6 +316,36 @@ export const PRODUCT_TRANSLATIONS: Record<string, { name?: string; description?:
     description: "Tirzepatid ist ein dualer GIP- und GLP-1-Rezeptor-Agonist zur Untersuchung der synergistischen Rezeptoraktivierung auf zellulärer Ebene.",
     shortDescription: "Duale GIP/GLP-1-Rezeptor-Kombination für fortgeschrittene metabolische Profile.",
   },
+  "wegovy-pen-4-pens-0-25mg": {
+    name: "WEGOVY PEN - Packung mit 4 Pens à 0,25mg",
+    description: "WEGOVY® (Semaglutid) ist ein GLP-1-Rezeptor-Agonist für die metabolische Forschung und Stoffwechselstudien. Packung mit 4 vorgefüllten Mehrdosis-Injektionspens.",
+    shortDescription: "WEGOVY (Semaglutid) Injektionspen-Packung mit 4 vorgefüllten Pens à 0,25mg.",
+  },
+  "wegovy-pen-4-pens-0-5mg": {
+    name: "WEGOVY PEN - Packung mit 4 Pens à 0,5mg",
+    description: "WEGOVY® (Semaglutid) ist ein GLP-1-Rezeptor-Agonist für die metabolische Forschung und Stoffwechselstudien. Packung mit 4 vorgefüllten Mehrdosis-Injektionspens.",
+    shortDescription: "WEGOVY (Semaglutid) Injektionspen-Packung mit 4 vorgefüllten Pens à 0,5mg.",
+  },
+  "wegovy-pen-4-pens-1-0mg": {
+    name: "WEGOVY PEN - Packung mit 4 Pens à 1,0mg",
+    description: "WEGOVY® (Semaglutid) ist ein GLP-1-Rezeptor-Agonist für die metabolische Forschung und Stoffwechselstudien. Packung mit 4 vorgefüllten Mehrdosis-Injektionspens.",
+    shortDescription: "WEGOVY (Semaglutid) Injektionspen-Packung mit 4 vorgefüllten Pens à 1,0mg.",
+  },
+  "wegovy-pen-4-pens-1-7mg": {
+    name: "WEGOVY PEN - Packung mit 4 Pens à 1,7mg",
+    description: "WEGOVY® (Semaglutid) ist ein GLP-1-Rezeptor-Agonist für die metabolische Forschung und Stoffwechselstudien. Packung mit 4 vorgefüllten Mehrdosis-Injektionspens.",
+    shortDescription: "WEGOVY (Semaglutid) Injektionspen-Packung mit 4 vorgefüllten Pens à 1,7mg.",
+  },
+  "wegovy-pen-4-pens-2-25mg": {
+    name: "WEGOVY PEN - Packung mit 4 Pens à 2,25mg",
+    description: "WEGOVY® (Semaglutid) ist ein GLP-1-Rezeptor-Agonist für die metabolische Forschung und Stoffwechselstudien. Packung mit 4 vorgefüllten Mehrdosis-Injektionspens.",
+    shortDescription: "WEGOVY (Semaglutid) Injektionspen-Packung mit 4 vorgefüllten Pens à 2,25mg.",
+  },
+  "wegovy-pen-4-pens-2-4mg": {
+    name: "WEGOVY PEN - Packung mit 4 Pens à 2,4mg",
+    description: "WEGOVY® (Semaglutid) ist ein GLP-1-Rezeptor-Agonist für die metabolische Forschung und Stoffwechselstudien. Packung mit 4 vorgefüllten Mehrdosis-Injektionspens.",
+    shortDescription: "WEGOVY (Semaglutid) Injektionspen-Packung mit 4 vorgefüllten Pens à 2,4mg.",
+  },
 };
 
 export const CATEGORY_TRANSLATIONS: Record<string, { name?: string; description?: string }> = {

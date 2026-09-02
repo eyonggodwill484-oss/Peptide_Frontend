@@ -1,119 +1,104 @@
-"use client";
+﻿"use client";
 
-import * as React from "react";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import Link from "@/components/ui/localized-link";
+import { AnimatePresence, motion } from "framer-motion";
 import { MapPin, X } from "lucide-react";
+
 import { ROUTES } from "@/constants/routes";
 
 interface FomoEvent {
   id: string;
-  name: {
-    en: string;
-    de: string;
-  };
-  location: {
-    en: string;
-    de: string;
-  };
-  productName: {
-    en: string;
-    de: string;
-  };
+  name: { en: string; de: string };
+  location: { en: string; de: string };
+  productName: { en: string; de: string };
   productSlug: string;
   imageSrc: string;
   price: string;
-  timeAgo: {
-    en: string;
-    de: string;
-  };
-  scarcityBadge: {
-    en: string;
-    de: string;
-  };
+  timeAgo: { en: string; de: string };
+  scarcityBadge: { en: string; de: string };
   scarcityType: "fire" | "zap" | "verified";
 }
 
 const FOMO_EVENTS: FomoEvent[] = [
   {
     id: "fomo-1",
-    name: { en: "Maximilian S.", de: "Maximilian S." },
+    name: { en: "Dr. Maximilian B.", de: "Dr. Maximilian B." },
     location: { en: "München, Germany", de: "München, Bayern" },
-    productName: { en: "BPC-157 Research Peptide (5mg)", de: "BPC-157 Forschungspeptid (5mg)" },
+    productName: { en: "BPC-157 Research Peptide 5mg", de: "BPC-157 Forschungspeptid 5mg" },
     productSlug: "bpc-157-research-peptide-5mg",
     imageSrc: "/images/products/bpc-157-research-peptide-5mg.png",
     price: "€44.90",
-    timeAgo: { en: "About 3 minutes ago", de: "Vor 3 Minuten" },
-    scarcityBadge: { en: "⚡ Only 4 units left in DE Hub", de: "⚡ Nur noch 4 Stück im DE-Lager" },
-    scarcityType: "zap",
+    timeAgo: { en: "About 4 minutes ago", de: "Vor 4 Minuten" },
+    scarcityBadge: { en: "⚡ High Demand Compound", de: "⚡ Hohe Labornachfrage" },
+    scarcityType: "fire",
   },
   {
     id: "fomo-2",
-    name: { en: "Dr. Lukas W.", de: "Dr. Lukas W." },
+    name: { en: "Stefan W.", de: "Stefan W." },
     location: { en: "Berlin, Germany", de: "Berlin, Deutschland" },
     productName: { en: "TB-500 (Thymosin Beta-4) 5mg", de: "TB-500 (Thymosin Beta-4) 5mg" },
     productSlug: "tb-500-thymosin-beta4-research-5mg",
     imageSrc: "/images/products/tb-500-thymosin-beta4-research-5mg.png",
     price: "€49.90",
-    timeAgo: { en: "About 7 minutes ago", de: "Vor 7 Minuten" },
-    scarcityBadge: { en: "🔥 High demand – 12 bought today", de: "🔥 Hohe Nachfrage – 12x heute gekauft" },
-    scarcityType: "fire",
-  },
-  {
-    id: "fomo-3",
-    name: { en: "Felix B.", de: "Felix B." },
-    location: { en: "Hamburg, Germany", de: "Hamburg, Deutschland" },
-    productName: { en: "GHK-Cu Copper Complex 50mg", de: "GHK-Cu Kupfer-Komplex 50mg" },
-    productSlug: "ghk-cu-complex-50mg",
-    imageSrc: "/images/products/ghk-cu-complex-50mg.png",
-    price: "€54.90",
-    timeAgo: { en: "About 12 minutes ago", de: "Vor 12 Minuten" },
-    scarcityBadge: { en: "✓ Verified Lab Order", de: "✓ Verifizierte Laborbestellung" },
+    timeAgo: { en: "About 9 minutes ago", de: "Vor 9 Minuten" },
+    scarcityBadge: { en: "✓ HPLC Batch Tested (>99%)", de: "✓ HPLC-getestet (>99% Reinheit)" },
     scarcityType: "verified",
   },
   {
+    id: "fomo-3",
+    name: { en: "Laura H.", de: "Laura H." },
+    location: { en: "Hamburg, Germany", de: "Hamburg, Deutschland" },
+    productName: { en: "GHK-Cu Copper Tripeptide 50mg", de: "GHK-Cu Kupferpeptid 50mg" },
+    productSlug: "ghk-cu-complex-50mg",
+    imageSrc: "/images/products/ghk-cu-complex-50mg.png",
+    price: "€54.90",
+    timeAgo: { en: "About 14 minutes ago", de: "Vor 14 Minuten" },
+    scarcityBadge: { en: "🔥 Trending in Cosmetics R&D", de: "🔥 Beliebt in der Kosmetikforschung" },
+    scarcityType: "fire",
+  },
+  {
     id: "fomo-4",
-    name: { en: "Dr. Stefan M.", de: "Dr. Stefan M." },
+    name: { en: "Johannes K.", de: "Johannes K." },
     location: { en: "Frankfurt am Main, Germany", de: "Frankfurt am Main, Hessen" },
-    productName: { en: "Foundational Research Kit", de: "Basis-Forschungskit (Bundle)" },
-    productSlug: "foundational-research-kit",
-    imageSrc: "/images/products/foundational-research-kit.png",
+    productName: { en: "Recovery Complex Blend 10mg", de: "Recovery Complex Blend 10mg" },
+    productSlug: "recovery-complex-blend-10mg",
+    imageSrc: "/images/products/recovery-complex-blend-10mg.png",
     price: "€129.00",
-    timeAgo: { en: "About 18 minutes ago", de: "Vor 18 Minuten" },
-    scarcityBadge: { en: "🚚 Next-day DHL Express Dispatch", de: "🚚 Express-Versand per DHL" },
+    timeAgo: { en: "About 21 minutes ago", de: "Vor 21 Minuten" },
+    scarcityBadge: { en: "📦 Bulk Lab Pack Ordered", de: "📦 Labor-Großbestellung versendet" },
     scarcityType: "zap",
   },
   {
     id: "fomo-5",
-    name: { en: "Hannah K.", de: "Hannah K." },
+    name: { en: "Dr. Markus T.", de: "Dr. Markus T." },
     location: { en: "Stuttgart, Germany", de: "Stuttgart, Baden-Württemberg" },
-    productName: { en: "Bacteriostatic Water (30ml)", de: "Bakteriostatisches Wasser (30ml)" },
+    productName: { en: "Bacteriostatic Water 30ml", de: "Bakteriostatisches Wasser 30ml" },
     productSlug: "bacteriostatic-water-30ml",
     imageSrc: "/images/products/bacteriostatic-water-30ml.png",
     price: "€14.90",
-    timeAgo: { en: "About 24 minutes ago", de: "Vor 24 Minuten" },
-    scarcityBadge: { en: "⚡ Almost sold out for today", de: "⚡ Für heute fast vergriffen" },
-    scarcityType: "zap",
+    timeAgo: { en: "About 27 minutes ago", de: "Vor 27 Minuten" },
+    scarcityBadge: { en: "✓ 0.9% Benzyl Alcohol USP", de: "✓ 0,9% Benzylalkohol USP" },
+    scarcityType: "verified",
   },
   {
     id: "fomo-6",
-    name: { en: "Sophie D.", de: "Sophie D." },
+    name: { en: "Felix S.", de: "Felix S." },
     location: { en: "Köln, Germany", de: "Köln, NRW" },
-    productName: { en: "Recovery Complex Blend 10mg", de: "Recovery Complex Blend 10mg" },
-    productSlug: "recovery-complex-blend-10mg",
-    imageSrc: "/images/products/recovery-complex-blend-10mg.png",
+    productName: { en: "Semax Research Solution 10mg", de: "Semax Forschungslösung 10mg" },
+    productSlug: "semax-research-solution-10mg",
+    imageSrc: "/images/products/semax-research-solution-10mg.png",
     price: "€69.90",
-    timeAgo: { en: "About 31 minutes ago", de: "Vor 31 Minuten" },
-    scarcityBadge: { en: "🔥 8 researchers viewing now", de: "🔥 8 Forscher sehen sich dies an" },
+    timeAgo: { en: "About 32 minutes ago", de: "Vor 32 Minuten" },
+    scarcityBadge: { en: "🧪 Neuro-Research Grade", de: "🧪 Neuropeptid-Forschungsqualität" },
     scarcityType: "fire",
   },
   {
     id: "fomo-7",
-    name: { en: "Alexander S.", de: "Alexander S." },
+    name: { en: "Christian R.", de: "Christian R." },
     location: { en: "Düsseldorf, Germany", de: "Düsseldorf, NRW" },
-    productName: { en: "AOD-9604 Peptide Fragment 5mg", de: "AOD-9604 Peptid Fragment 5mg" },
+    productName: { en: "AOD-9604 Peptide 5mg", de: "AOD-9604 Peptid 5mg" },
     productSlug: "aod-9604-fragment-5mg",
     imageSrc: "/images/products/aod-9604-fragment-5mg.png",
     price: "€42.90",
@@ -130,7 +115,7 @@ const FOMO_EVENTS: FomoEvent[] = [
     imageSrc: "/images/products/advanced-reconstitution-kit.png",
     price: "€29.90",
     timeAgo: { en: "About 46 minutes ago", de: "Vor 46 Minuten" },
-    scarcityBadge: { en: "⚡ Only 2 kits in stock", de: "⚡ Nur noch 2 Kits auf Lager" },
+    scarcityBadge: { en: "⚡ Only 3 kits left in stock", de: "⚡ Nur noch 3 Kits auf Lager" },
     scarcityType: "zap",
   },
   {
@@ -142,7 +127,7 @@ const FOMO_EVENTS: FomoEvent[] = [
     imageSrc: "/images/products/sermorelin-acetate-5mg.png",
     price: "€46.90",
     timeAgo: { en: "About 52 minutes ago", de: "Vor 52 Minuten" },
-    scarcityBadge: { en: "🚚 Dispatched to Austria", de: "🚚 Express-Versand nach Österreich" },
+    scarcityBadge: { en: "🚀 Express Dispatched to Austria", de: "🚀 Express-Versand nach Österreich" },
     scarcityType: "verified",
   },
   {
@@ -154,7 +139,7 @@ const FOMO_EVENTS: FomoEvent[] = [
     imageSrc: "/images/products/cold-chain-starter-bundle.png",
     price: "€149.00",
     timeAgo: { en: "About 58 minutes ago", de: "Vor 58 Minuten" },
-    scarcityBadge: { en: "🔥 Free Cold-Chain Shipping", de: "🔥 Gratis Kühlkettenversand" },
+    scarcityBadge: { en: "❄️ Free Cold-Chain Shipping", de: "❄️ Gratis Kühlkettenversand" },
     scarcityType: "fire",
   },
 ];
@@ -276,7 +261,7 @@ export function FomoSalesPopup({ locale = "en" }: FomoSalesPopupProps) {
                 {/* Action & Product Name */}
                 <div className="mt-0.5">
                   <p className="text-[11px] text-muted-foreground">
-                    {isDe ? "hat soeben gekauft:" : "recently purchased"}
+                    {isDe ? "hat soeben bestellt:" : "recently purchased"}
                   </p>
                   <p className="truncate text-xs font-bold text-primary group-hover:underline">
                     {isDe ? currentEvent.productName.de : currentEvent.productName.en}

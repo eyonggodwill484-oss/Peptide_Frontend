@@ -28,6 +28,7 @@ export function ProductCard({ product }: { product: Product }) {
     limited: locale === "de" ? "Limitiert" : "Limited",
     sale: locale === "de" ? "Angebot" : "Sale",
     "coa-verified": locale === "de" ? "CoA Verifiziert" : "CoA Verified",
+    featured: locale === "de" ? "Empfohlen" : "Featured",
   };
 
   function handleAddToCart(event: React.MouseEvent<HTMLButtonElement>) {

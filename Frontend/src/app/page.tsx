@@ -5,11 +5,13 @@ import { ArrowRight } from "lucide-react";
 
 import { ROUTES } from "@/constants/routes";
 import { SITE_NAME } from "@/constants/site";
-import { getBestSellers, getFeaturedProducts } from "@/lib/data/products";
+import { getProducts } from "@/lib/data/products";
 import { getFeaturedCategories } from "@/lib/data/categories";
 import { CERTIFICATES, COMPANY_STATS } from "@/lib/data/content";
 import { Button } from "@/components/ui/button";
-import { ProductCard } from "@/components/product-card";
+import { ProductGroupCard } from "@/components/product-group-card";
+import { groupProductsByLine, type ProductGroup } from "@/lib/product-grouping";
+import { extractBaseName } from "@/lib/variant-parser";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { HeroSlideshow } from "@/components/motion/hero-slideshow";
 import { HeroBackground, HeroEntrance, HeroEntranceItem } from "@/components/motion/hero-entrance";
@@ -18,9 +20,10 @@ import { HeroScrollDemo } from "@/components/hero-scroll-demo";
 import { CountUpStat } from "@/components/motion/count-up-stat";
 import { GoogleReviewsSection } from "@/components/google-reviews-section";
 import { TrustBadgesGrid } from "@/components/trust-badges-grid";
+import { B2BWholesaleShowcase } from "@/components/b2b-wholesale-showcase";
 import { getServerLocale, getServerTranslations } from "@/lib/i18n";
 import { PRODUCT_TRANSLATIONS, CATEGORY_TRANSLATIONS } from "@/constants/translations";
-import type { Product, Category } from "@/types";
+import type { Category } from "@/types";
 
 export const revalidate = 60;
 
@@ -50,17 +53,16 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-function localizeProduct(product: Product, locale: string): Product {
-  const translation = PRODUCT_TRANSLATIONS[product.slug];
-  if (translation) {
+function localizeGroup(group: ProductGroup, locale: string): ProductGroup {
+  const translation = PRODUCT_TRANSLATIONS[group.slug];
+  if (translation && translation.name) {
+    const baseName = extractBaseName(translation.name);
     return {
-      ...product,
-      name: translation.name || product.name,
-      description: locale === "de" && translation.description ? translation.description : product.description,
-      shortDescription: locale === "de" && translation.shortDescription ? translation.shortDescription : product.shortDescription,
+      ...group,
+      name: baseName || group.name,
     };
   }
-  return product;
+  return group;
 }
 
 function localizeCategory(category: Category, locale: string): Category {
@@ -79,14 +81,23 @@ export default async function Home() {
   const locale = await getServerLocale();
   const t = await getServerTranslations();
 
-  const [allFeaturedProducts, allBestSellers, rawFeaturedCategories] = await Promise.all([
-    getFeaturedProducts(),
-    getBestSellers(),
+  const [allProducts, rawFeaturedCategories] = await Promise.all([
+    getProducts(),
     getFeaturedCategories(),
   ]);
 
-  const featuredProducts = allFeaturedProducts.slice(0, 8).map((p) => localizeProduct(p, locale));
-  const bestSellers = allBestSellers.slice(0, 4).map((p) => localizeProduct(p, locale));
+  const allGroups = groupProductsByLine(allProducts);
+
+  const featuredProducts = allGroups
+    .filter((g) => g.featured)
+    .slice(0, 8)
+    .map((g) => localizeGroup(g, locale));
+
+  const bestSellers = allGroups
+    .filter((g) => g.bestSeller)
+    .slice(0, 4)
+    .map((g) => localizeGroup(g, locale));
+
   const featuredCategories = rawFeaturedCategories.map((c) => localizeCategory(c, locale));
 
   const localizedCompanyStats = COMPANY_STATS.map((stat) => {
@@ -288,9 +299,9 @@ export default async function Home() {
             </Link>
           </Reveal>
           <RevealGroup className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-            {featuredProducts.map((product) => (
-              <RevealItem key={product.id}>
-                <ProductCard product={product} />
+            {featuredProducts.map((group) => (
+              <RevealItem key={group.key}>
+                <ProductGroupCard group={group} />
               </RevealItem>
             ))}
           </RevealGroup>
@@ -321,9 +332,9 @@ export default async function Home() {
           <p className="mt-1 text-sm text-muted-foreground">{t.home.bestSellersDesc}</p>
         </Reveal>
         <RevealGroup className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-          {bestSellers.map((product) => (
-            <RevealItem key={product.id}>
-              <ProductCard product={product} />
+          {bestSellers.map((group) => (
+            <RevealItem key={group.key}>
+              <ProductGroupCard group={group} />
             </RevealItem>
           ))}
         </RevealGroup>
@@ -353,6 +364,9 @@ export default async function Home() {
 
       {/* Google Reviews - 60 Verified Reviews */}
       <GoogleReviewsSection locale={locale} />
+
+      {/* B2B Großhandel & Bulk Wholesale Showcase */}
+      <B2BWholesaleShowcase locale={locale} />
 
       {/* Certificates */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
