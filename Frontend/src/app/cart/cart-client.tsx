@@ -103,9 +103,13 @@ export function CartClient() {
                   <div key={item.productId} className="flex flex-col gap-3 p-4.5 sm:flex-row sm:items-center sm:gap-4 hover:bg-muted/20 transition-colors">
                     <div className="flex items-center gap-4">
                       <div className="relative size-20 shrink-0 overflow-hidden rounded-xl bg-muted border border-border/60">
-                        {item.image.src && (
-                          <Image src={item.image.src} alt={item.image.alt} fill sizes="80px" className="object-cover" />
-                        )}
+                        <Image
+                          src={item.image?.src || "/images/hero/hero-lab-vials.png"}
+                          alt={item.image?.alt || item.name}
+                          fill
+                          sizes="80px"
+                          className="object-cover"
+                        />
                       </div>
                       <div className="flex flex-1 flex-col gap-1 sm:hidden">
                         <Link href={ROUTES.product(item.slug)} className="text-sm font-bold text-foreground hover:underline">

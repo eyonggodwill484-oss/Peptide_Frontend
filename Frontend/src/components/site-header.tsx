@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "@/components/ui/localized-link";
 import NextLink from "next/link";
@@ -136,6 +136,7 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
       case "Blog": return t.nav.blog;
       case "About": return t.nav.about;
       case "Contact": return t.nav.contact;
+      case "Cart": return t.nav.cart;
       default: return label;
     }
   };
@@ -417,6 +418,24 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
                       </motion.div>
                     );
                   })}
+
+                  <motion.div variants={mobileItemVariants}>
+                    <Link
+                      href={ROUTES.cart}
+                      onClick={() => setMobileOpen(false)}
+                      className="flex items-center justify-between rounded-lg px-2 py-2.5 text-sm font-medium text-foreground hover:bg-muted"
+                    >
+                      <span className="flex items-center gap-2">
+                        <ShoppingBag className="size-4 text-muted-foreground" />
+                        <span>{t.nav.cart}</span>
+                      </span>
+                      {mounted && cartCount > 0 && (
+                        <span className="flex size-5 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-primary-foreground">
+                          {cartCount > 9 ? "9+" : cartCount}
+                        </span>
+                      )}
+                    </Link>
+                  </motion.div>
 
                   <div className="my-2 h-px bg-border" />
 

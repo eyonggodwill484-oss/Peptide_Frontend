@@ -94,6 +94,24 @@ export function ProductDetail({ product, variants = [] }: { product: Product; va
   const stock = STOCK_LABELS[selectedProduct.stock];
   const canAddToCart = selectedProduct.stock !== "out-of-stock";
 
+  const [imgSrc, setImgSrc] = useState(image?.src || "/images/hero/hero-lab-vials.png");
+  useEffect(() => {
+    setImgSrc(image?.src || "/images/hero/hero-lab-vials.png");
+  }, [image?.src]);
+
+  const isConsumableWeightLoss =
+    selectedProduct.categorySlug === "diabetes-and-weight-loss" ||
+    selectedProduct.categorySlug === "weight-management" ||
+    selectedProduct.slug.includes("ozempic") ||
+    selectedProduct.slug.includes("mounjaro") ||
+    selectedProduct.slug.includes("rybelsus") ||
+    selectedProduct.slug.includes("wegovy") ||
+    selectedProduct.slug.includes("saxenda") ||
+    selectedProduct.slug.includes("zepbound") ||
+    selectedProduct.slug.includes("trulicity") ||
+    selectedProduct.slug.includes("victoza") ||
+    selectedProduct.slug.includes("duromine");
+
   function handleSelectVariant(prod: Product) {
     setSelectedProduct(prod);
     setActiveImage(0);
@@ -185,18 +203,24 @@ export function ProductDetail({ product, variants = [] }: { product: Product; va
           <div className="relative aspect-square w-full overflow-hidden rounded-3xl bg-muted/40 border border-border/80 shadow-sm backdrop-blur-xs">
             {image && (
               <Image
-                src={image.src}
+                src={imgSrc}
                 alt={image.alt}
                 fill
                 sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover transition-transform duration-500 hover:scale-105"
                 priority
+                onError={() => setImgSrc("/images/hero/hero-lab-vials.png")}
               />
             )}
             <div className="absolute top-4 left-4 flex flex-wrap gap-1.5">
               <span className="inline-flex items-center gap-1 rounded-full bg-background/90 backdrop-blur-md px-3 py-1 text-xs font-bold text-foreground shadow-xs border border-border/60">
                 <ShieldCheck className="size-3.5 text-emerald-500" /> HPLC ≥99.0% Reinheit
               </span>
+              {isConsumableWeightLoss && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-teal-600/90 text-white backdrop-blur-md px-3 py-1 text-xs font-bold shadow-xs">
+                  {isDe ? "💊 Verzehrbar" : "💊 Consumable"}
+                </span>
+              )}
             </div>
           </div>
           {currentImages.length > 1 && (
@@ -234,6 +258,28 @@ export function ProductDetail({ product, variants = [] }: { product: Product; va
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground leading-tight">
               {selectedProduct.name}
             </h1>
+
+            {/* Consumable Weight Loss & Diabetes Treatment Highlight */}
+            {isConsumableWeightLoss && (
+              <div className="mt-3.5 flex items-start gap-3 rounded-2xl border border-teal-500/30 bg-teal-500/10 p-3.5 text-xs shadow-xs">
+                <Sparkles className="size-4.5 shrink-0 text-teal-600 dark:text-teal-400 mt-0.5" />
+                <div className="flex flex-col gap-1">
+                  <span className="font-bold text-[13px] text-teal-950 dark:text-teal-100 flex items-center gap-1.5">
+                    <span>💊</span>
+                    <span>
+                      {isDe
+                        ? "Verzehr- & gebrauchsfertig für Gewichtsmanagement & Typ-2-Diabetes"
+                        : "Consumable & Ready-to-use for Weight Loss & Type-2 Diabetes Care"}
+                    </span>
+                  </span>
+                  <p className="text-teal-900/80 dark:text-teal-200/80 leading-relaxed text-xs">
+                    {isDe
+                      ? "Dieses Präparat ist für den direkten Verzehr bzw. die subkutane Selbstanwendung formuliert (vorgefüllte Mehrdosispens oder orale Tabletten) zur Unterstützung der Blutzuckersenkung und effektiven Adipositas-Therapie."
+                      : "Formulated as a consumable, ready-to-use treatment (pre-filled multi-dose pens or oral tablets) to support healthy glycemic control, blood sugar regulation, and chronic metabolic weight reduction."}
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Rating Summary Link */}
@@ -791,40 +837,95 @@ export function ProductDetail({ product, variants = [] }: { product: Product; va
 
           {/* TAB 3: ANWENDUNG & LEITFADEN */}
           <TabsContent value="guide" className="space-y-6 outline-none">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="rounded-2xl border border-border/80 bg-muted/20 p-5 flex flex-col gap-2.5">
-                <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-primary font-bold text-xs">
-                  01
+            {isConsumableWeightLoss ? (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="rounded-2xl border border-teal-500/25 bg-teal-500/5 p-5 flex flex-col gap-2.5">
+                  <div className="flex size-8 items-center justify-center rounded-lg bg-teal-500/15 text-teal-600 dark:text-teal-400 font-bold text-xs">
+                    01
+                  </div>
+                  <h4 className="text-sm font-extrabold text-foreground">
+                    {isDe ? "Gebrauchsfertige Formulierung" : "Ready-to-Use Formulation"}
+                  </h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    {isDe
+                      ? "Keine Rekonstitution erforderlich. Vorgefüllte Pens oder Tabletten sind sofort einsatzbereit für die direkte orale oder subkutane Selbstanwendung."
+                      : "No reconstitution required. Pre-filled multi-dose pens and oral tablets come ready for direct subcutaneous or oral administration."}
+                  </p>
                 </div>
-                <h4 className="text-sm font-extrabold text-foreground">Vorbereitung & Rekonstitution</h4>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  Verwenden Sie steriles bakteriostatisches Wasser. Lassen Sie die Flüssigkeit langsam an der Glaswand entlang einfließen und schwenken Sie die Vial sanft (nicht schütteln).
-                </p>
-              </div>
 
-              <div className="rounded-2xl border border-border/80 bg-muted/20 p-5 flex flex-col gap-2.5">
-                <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-primary font-bold text-xs">
-                  02
+                <div className="rounded-2xl border border-teal-500/25 bg-teal-500/5 p-5 flex flex-col gap-2.5">
+                  <div className="flex size-8 items-center justify-center rounded-lg bg-teal-500/15 text-teal-600 dark:text-teal-400 font-bold text-xs">
+                    02
+                  </div>
+                  <h4 className="text-sm font-extrabold text-foreground">
+                    {isDe ? "Präzises Titrationsschema" : "Precise Titration Schedule"}
+                  </h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    {isDe
+                      ? "Beginnen Sie mit der Einstiegsdosis und steigern Sie die Dosis schrittweise alle 4 Wochen für optimale Blutzuckereinstellung und Verträglichkeit."
+                      : "Start with initial titration dosage and escalate gradually every 4 weeks to ensure optimal glycemic response and digestive comfort."}
+                  </p>
                 </div>
-                <h4 className="text-sm font-extrabold text-foreground">Präzise Dosierung</h4>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  Nutzen Sie feinskalierte 1-ml-Insulinspritzen (30G/31G) oder den Mehrdosis-Klickmechanismus für exakte Mikrogramm- bzw. Milligramm-Dosierungen.
-                </p>
-              </div>
 
-              <div className="rounded-2xl border border-border/80 bg-muted/20 p-5 flex flex-col gap-2.5">
-                <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-primary font-bold text-xs">
-                  03
+                <div className="rounded-2xl border border-teal-500/25 bg-teal-500/5 p-5 flex flex-col gap-2.5">
+                  <div className="flex size-8 items-center justify-center rounded-lg bg-teal-500/15 text-teal-600 dark:text-teal-400 font-bold text-xs">
+                    03
+                  </div>
+                  <h4 className="text-sm font-extrabold text-foreground">
+                    {isDe ? "Lagerung & Kühlkette" : "Storage & Preservation"}
+                  </h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    {isDe
+                      ? "Ungeöffnete Pens bei 2°C bis 8°C im Kühlschrank lagern. Nach Anbruch bis zu 56 Tage bei Raumtemperatur (<30°C) stabil. Tabletten trocken lagern."
+                      : "Store unopened pens refrigerated at 2°C–8°C. In-use pens remain stable up to 56 days at room temperature (<30°C). Keep tablets in a dry place."}
+                  </p>
                 </div>
-                <h4 className="text-sm font-extrabold text-foreground">Kühlung & Haltbarkeit</h4>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  Gelöste Peptide stets im Kühlschrank bei 2°C bis 8°C lagern und vor Licht schützen. Unrekonstituiertes Pulver im Gefrierschrank aufbewahren.
-                </p>
               </div>
-            </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="rounded-2xl border border-border/80 bg-muted/20 p-5 flex flex-col gap-2.5">
+                  <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-primary font-bold text-xs">
+                    01
+                  </div>
+                  <h4 className="text-sm font-extrabold text-foreground">Vorbereitung & Rekonstitution</h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Verwenden Sie steriles bakteriostatisches Wasser. Lassen Sie die Flüssigkeit langsam an der Glaswand entlang einfließen und schwenken Sie die Vial sanft (nicht schütteln).
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-border/80 bg-muted/20 p-5 flex flex-col gap-2.5">
+                  <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-primary font-bold text-xs">
+                    02
+                  </div>
+                  <h4 className="text-sm font-extrabold text-foreground">Präzise Dosierung</h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Nutzen Sie feinskalierte 1-ml-Insulinspritzen (30G/31G) oder den Mehrdosis-Klickmechanismus für exakte Mikrogramm- bzw. Milligramm-Dosierungen.
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-border/80 bg-muted/20 p-5 flex flex-col gap-2.5">
+                  <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-primary font-bold text-xs">
+                    03
+                  </div>
+                  <h4 className="text-sm font-extrabold text-foreground">Kühlung & Haltbarkeit</h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Gelöste Peptide stets im Kühlschrank bei 2°C bis 8°C lagern und vor Licht schützen. Unrekonstituiertes Pulver im Gefrierschrank aufbewahren.
+                  </p>
+                </div>
+              </div>
+            )}
 
             <div className="rounded-2xl border border-border/80 bg-card p-5">
-              <h4 className="text-sm font-extrabold text-foreground mb-1.5">Produktübersicht & Anwendungsgebiete</h4>
+              <div className="flex items-center justify-between mb-2">
+                <h4 className="text-sm font-extrabold text-foreground">
+                  {isDe ? "Produktübersicht & Indikationen" : "Product Overview & Indications"}
+                </h4>
+                {isConsumableWeightLoss && (
+                  <span className="text-[11px] font-bold text-teal-600 dark:text-teal-400 bg-teal-500/10 px-2 py-0.5 rounded-full">
+                    {isDe ? "Verzehrfertig / Ready-to-Use" : "Consumable / Ready-to-Use"}
+                  </span>
+                )}
+              </div>
               <p className="text-xs leading-relaxed text-muted-foreground">
                 {selectedProduct.description}
               </p>

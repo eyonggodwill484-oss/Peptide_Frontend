@@ -1,4 +1,4 @@
-﻿export interface NavLink {
+export interface NavLink {
   label: string;
   href: string;
 }
@@ -48,6 +48,7 @@ export const FOOTER_LINKS: MegaMenuColumn[] = [
       { label: "Returns Policy", href: "/returns" },
       { label: "Quality Documentation", href: "/quality-documentation" },
       { label: "Ireland Research Support", href: "/research-peptides-ireland" },
+      { label: "Shopping Cart", href: "/cart" },
       { label: "Track Order", href: "/account/orders" },
     ],
   },
@@ -56,7 +57,7 @@ export const FOOTER_LINKS: MegaMenuColumn[] = [
     links: [
       { label: "Privacy Policy", href: "/privacy" },
       { label: "Terms of Service", href: "/terms" },
-      { label: "Research Use Disclaimer", href: "/research#disclaimer" },
+      { label: "Product & Usage Guidelines", href: "/research#disclaimer" },
     ],
   },
 ];

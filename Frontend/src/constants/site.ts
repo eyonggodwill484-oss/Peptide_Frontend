@@ -1,4 +1,4 @@
-﻿export const SITE_NAME = "Wardiere Peptide Sciences";
+export const SITE_NAME = "Wardiere Peptide Sciences";
 export const SITE_SHORT_NAME = "Wardiere";
 export const SITE_TAGLINE = "Research-Grade Peptides, Verified for Precision";
 export const SITE_DESCRIPTION =
@@ -26,4 +26,4 @@ export const SOCIAL_LINKS = {
 } as const;
 
 export const RESEARCH_USE_DISCLAIMER =
-  "All products are intended strictly for in-vitro laboratory research use only. Not for human or animal consumption, diagnostic, or therapeutic use.";
+  "All products are manufactured to strict pharmaceutical and analytical quality standards. Dedicated research compounds are intended for laboratory and scientific evaluation, while consumable wellness and weight-loss formulations must be used strictly in accordance with their respective product guidelines, dosage recommendations, and applicable regulatory directives.";

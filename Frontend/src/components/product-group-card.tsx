@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "@/components/ui/localized-link";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 
@@ -16,6 +17,7 @@ import { useLocale } from "@/lib/i18n-client";
 
 export function ProductGroupCard({ group }: { group: ProductGroup }) {
   const image = group.image;
+  const [imgSrc, setImgSrc] = useState(image?.src || "/images/hero/hero-lab-vials.png");
   const isRange = group.priceTo > group.priceFrom;
   const locale = useLocale();
 
@@ -35,15 +37,14 @@ export function ProductGroupCard({ group }: { group: ProductGroup }) {
         className="flex h-full flex-col overflow-hidden rounded-xl bg-card ring-1 ring-foreground/10 transition-shadow duration-300 hover:shadow-xl hover:shadow-brand/15"
       >
         <div className="relative aspect-square w-full overflow-hidden bg-muted">
-          {image && (
-            <Image
-              src={image.src}
-              alt={image.alt}
-              fill
-              sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-              className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-            />
-          )}
+          <Image
+            src={imgSrc}
+            alt={image?.alt || group.name}
+            fill
+            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+            className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+            onError={() => setImgSrc("/images/hero/hero-lab-vials.png")}
+          />
           {group.badges.length > 0 && (
             <div className="absolute left-2 top-2 flex flex-wrap gap-1">
               {group.badges.slice(0, 2).map((badge) => (
@@ -63,7 +64,14 @@ export function ProductGroupCard({ group }: { group: ProductGroup }) {
         </div>
 
         <div className="flex flex-1 flex-col gap-1.5 p-4">
-          <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{group.categoryName}</span>
+          <div className="flex items-center justify-between gap-1">
+            <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{group.categoryName}</span>
+            {(group.categorySlug === "diabetes-and-weight-loss" || group.categorySlug === "weight-management") && (
+              <span className="text-[10px] font-bold text-teal-600 dark:text-teal-400 bg-teal-500/10 px-1.5 py-0.5 rounded-md shrink-0">
+                {locale === "de" ? "💊 Verzehrbar" : "💊 Consumable"}
+              </span>
+            )}
+          </div>
           <h3 className="line-clamp-2 text-sm font-semibold leading-snug text-foreground">{group.name}</h3>
 
           <div className="mt-0.5 flex items-center gap-1 text-xs text-muted-foreground">

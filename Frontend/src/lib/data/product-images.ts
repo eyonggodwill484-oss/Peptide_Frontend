@@ -1120,14 +1120,14 @@ export function getProductImagesForProduct(name: string, categorySlug: string): 
   if (lower.includes("argireline") || lower.includes("snap-8") || lower.includes("snap8")) {
     return [
       {
-        src: "/images/products/ghk-cu/ghk-cu-1.jfif",
+        src: "/images/products/ghk-cu/ghk-cu-1.jpg",
         alt: `${name} - High Purity Research Cosmetic Peptide`,
         title: `${name} - Lyophilized Cosmetic Research Vial`,
         width: 1200,
         height: 1200,
       },
       {
-        src: "/images/products/ghk-cu/ghk-cu-2.jfif",
+        src: "/images/products/ghk-cu/ghk-cu-2.jpg",
         alt: `${name} - Laboratory Sealed Glass Vial`,
         title: `${name} - Third-Party Tested Compound`,
         width: 1200,

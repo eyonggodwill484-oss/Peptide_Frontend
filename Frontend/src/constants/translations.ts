@@ -17,7 +17,7 @@ export const TRANSLATIONS = {
       returns: "Rückgaberecht",
       privacy: "Datenschutzerklärung",
       terms: "Nutzungsbedingungen",
-      disclaimer: "Haftungsausschluss",
+      disclaimer: "Produkt- & Anwendungshinweise",
       allProducts: "Alle Produkte",
       bestSellers: "Bestseller",
       newArrivals: "Neuheiten",
@@ -29,6 +29,7 @@ export const TRANSLATIONS = {
       signup: "Registrieren",
       menu: "Menü",
       blog: "Blog",
+      cart: "Warenkorb",
       reviewsNav: "Kundenberichte",
       qualityDocsNav: "Qualitätsdokumentation",
       irelandSupplierNav: "Irland Forschungs-Support",
@@ -121,8 +122,8 @@ export const TRANSLATIONS = {
           a: "Ja, wir versenden nach Irland, Deutschland, Österreich und in die gesamte Europäische Union. Wir nutzen Express-Kuriere und temperaturregulierte Verpackungen, um eine stabile Kühlkette im Transit zu gewährleisten."
         },
         {
-          q: "Sind Ihre Peptide für den menschlichen Verzehr bestimmt?",
-          a: "Nein. Alle von Wardiere Peptide Sciences verkauften Produkte sind ausschließlich für Laborforschung und In-vitro-Tests bestimmt. Sie sind nicht für den menschlichen Verzehr oder therapeutische Zwecke zugelassen."
+          q: "Wie sind Ihre Produkte anzuwenden und sind sie für den Verzehr bestimmt?",
+          a: "Unsere Gewichtsmanagement- und Wellness-Formulierungen sind für die gezielte Anwendung gemäß der jeweiligen Packungsbeilage und Verzehrempfehlung vorgesehen. Analytische Peptidwirkstoffe und reine Laborverbindungen sind für wissenschaftliche Forschungs- und Testprotokolle bestimmt. Bitte beachten Sie stets die individuellen Produktangaben."
         }
       ]
     },
@@ -162,7 +163,7 @@ export const TRANSLATIONS = {
       returns: "Returns Policy",
       privacy: "Privacy Policy",
       terms: "Terms of Service",
-      disclaimer: "Research Use Disclaimer",
+      disclaimer: "Product & Usage Guidelines",
       allProducts: "All Products",
       bestSellers: "Best Sellers",
       newArrivals: "New Arrivals",
@@ -174,6 +175,7 @@ export const TRANSLATIONS = {
       signup: "Sign Up",
       menu: "Menu",
       blog: "Blog",
+      cart: "Cart",
       reviewsNav: "Customer Reviews",
       qualityDocsNav: "Quality Documentation",
       irelandSupplierNav: "Ireland Research Support",
@@ -266,8 +268,8 @@ export const TRANSLATIONS = {
           a: "Yes, we ship to Ireland, Germany, Austria, and across the entire European Union. We utilize reliable express couriers and temperature-regulated packaging to ensure the peptides remain cold and stable during transit."
         },
         {
-          q: "Are your peptides intended for human consumption?",
-          a: "No. All products sold by Wardiere Peptide Sciences are strictly intended for laboratory research and in-vitro analytical testing. They are not intended for human consumption, therapeutic, or diagnostic use."
+          q: "How should your products be used, and are they intended for consumption?",
+          a: "Our weight-management and wellness formulations are intended for use strictly in accordance with their respective packaging instructions and recommended regimens. Pure analytical peptides and laboratory compounds are supplied for scientific research and evaluation protocols. Always consult the respective product specifications."
         }
       ]
     },
@@ -355,7 +357,11 @@ export const CATEGORY_TRANSLATIONS: Record<string, { name?: string; description?
   },
   "weight-management": {
     name: "Gewichtsmanagement & Stoffwechsel",
-    description: "Verbindungen zur Erforschung von GLP-1-Agonismus, Stoffwechselregulation und Lipidprofilen.",
+    description: "Verzehr- und gebrauchsfertige Präparate zur Blutzuckerkontrolle, Appetitdämpfung und nachhaltigen Gewichtsreduktion.",
+  },
+  "diabetes-and-weight-loss": {
+    name: "Diabetes & Gewichtsmanagement",
+    description: "Gebrauchsfertige Formulierungen & Injektionspens (GLP-1/GIP) für gezielten Gewichtsverlust und Typ-2-Diabetes-Behandlung.",
   },
   "cognitive-health": {
     name: "Kognitive Gesundheit",

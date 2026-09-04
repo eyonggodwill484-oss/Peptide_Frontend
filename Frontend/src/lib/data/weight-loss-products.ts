@@ -447,8 +447,12 @@ function makeWeightLossVariant(opts: {
     slug: opts.slug,
     sku: opts.sku,
     name: opts.name,
-    shortDescription: opts.shortDescription,
-    description: opts.description,
+    shortDescription: opts.shortDescription.startsWith("[Consumable")
+      ? opts.shortDescription
+      : `[Consumable / Weight Loss & Diabetes Treatment] ${opts.shortDescription}`,
+    description: opts.description.startsWith("Verzehrbares") || opts.description.startsWith("Gebrauchsfertiges")
+      ? opts.description
+      : `Gebrauchs- & verzehrfertiges Präparat für gezielte Gewichtsreduktion und Diabetes-Therapie: ${opts.description}`,
     longDescription: opts.longDescription,
     categorySlug: opts.categorySlug || "diabetes-and-weight-loss",
     categoryName: opts.categoryName || "Diabetes and Weight Loss",
@@ -483,6 +487,8 @@ function makeWeightLossVariant(opts: {
       },
     ],
     specifications: [
+      { name: "Application / Indikation", value: "Gewichtsreduktion & Typ-2-Diabetes / Metabolic Weight Loss & Diabetes Treatment" },
+      { name: "Formulation / Darreichungsform", value: "Consumable & Ready-to-use / Gebrauchs- & Verzehrfertig" },
       { name: "Purity / Reinheit", value: "≥99.0% (HPLC & Mass Spectrometry Verified)" },
       { name: "Format", value: "Original Pre-filled Auto-Injector Pen / Oral Formulation" },
       { name: "Storage / Lagerung", value: "Refrigerated 2°C – 8°C (Do not freeze), protect from light" },

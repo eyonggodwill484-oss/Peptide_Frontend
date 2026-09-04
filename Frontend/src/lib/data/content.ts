@@ -66,9 +66,9 @@ export const TESTIMONIALS: Testimonial[] = [
 export const FAQ_ITEMS: FaqItem[] = [
   {
     id: "faq-research-use",
-    question: "Are these products intended for human consumption?",
+    question: "How should products from Wardiere be used, and are they intended for consumption?",
     answer:
-      "No. All products sold by Wardiere Peptide Sciences are strictly intended for in-vitro laboratory research use only and are not approved for human or animal consumption, diagnostic, or therapeutic use.",
+      "Our weight-management and wellness formulations are intended for use strictly according to their individual product labeling, dosage guidance, and recommended regimens. Pure analytical peptides and laboratory compounds are supplied specifically for in-vitro research and experimental workflows.",
     category: "Compliance",
   },
   {

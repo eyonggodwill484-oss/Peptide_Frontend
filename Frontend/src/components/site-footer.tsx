@@ -102,10 +102,11 @@ export async function SiteFooter() {
       else if (link.label === "Returns Policy") label = t.nav.returns;
       else if (link.label === "Quality Documentation") label = t.nav.qualityDocsNav;
       else if (link.label === "Ireland Research Support") label = t.nav.irelandSupplierNav;
+      else if (link.label === "Shopping Cart" || link.label === "Cart") label = locale === "de" ? "Warenkorb" : "Shopping Cart";
       else if (link.label === "Track Order") label = t.nav.trackOrder;
       else if (link.label === "Privacy Policy") label = t.nav.privacy;
       else if (link.label === "Terms of Service") label = t.nav.terms;
-      else if (link.label === "Research Use Disclaimer") label = t.nav.disclaimer;
+      else if (link.label === "Research Use Disclaimer" || link.label === "Product & Usage Guidelines") label = t.nav.disclaimer;
 
       return { ...link, label };
     });
@@ -114,7 +115,7 @@ export async function SiteFooter() {
   });
 
   const localizedDisclaimer = locale === "de"
-    ? "Alle Produkte sind ausschließlich für Laboruntersuchungen und Forschungszwecke bestimmt. Nicht für den menschlichen Verzehr, die medizinische Diagnose oder therapeutische Zwecke."
+    ? "Alle Produkte werden nach strengen pharmazeutischen und analytischen Qualitätsstandards hergestellt. Spezifische Forschungswirkstoffe sind für wissenschaftliche Laboruntersuchungen bestimmt, während Wellness- und Gewichtsmanagement-Produkte entsprechend der jeweiligen Produktkennzeichnung, Verzehrempfehlung und ärztlichen Begleitung anzuwenden sind."
     : RESEARCH_USE_DISCLAIMER;
 
   const rightsReserved = locale === "de"

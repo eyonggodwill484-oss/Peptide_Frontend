@@ -17,15 +17,13 @@ export default function TermsPage() {
       <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
         <RevealGroup className="flex flex-col gap-8 text-sm leading-relaxed text-muted-foreground">
           <RevealItem as="section">
-            <h2 className="mb-2 text-base font-semibold text-foreground">Research Use Only</h2>
+            <h2 className="mb-2 text-base font-semibold text-foreground">Product Guidelines & Intended Use</h2>
             <p>{RESEARCH_USE_DISCLAIMER}</p>
           </RevealItem>
           <RevealItem as="section">
-            <h2 className="mb-2 text-base font-semibold text-foreground">Eligibility</h2>
+            <h2 className="mb-2 text-base font-semibold text-foreground">Eligibility & Responsible Use</h2>
             <p>
-              By purchasing from {SITE_NAME}, you represent that you are purchasing on behalf of a qualified
-              laboratory, research institution, or organization, and that all products will be used strictly for
-              in-vitro laboratory research in a controlled setting by qualified personnel.
+              By purchasing from {SITE_NAME}, you represent that you are at least 18 years of age and that all products will be utilized responsibly according to their packaging, dosage directions, and intended regulatory context. Dedicated research-grade compounds must be handled in controlled environments by qualified personnel.
             </p>
           </RevealItem>
           <RevealItem as="section">

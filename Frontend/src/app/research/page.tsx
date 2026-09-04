@@ -47,7 +47,7 @@ export default async function ResearchPage() {
   });
 
   const localizedDisclaimer = locale === "de"
-    ? "Alle Produkte sind ausschließlich für Laboruntersuchungen und Forschungszwecke bestimmt. Nicht für den menschlichen Verzehr, die medizinische Diagnose oder therapeutische Zwecke."
+    ? "Alle von Wardiere gelieferten Produkte werden nach strengsten pharmazeutischen und analytischen Qualitätsstandards hergestellt. Spezifische Laborwirkstoffe sind für wissenschaftliche Forschungs- und Testzwecke vorgesehen, während Gewichtsmanagement- und Wellness-Präparate gemäß der jeweiligen Produktkennzeichnung und den entsprechenden Richtlinien anzuwenden sind."
     : RESEARCH_USE_DISCLAIMER;
 
   return (
@@ -131,7 +131,7 @@ export default async function ResearchPage() {
 
         <section id="disclaimer" className="mt-16 scroll-mt-24 rounded-xl border border-border bg-muted/40 p-6">
           <Reveal>
-            <h2 className="text-lg font-semibold text-foreground">{locale === "de" ? "Forschungs-Haftungsausschluss" : "Research Use Disclaimer"}</h2>
+            <h2 className="text-lg font-semibold text-foreground">{locale === "de" ? "Qualitäts- & Produktrichtlinien" : "Product Guidelines & Compliance"}</h2>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{localizedDisclaimer}</p>
           </Reveal>
         </section>
