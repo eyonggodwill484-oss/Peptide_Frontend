@@ -116,7 +116,7 @@ export const TAB_5_AMINO_1MQ_TABLETS_IMAGES: ProductImage[] = [
 
 export const ADDY_IMAGES: ProductImage[] = [
   {
-    src: "/images/hero/hero-lab-vials.png",
+    src: "/images/products/tablets/addy/addy-1.webp",
     alt: "Addy Research Tablets",
     title: "Addy Tablets",
     width: 1200,
@@ -136,7 +136,7 @@ export const ANASTROZOLE_IMAGES: ProductImage[] = [
 
 export const ANAVAR_IMAGES: ProductImage[] = [
   {
-    src: "/images/hero/hero-lab-vials.png",
+    src: "/images/products/tablets/anavar/anavar-1.webp",
     alt: "Anavar Research Tablets",
     title: "Anavar Tablets",
     width: 1200,
@@ -156,9 +156,9 @@ export const ANDARINE_S4_TABLETS_IMAGES: ProductImage[] = [
 
 export const ANDROGEL_IMAGES: ProductImage[] = [
   {
-    src: "/images/hero/hero-lab-vials.png",
-    alt: "Androgel Research Tablets",
-    title: "Androgel Tablets",
+    src: "/images/products/tablets/androgel/androgel-1.webp",
+    alt: "Androgel Research Formulation",
+    title: "Androgel 1.62% Unit",
     width: 1200,
     height: 1200,
   },
@@ -186,7 +186,7 @@ export const AROMASIN_IMAGES: ProductImage[] = [
 
 export const AVANAFIL_IMAGES: ProductImage[] = [
   {
-    src: "/images/hero/hero-lab-vials.png",
+    src: "/images/products/tablets/avanafil/avanafil-1.webp",
     alt: "Avanafil Research Tablets",
     title: "Avanafil Tablets",
     width: 1200,
@@ -216,7 +216,7 @@ export const CABERGOLINE_IMAGES: ProductImage[] = [
 
 export const CHOLINE_CHLORIDE_IMAGES: ProductImage[] = [
   {
-    src: "/images/hero/hero-lab-vials.png",
+    src: "/images/products/tablets/choline-chloride/choline-chloride-1.webp",
     alt: "Choline Chloride Research Tablets",
     title: "Choline Chloride Tablets",
     width: 1200,
@@ -286,7 +286,7 @@ export const DUTASTERIDE_IMAGES: ProductImage[] = [
 
 export const ENCLOMIPHENE_IMAGES: ProductImage[] = [
   {
-    src: "/images/hero/hero-lab-vials.png",
+    src: "/images/products/tablets/enclomiphene/enclomiphene-1.webp",
     alt: "Enclomiphene Research Tablets",
     title: "Enclomiphene Tablets",
     width: 1200,
@@ -333,9 +333,9 @@ export const FLUOXYMESTERONE_HALOTESTIN_IMAGES: ProductImage[] = [
 
 export const GENOTROPIN_IMAGES: ProductImage[] = [
   {
-    src: "/images/hero/hero-lab-vials.png",
-    alt: "Genotropin Research Tablets",
-    title: "Genotropin Tablets",
+    src: "/images/products/tablets/genotropin/genotropin-1.webp",
+    alt: "Genotropin Research Pen Device",
+    title: "Genotropin GoQuick Pen",
     width: 1200,
     height: 1200,
   },
@@ -353,9 +353,9 @@ export const GW_501516_CARDARINE_TABLETS_IMAGES: ProductImage[] = [
 
 export const HUMATROPE_IMAGES: ProductImage[] = [
   {
-    src: "/images/hero/hero-lab-vials.png",
-    alt: "Humatrope Research Tablets",
-    title: "Humatrope Tablets",
+    src: "/images/products/tablets/humatrope/humatrope-1.webp",
+    alt: "Humatrope Research Cartridge Device",
+    title: "Humatrope Cartridge Kit",
     width: 1200,
     height: 1200,
   },
@@ -383,7 +383,7 @@ export const KPV_TABLETS_IMAGES: ProductImage[] = [
 
 export const L_CARNITINE_IMAGES: ProductImage[] = [
   {
-    src: "/images/hero/hero-lab-vials.png",
+    src: "/images/products/tablets/l-carnitine/l-carnitine-1.webp",
     alt: "L-Carnitine Research Tablets",
     title: "L-Carnitine Tablets",
     width: 1200,

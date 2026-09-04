@@ -848,8 +848,624 @@ export const THYMOSIN_IMAGES: ProductImage[] = [
   },
 ];
 
+// 39. Survodutide
+export const SURVODUTIDE_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/survodutide/survodutide-1.webp",
+    alt: "Survodutide Dual Agonist Research Peptide 2mg Vial",
+    title: "Survodutide Research Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 40. ACE-031
+export const ACE_031_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/ace-031/ace-031-1.webp",
+    alt: "ACE-031 Activin Receptor Type IIB Research Peptide Vial",
+    title: "ACE-031 Research Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 41. Alprostadil
+export const ALPROSTADIL_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/alprostadil/alprostadil-1.webp",
+    alt: "Alprostadil Prostaglandin E1 Sterile Research Vial",
+    title: "Alprostadil Research Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 42. BPC-157 + TB-500 Blend
+export const BPC_TB_BLEND_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/bpc-157-tb-500-blend/bpc-157-tb-500-blend-1.webp",
+    alt: "BPC-157 5mg + TB-500 5mg Synergistic Recovery Blend Vial",
+    title: "BPC-157 + TB-500 Research Blend Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 43. BPC157 + GHK-CU Blend
+export const BPC_GHK_BLEND_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/bpc157-ghk-cu-blend/bpc157-ghk-cu-blend-1.webp",
+    alt: "BPC-157 10mg + GHK-CU 50mg Synergistic Tissue Regeneration Matrix",
+    title: "BPC-157 + GHK-CU Matrix Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 44. Dermorphin
+export const DERMORPHIN_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/dermorphin/dermorphin-1.webp",
+    alt: "Dermorphin High Purity Research Peptide 10mg Vial",
+    title: "Dermorphin Research Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 45. Epithalon
+export const EPITHALON_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/epithalon/epithalon-1.webp",
+    alt: "Epithalon (Epitalon) Telomerase Activator Peptide 10mg Vial",
+    title: "Epithalon Research Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 46. Erythropoietin
+export const ERYTHROPOIETIN_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/erythropoietin/erythropoietin-1.webp",
+    alt: "Erythropoietin (EPO) Recombinant Glycoprotein Sterile Vial",
+    title: "Erythropoietin Research Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 47. Follistatin 344
+export const FOLLISTATIN_344_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/follistatin-344/follistatin-344-1.webp",
+    alt: "Follistatin 344 Myostatin Inhibitor 1mg Vial",
+    title: "Follistatin 344 Research Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 48. FOXO4-DRI
+export const FOXO4_DRI_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/foxo4-dri/foxo4-dri-1.webp",
+    alt: "FOXO4-DRI Senolytic Research Peptide 10mg Vial",
+    title: "FOXO4-DRI Research Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 49. GDF-8
+export const GDF_8_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/gdf-8/gdf-8-1.webp",
+    alt: "GDF-8 Myostatin Propeptide Analytical Grade 1mg Vial",
+    title: "GDF-8 Research Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 50. Glutathione
+export const GLUTATHIONE_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/glutathione/glutathione-1.webp",
+    alt: "Glutathione High Purity Antioxidant Peptide Sterile Vial",
+    title: "Glutathione Research Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 51. SS-31
+export const SS_31_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/ss-31/ss-31-1.webp",
+    alt: "SS-31 (Elamipretide / Bendavia) Mitochondrial Peptide 10mg Vial",
+    title: "SS-31 Research Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 52. MOTS-c
+export const MOTS_C_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/mots-c/mots-c-1.webp",
+    alt: "MOTS-c Mitochondrial-Derived Peptide 10mg Vial",
+    title: "MOTS-c Research Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 53. Kisspeptin-10
+export const KISSPEPTIN_10_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/kisspeptin-10/kisspeptin-10-1.webp",
+    alt: "Kisspeptin-10 High Purity Research Peptide 10mg Vial",
+    title: "Kisspeptin-10 Research Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 54. PT-141
+export const PT_141_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/pt-141/pt-141-1.webp",
+    alt: "PT-141 (Bremelanotide) Research Peptide 10mg Vial",
+    title: "PT-141 Research Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 55. HMG
+export const HMG_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/hmg/hmg-1.webp",
+    alt: "HMG (Human Menopausal Gonadotropin) 75 IU Sterile Vial",
+    title: "HMG Research Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 56. KPV
+export const KPV_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/kpv/kpv-1.webp",
+    alt: "KPV Anti-Inflammatory Tripeptide 10mg Vial",
+    title: "KPV Research Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 57. PNC-27
+export const PNC_27_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/pnc-27/pnc-27-1.webp",
+    alt: "PNC-27 Membrane-Targeting Research Peptide 5mg Vial",
+    title: "PNC-27 Research Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 58. Gonadorelin
+export const GONADORELIN_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/gonadorelin/gonadorelin-1.webp",
+    alt: "Gonadorelin Acetate GnRH Research Peptide 5mg Vial",
+    title: "Gonadorelin Research Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 59. Triptorelin
+export const TRIPTORELIN_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/triptorelin/triptorelin-1.webp",
+    alt: "Triptorelin Acetate Research Peptide 2mg Vial",
+    title: "Triptorelin Research Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 60. Oxytocin
+export const OXYTOCIN_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/oxytocin/oxytocin-1.webp",
+    alt: "Oxytocin Acetate Neuropeptide 10mg Vial",
+    title: "Oxytocin Research Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 61. HCG
+export const HCG_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/hcg/hcg-1.webp",
+    alt: "HCG (Human Chorionic Gonadotropin) 5000 IU Sterile Vial",
+    title: "HCG Research Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 62. Botox
+export const BOTOX_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/botox/botox-1.webp",
+    alt: "Botulinum Toxin Type A 100 Units Lyophilized Vial",
+    title: "Botulinum Toxin 100IU Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 63. Hyaluronic Acid
+export const HYALURONIC_ACID_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/hyaluronic-acid/hyaluronic-acid-1.webp",
+    alt: "Hyaluronic Acid High Molecular Weight Sterile Vial",
+    title: "Hyaluronic Acid Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 64. LL-37
+export const LL_37_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/ll-37/ll-37-1.webp",
+    alt: "LL-37 Cathelicidin Antimicrobial Peptide 5mg Vial",
+    title: "LL-37 Research Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 65. Insulin
+export const INSULIN_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/insulin/insulin-1.webp",
+    alt: "Insulin Regular Human Recombinant 100 U/mL 10ml Vial",
+    title: "Insulin Research Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 66. Tesamorelin
+export const TESAMORELIN_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/tesamorelin/tesamorelin-1.webp",
+    alt: "Tesamorelin GHRH Analog Pure Research Peptide 10mg Vial",
+    title: "Tesamorelin Research Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 67. Somatropin
+export const SOMATROPIN_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/growth-hormone/growth-hormone-1.jpg",
+    alt: "Somatropin Recombinant Human Growth Hormone 10IU Vial",
+    title: "Somatropin Research Vial",
+    width: 1200,
+    height: 1200,
+  },
+  {
+    src: "/images/products/growth-hormone/somatropin-1.webp",
+    alt: "Somatropin Pure Growth Hormone Lyophilized Powder",
+    title: "Somatropin Formulation",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 68. Melanotan 1
+export const MELANOTAN_1_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/melanotan/melanotan-2.jpg",
+    alt: "Melanotan-1 Pure Research Peptide 10mg Vial",
+    title: "Melanotan-1 Research Vial",
+    width: 1200,
+    height: 1200,
+  },
+  {
+    src: "/images/products/melanotan/melanotan-1.jfif",
+    alt: "Melanotan-1 Lyophilized Peptide Vial",
+    title: "Melanotan-1 Laboratory Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 69. MGF (Mechano Growth Factor)
+export const MGF_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/peg-mgf/peg-mgf-2.jpg",
+    alt: "MGF (Mechano Growth Factor) Research Peptide 2mg Vial",
+    title: "MGF Research Vial",
+    width: 1200,
+    height: 1200,
+  },
+  {
+    src: "/images/products/peg-mgf/peg-mgf-1.jfif",
+    alt: "MGF Mechano Growth Factor Lyophilized Powder",
+    title: "MGF Laboratory Formulation",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 70. NAD+ (Nicotinamide Adenine Dinucleotide)
+export const NAD_PLUS_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/nad-plus/nad-plus-1.webp",
+    alt: "NAD+ 500mg Research Grade Lyophilized Powder Vial",
+    title: "NAD+ Research Grade Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 71. Vasoactive Intestinal Peptide (VIP)
+export const VASOACTIVE_INTESTINAL_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/vasoactive-intestinal/vasoactive-intestinal-1.webp",
+    alt: "VIP (Vasoactive Intestinal Peptide) 5mg Lyophilized Powder Vial",
+    title: "VIP Research Vial",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 72. Melatonin
+export const MELATONIN_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/melatonin/melatonin-1.webp",
+    alt: "Melatonin Tablets Pharmaceutical Sleep Aid Supplement",
+    title: "Melatonin Tablets Bottle",
+    width: 1200,
+    height: 1200,
+  },
+];
+
 export function getProductImagesForProduct(name: string, categorySlug: string): ProductImage[] {
   const lower = name.toLowerCase();
+
+  // Survodutide
+  if (lower.includes("survodutide")) {
+    return SURVODUTIDE_IMAGES;
+  }
+
+  // NAD+ (Nicotinamide Adenine Dinucleotide)
+  if (!lower.includes("gonad") && !lower.includes("nandrolone") && (lower.includes("nad+") || lower.includes("nad-plus") || lower.includes("nad plus") || lower.includes("nicotinamide adenine dinucleotide") || /\bnad\b/.test(lower))) {
+    return NAD_PLUS_IMAGES;
+  }
+
+  // Vasoactive Intestinal Peptide (VIP)
+  if (lower.includes("vasoactive intestinal") || lower.includes("vip")) {
+    return VASOACTIVE_INTESTINAL_IMAGES;
+  }
+
+  // Melatonin
+  if (lower.includes("melatonin")) {
+    return MELATONIN_IMAGES;
+  }
+
+  // Somatropin (standalone, not 191AA)
+  if (lower.includes("somatropin") && !lower.includes("191aa") && !lower.includes("191 amino")) {
+    return SOMATROPIN_IMAGES;
+  }
+
+  // PT-141
+  if (lower.includes("pt-141") || lower.includes("pt141") || lower.includes("bremelanotide")) {
+    return PT_141_IMAGES;
+  }
+
+  // Melanotan 1
+  if (lower.includes("melanotan 1") || lower.includes("melanotan-1") || lower.includes("melanotan i") || lower.includes("afamelanotide")) {
+    return MELANOTAN_1_IMAGES;
+  }
+
+  // MGF standalone (not PEG MGF)
+  if ((lower.includes("mgf") || lower.includes("mechano")) && !lower.includes("peg")) {
+    return MGF_IMAGES;
+  }
+
+  // ACE-031
+  if (lower.includes("ace-031") || lower.includes("ace 031") || lower.includes("ace031")) {
+    return ACE_031_IMAGES;
+  }
+
+  // Alprostadil
+  if (lower.includes("alprostadil") || lower.includes("caverject")) {
+    return ALPROSTADIL_IMAGES;
+  }
+
+  // BPC-157 + TB-500 Blend
+  if (
+    (lower.includes("bpc-157") || lower.includes("bpc 157") || lower.includes("bpc157")) &&
+    (lower.includes("tb-500") || lower.includes("tb 500") || lower.includes("tb500")) &&
+    !lower.includes("ghk")
+  ) {
+    return BPC_TB_BLEND_IMAGES;
+  }
+
+  // BPC-157 + GHK-CU Blend
+  if (
+    (lower.includes("bpc-157") || lower.includes("bpc 157") || lower.includes("bpc157")) &&
+    (lower.includes("ghk-cu") || lower.includes("ghk cu") || lower.includes("ghk"))
+  ) {
+    return BPC_GHK_BLEND_IMAGES;
+  }
+
+  // Dermorphin
+  if (lower.includes("dermorphin")) {
+    return DERMORPHIN_IMAGES;
+  }
+
+  // Epithalon
+  if (lower.includes("epithalon") || lower.includes("epitalon")) {
+    return EPITHALON_IMAGES;
+  }
+
+  // Erythropoietin (EPO)
+  if (lower.includes("erythropoietin") || lower.includes("epoetin") || lower.includes(" epo ") || lower.includes("(epo)")) {
+    return ERYTHROPOIETIN_IMAGES;
+  }
+
+  // Follistatin 344
+  if (lower.includes("follistatin")) {
+    return FOLLISTATIN_344_IMAGES;
+  }
+
+  // FOXO4-DRI
+  if (lower.includes("foxo4") || lower.includes("foxo-4") || lower.includes("foxo 4")) {
+    return FOXO4_DRI_IMAGES;
+  }
+
+  // GDF-8
+  if (lower.includes("gdf-8") || lower.includes("gdf 8") || lower.includes("gdf8") || lower.includes("myostatin")) {
+    return GDF_8_IMAGES;
+  }
+
+  // Glutathione
+  if (lower.includes("glutathione")) {
+    return GLUTATHIONE_IMAGES;
+  }
+
+  // SS-31
+  if (lower.includes("ss-31") || lower.includes("ss 31") || lower.includes("ss31") || lower.includes("elamipretide") || lower.includes("bendavia")) {
+    return SS_31_IMAGES;
+  }
+
+  // MOTS-c
+  if (lower.includes("mots-c") || lower.includes("mots c") || lower.includes("motsc")) {
+    return MOTS_C_IMAGES;
+  }
+
+  // Kisspeptin-10
+  if (lower.includes("kisspeptin")) {
+    return KISSPEPTIN_10_IMAGES;
+  }
+
+  // PT-141
+  if (lower.includes("pt-141") || lower.includes("pt 141") || lower.includes("pt141") || lower.includes("bremelanotide")) {
+    return PT_141_IMAGES;
+  }
+
+  // HMG
+  if (lower.includes("hmg") || lower.includes("menopausal gonadotropin")) {
+    return HMG_IMAGES;
+  }
+
+  // KPV
+  if (lower.includes("kpv")) {
+    return KPV_IMAGES;
+  }
+
+  // PNC-27
+  if (lower.includes("pnc-27") || lower.includes("pnc 27") || lower.includes("pnc27")) {
+    return PNC_27_IMAGES;
+  }
+
+  // Gonadorelin
+  if (lower.includes("gonadorelin")) {
+    return GONADORELIN_IMAGES;
+  }
+
+  // Triptorelin
+  if (lower.includes("triptorelin")) {
+    return TRIPTORELIN_IMAGES;
+  }
+
+  // Oxytocin
+  if (lower.includes("oxytocin")) {
+    return OXYTOCIN_IMAGES;
+  }
+
+  // HCG
+  if (lower.includes("hcg") || lower.includes("chorionic gonadotropin")) {
+    return HCG_IMAGES;
+  }
+
+  // Botox / Botulinum
+  if (lower.includes("botox") || lower.includes("botulinum")) {
+    return BOTOX_IMAGES;
+  }
+
+  // Hyaluronic Acid
+  if (lower.includes("hyaluronic")) {
+    return HYALURONIC_ACID_IMAGES;
+  }
+
+  // LL-37
+  if (lower.includes("ll-37") || lower.includes("ll 37") || lower.includes("ll37") || lower.includes("cathelicidin")) {
+    return LL_37_IMAGES;
+  }
+
+  // Insulin
+  if (lower.includes("insulin")) {
+    return INSULIN_IMAGES;
+  }
+
+  // Tesamorelin
+  if (lower.includes("tesamorelin")) {
+    return TESAMORELIN_IMAGES;
+  }
+
+  // Somatropin standalone (vs HGH 191AA)
+  if (lower.includes("somatropin") && !lower.includes("191aa") && !lower.includes("hgh 191")) {
+    return [
+      {
+        src: "/images/products/growth-hormone/growth-hormone-1.jpg",
+        alt: `${name} - Recombinant Human Growth Hormone Somatropin`,
+        title: `${name} - Somatropin Vial`,
+        width: 1200,
+        height: 1200,
+      },
+    ];
+  }
+
+  // Melanotan 1 (vs Melanotan II)
+  if (lower.includes("melanotan 1") || lower.includes("melanotan-1") || lower.includes("melanotan i") || lower.includes("afamelanotide")) {
+    return [
+      {
+        src: "/images/products/melanotan/melanotan-2.jpg",
+        alt: `${name} - Melanotan-1 Pure Research Peptide`,
+        title: `${name} - Research Vial`,
+        width: 1200,
+        height: 1200,
+      },
+    ];
+  }
+
+  // MGF standalone (vs PEG MGF)
+  if ((lower.includes("mgf") || lower.includes("mechano")) && !lower.includes("peg")) {
+    return [
+      {
+        src: "/images/products/peg-mgf/peg-mgf-2.jpg",
+        alt: `${name} - Mechano Growth Factor Research Peptide`,
+        title: `${name} - Research Vial`,
+        width: 1200,
+        height: 1200,
+      },
+    ];
+  }
 
   // 1. WEGOVY PEN
   if (lower.includes("wegovy")) {

@@ -783,7 +783,7 @@ export const OIL_L_CARNITINE_COMPLEX_OIL_IMAGES: ProductImage[] = [
 
 export const OIL_METHONINE_OIL_IMAGES: ProductImage[] = [
   {
-    src: "/images/hero/hero-lab-vials.png",
+    src: "/images/products/oils/methonine-oil/methonine-oil-1.webp",
     alt: "Methionine Injectable Injectable Research Oil",
     title: "Methionine Injectable 10ml Vial",
     width: 1200,

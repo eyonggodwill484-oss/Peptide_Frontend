@@ -41,6 +41,11 @@ import {
   THYMALIN_IMAGES,
   THYMOSIN_IMAGES,
   WEGOVY_IMAGES,
+  SURVODUTIDE_IMAGES,
+  PT_141_IMAGES,
+  SOMATROPIN_IMAGES,
+  MELANOTAN_1_IMAGES,
+  MGF_IMAGES,
 } from "./product-images";
 
 function makeVariant(opts: {
@@ -2036,7 +2041,7 @@ export const ALL_VARIABLE_PRODUCTS: Product[] = [
     categorySlug: "peptides",
     categoryName: "PEPTIDES",
     price: 25,
-    images: MELANOTAN_IMAGES,
+    images: MELANOTAN_1_IMAGES,
   }),
   makeVariant({
     slug: "melanotan-1-10mg-vials",
@@ -2050,7 +2055,7 @@ export const ALL_VARIABLE_PRODUCTS: Product[] = [
     price: 35,
     featured: true,
     bestSeller: true,
-    images: MELANOTAN_IMAGES,
+    images: MELANOTAN_1_IMAGES,
   }),
 
   // 49. Melatonin
@@ -2101,7 +2106,7 @@ export const ALL_VARIABLE_PRODUCTS: Product[] = [
     categorySlug: "peptides",
     categoryName: "PEPTIDES",
     price: 25,
-    images: PEG_MGF_IMAGES,
+    images: MGF_IMAGES,
   }),
   makeVariant({
     slug: "mgf-mechano-growth-factor-5mg-vial",
@@ -2115,7 +2120,7 @@ export const ALL_VARIABLE_PRODUCTS: Product[] = [
     price: 40,
     featured: true,
     bestSeller: true,
-    images: PEG_MGF_IMAGES,
+    images: MGF_IMAGES,
   }),
 
   // 51. MOTS-c
@@ -2419,7 +2424,7 @@ export const ALL_VARIABLE_PRODUCTS: Product[] = [
     categorySlug: "peptides",
     categoryName: "PEPTIDES",
     price: 25,
-    images: MELANOTAN_IMAGES,
+    images: PT_141_IMAGES,
   }),
   makeVariant({
     slug: "pt-141-10mg-vial",
@@ -2433,7 +2438,7 @@ export const ALL_VARIABLE_PRODUCTS: Product[] = [
     price: 35,
     featured: true,
     bestSeller: true,
-    images: MELANOTAN_IMAGES,
+    images: PT_141_IMAGES,
   }),
   makeVariant({
     slug: "pt-141-12mg-vial",
@@ -2445,7 +2450,7 @@ export const ALL_VARIABLE_PRODUCTS: Product[] = [
     categorySlug: "peptides",
     categoryName: "PEPTIDES",
     price: 50,
-    images: MELANOTAN_IMAGES,
+    images: PT_141_IMAGES,
   }),
 
   // 59. Selank
@@ -2619,7 +2624,7 @@ export const ALL_VARIABLE_PRODUCTS: Product[] = [
     categorySlug: "peptides",
     categoryName: "PEPTIDES",
     price: 20,
-    images: HGH_191AA_SOMATROPIN_IMAGES,
+    images: SOMATROPIN_IMAGES,
   }),
   makeVariant({
     slug: "somatropin-100iu-vial",
@@ -2633,7 +2638,7 @@ export const ALL_VARIABLE_PRODUCTS: Product[] = [
     price: 30,
     featured: true,
     bestSeller: true,
-    images: HGH_191AA_SOMATROPIN_IMAGES,
+    images: SOMATROPIN_IMAGES,
   }),
 
   // 64. SS-31
@@ -2684,7 +2689,7 @@ export const ALL_VARIABLE_PRODUCTS: Product[] = [
     categorySlug: "diabetes-and-weight-loss",
     categoryName: "Diabetes and Weight Loss",
     price: 20,
-    images: GLP_1_IMAGES,
+    images: SURVODUTIDE_IMAGES,
   }),
   makeVariant({
     slug: "survodutide-6mg-vials",
@@ -2696,7 +2701,7 @@ export const ALL_VARIABLE_PRODUCTS: Product[] = [
     categorySlug: "diabetes-and-weight-loss",
     categoryName: "Diabetes and Weight Loss",
     price: 35,
-    images: GLP_1_IMAGES,
+    images: SURVODUTIDE_IMAGES,
   }),
   makeVariant({
     slug: "survodutide-10mg-vials",
@@ -2710,7 +2715,7 @@ export const ALL_VARIABLE_PRODUCTS: Product[] = [
     price: 45,
     featured: true,
     bestSeller: true,
-    images: GLP_1_IMAGES,
+    images: SURVODUTIDE_IMAGES,
   }),
   makeVariant({
     slug: "survodutide-12mg-vials",
@@ -2722,7 +2727,7 @@ export const ALL_VARIABLE_PRODUCTS: Product[] = [
     categorySlug: "diabetes-and-weight-loss",
     categoryName: "Diabetes and Weight Loss",
     price: 60,
-    images: GLP_1_IMAGES,
+    images: SURVODUTIDE_IMAGES,
   }),
   makeVariant({
     slug: "survodutide-20mg-vials",
@@ -2736,7 +2741,7 @@ export const ALL_VARIABLE_PRODUCTS: Product[] = [
     price: 80,
     featured: true,
     bestSeller: true,
-    images: GLP_1_IMAGES,
+    images: SURVODUTIDE_IMAGES,
   }),
 
   // 66. TB-500
