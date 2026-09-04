@@ -68,7 +68,7 @@ export default async function AboutPage() {
     <>
       <PageHeader
         title={locale === "de" ? `Über ${SITE_NAME}` : `About ${SITE_NAME}`}
-        description={locale === "de" ? "Lieferung verifizierter Peptide in Forschungsqualität an Labore weltweit seit 2019." : "Supplying verified, research-grade peptides to laboratories worldwide since 2019."}
+        description={locale === "de" ? "Lieferung verifizierter Peptide in Forschungsqualität an Labore weltweit seit 2014." : "Supplying verified, research-grade peptides to laboratories worldwide since 2014."}
         crumbs={[{ label: locale === "de" ? "Über uns" : "About" }]}
       />
 
