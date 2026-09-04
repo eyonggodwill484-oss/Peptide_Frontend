@@ -65,7 +65,17 @@ export function DnaHelix({ className }: { className?: string }) {
   const [canRender3d, setCanRender3d] = useState(false);
 
   useEffect(() => {
-    setCanRender3d(!prefersReducedMotion() && supportsWebGL());
+    if (prefersReducedMotion() || !supportsWebGL()) return;
+
+    // Defer mounting the three.js scene until the browser is idle so the
+    // ~370KB WebGL chunk never competes with initial hydration/TBT — this
+    // is a purely decorative background flourish, never above-the-fold-critical.
+    if (typeof window.requestIdleCallback === "function") {
+      const handle = window.requestIdleCallback(() => setCanRender3d(true));
+      return () => window.cancelIdleCallback(handle);
+    }
+    const timer = window.setTimeout(() => setCanRender3d(true), 200);
+    return () => window.clearTimeout(timer);
   }, []);
 
   if (!canRender3d) return <StaticHelixFallback className={className} />;

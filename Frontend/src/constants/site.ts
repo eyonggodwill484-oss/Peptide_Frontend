@@ -7,9 +7,11 @@ export const SITE_URL = "https://www.wardierepeptidesciences.com";
 export const SITE_LOCALE = "de_DE";
 export const SITE_CURRENCY = "EUR";
 
-export const CONTACT_EMAIL = "sales@wardierepeptidesciences.com";
+export const CONTACT_EMAIL = "wardierepeptidesc@gmail.com";
 export const CONTACT_PHONE = "+49 (0) 89 2017 4820";
-export const SUPPORT_HOURS = "Mo–Fr, 08:00 – 18:00 Uhr MEZ / CET";
+export const CONTACT_WHATSAPP = "+49 89 2017 4820";
+export const CONTACT_WHATSAPP_URL = "https://wa.me/498920174820";
+export const SUPPORT_HOURS = "Mo–Fr, 08:00 – 18:00 Uhr MEZ / Mon–Fri, 8:00 AM – 6:00 PM CET";
 
 export const COMPANY_ADDRESS = {
   line1: "Maximilianstraße 24",
