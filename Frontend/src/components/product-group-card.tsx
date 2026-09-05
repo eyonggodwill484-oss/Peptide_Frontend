@@ -41,6 +41,7 @@ export function ProductGroupCard({ group }: { group: ProductGroup }) {
             src={imgSrc}
             alt={image?.alt || group.name}
             fill
+            unoptimized={imgSrc.startsWith("http")}
             sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
             className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
             onError={() => setImgSrc("/images/hero/hero-lab-vials.png")}
