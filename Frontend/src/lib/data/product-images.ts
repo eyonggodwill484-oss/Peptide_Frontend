@@ -606,10 +606,10 @@ export const MAZDUTIDE_IMAGES: ProductImage[] = [
   },
 ];
 
-// 27. Melanotan & Melanotan 1 & PT-141 (2 authentic images)
+// 27. Melanotan II & PT-141 (2 authentic images)
 export const MELANOTAN_IMAGES: ProductImage[] = [
   {
-    src: "/images/products/melanotan/melanotan-1.jfif",
+    src: "/images/products/melanotan/melanotan-2.jpg",
     alt: "Melanotan Synthetic Melanocortin Receptor Agonist Vial",
     title: "Melanotan Research Peptide",
     width: 1200,
@@ -1159,16 +1159,9 @@ export const TESAMORELIN_IMAGES: ProductImage[] = [
 // 67. Somatropin
 export const SOMATROPIN_IMAGES: ProductImage[] = [
   {
-    src: "/images/products/growth-hormone/growth-hormone-1.jpg",
-    alt: "Somatropin Recombinant Human Growth Hormone 10IU Vial",
+    src: "/images/products/somatropin/somatropin-2.jpg",
+    alt: "Somatropin Recombinant Human Growth Hormone Vial",
     title: "Somatropin Research Vial",
-    width: 1200,
-    height: 1200,
-  },
-  {
-    src: "/images/products/growth-hormone/somatropin-1.webp",
-    alt: "Somatropin Pure Growth Hormone Lyophilized Powder",
-    title: "Somatropin Formulation",
     width: 1200,
     height: 1200,
   },
@@ -1177,7 +1170,7 @@ export const SOMATROPIN_IMAGES: ProductImage[] = [
 // 68. Melanotan 1
 export const MELANOTAN_1_IMAGES: ProductImage[] = [
   {
-    src: "/images/products/melanotan/melanotan-2.jpg",
+    src: "/images/products/melanotan/melanotan-1.jpg",
     alt: "Melanotan-1 Pure Research Peptide 10mg Vial",
     title: "Melanotan-1 Research Vial",
     width: 1200,
@@ -1195,16 +1188,20 @@ export const MELANOTAN_1_IMAGES: ProductImage[] = [
 // 69. MGF (Mechano Growth Factor)
 export const MGF_IMAGES: ProductImage[] = [
   {
-    src: "/images/products/peg-mgf/peg-mgf-2.jpg",
+    src: "/images/products/mgf/mgf-1.jpg",
     alt: "MGF (Mechano Growth Factor) Research Peptide 2mg Vial",
     title: "MGF Research Vial",
     width: 1200,
     height: 1200,
   },
+];
+
+// 69b. Argireline (Acetyl Hexapeptide-8)
+export const ARGIRELINE_IMAGES: ProductImage[] = [
   {
-    src: "/images/products/peg-mgf/peg-mgf-1.jfif",
-    alt: "MGF Mechano Growth Factor Lyophilized Powder",
-    title: "MGF Laboratory Formulation",
+    src: "/images/products/argireline/argireline-1.jpg",
+    alt: "Argireline (Acetyl Hexapeptide-8) Sealed Research Ampoule",
+    title: "Argireline Research Ampoule",
     width: 1200,
     height: 1200,
   },
@@ -1243,8 +1240,66 @@ export const MELATONIN_IMAGES: ProductImage[] = [
   },
 ];
 
+// 73. Lyophilisate - Spasfon Lyoc
+export const LYOPHILISATE_SPASFON_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/lyophilisate-spasfon/lyophilisate-spasfon-1.jpg",
+    alt: "Spasfon Lyoc Phloroglucinol 80mg Oral Lyophilisate Box",
+    title: "Spasfon Lyoc Oral Lyophilisate",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 74. Lyophilisate - Loperamide
+export const LYOPHILISATE_LOPERAMIDE_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/lyophilisate-loperamide/lyophilisate-loperamide-1.jpg",
+    alt: "Loperamide 2mg Lyophilized Dose Packaging",
+    title: "Loperamide Lyophilized Dose",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 75. Lyophilisate - Trypsin Inhibitor
+export const LYOPHILISATE_TRYPSIN_INHIBITOR_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/lyophilisate-trypsin-inhibitor/lyophilisate-trypsin-inhibitor-1.jpg",
+    alt: "Trypsin Inhibitor Lyophilized Powder Laboratory Vial",
+    title: "Trypsin Inhibitor Lyophilized Powder",
+    width: 1200,
+    height: 1200,
+  },
+];
+
+// 76. Lyophilisate - Proteinase K
+export const LYOPHILISATE_PROTEINASE_K_IMAGES: ProductImage[] = [
+  {
+    src: "/images/products/lyophilisate-proteinase-k/lyophilisate-proteinase-k-1.jpg",
+    alt: "Proteinase K Lyophilisate Laboratory Vial",
+    title: "Proteinase K Lyophilisate",
+    width: 1200,
+    height: 1200,
+  },
+];
+
 export function getProductImagesForProduct(name: string, categorySlug: string): ProductImage[] {
   const lower = name.toLowerCase();
+
+  // Lyophilisate line
+  if (lower.includes("spasfon")) {
+    return LYOPHILISATE_SPASFON_IMAGES;
+  }
+  if (lower.includes("loperamide")) {
+    return LYOPHILISATE_LOPERAMIDE_IMAGES;
+  }
+  if (lower.includes("trypsin inhibitor")) {
+    return LYOPHILISATE_TRYPSIN_INHIBITOR_IMAGES;
+  }
+  if (lower.includes("proteinase k")) {
+    return LYOPHILISATE_PROTEINASE_K_IMAGES;
+  }
 
   // Survodutide
   if (lower.includes("survodutide")) {
@@ -1363,11 +1418,6 @@ export function getProductImagesForProduct(name: string, categorySlug: string): 
     return KISSPEPTIN_10_IMAGES;
   }
 
-  // PT-141
-  if (lower.includes("pt-141") || lower.includes("pt 141") || lower.includes("pt141") || lower.includes("bremelanotide")) {
-    return PT_141_IMAGES;
-  }
-
   // HMG
   if (lower.includes("hmg") || lower.includes("menopausal gonadotropin")) {
     return HMG_IMAGES;
@@ -1426,45 +1476,6 @@ export function getProductImagesForProduct(name: string, categorySlug: string): 
   // Tesamorelin
   if (lower.includes("tesamorelin")) {
     return TESAMORELIN_IMAGES;
-  }
-
-  // Somatropin standalone (vs HGH 191AA)
-  if (lower.includes("somatropin") && !lower.includes("191aa") && !lower.includes("hgh 191")) {
-    return [
-      {
-        src: "/images/products/growth-hormone/growth-hormone-1.jpg",
-        alt: `${name} - Recombinant Human Growth Hormone Somatropin`,
-        title: `${name} - Somatropin Vial`,
-        width: 1200,
-        height: 1200,
-      },
-    ];
-  }
-
-  // Melanotan 1 (vs Melanotan II)
-  if (lower.includes("melanotan 1") || lower.includes("melanotan-1") || lower.includes("melanotan i") || lower.includes("afamelanotide")) {
-    return [
-      {
-        src: "/images/products/melanotan/melanotan-2.jpg",
-        alt: `${name} - Melanotan-1 Pure Research Peptide`,
-        title: `${name} - Research Vial`,
-        width: 1200,
-        height: 1200,
-      },
-    ];
-  }
-
-  // MGF standalone (vs PEG MGF)
-  if ((lower.includes("mgf") || lower.includes("mechano")) && !lower.includes("peg")) {
-    return [
-      {
-        src: "/images/products/peg-mgf/peg-mgf-2.jpg",
-        alt: `${name} - Mechano Growth Factor Research Peptide`,
-        title: `${name} - Research Vial`,
-        width: 1200,
-        height: 1200,
-      },
-    ];
   }
 
   // 1. WEGOVY PEN
@@ -1603,8 +1614,8 @@ export function getProductImagesForProduct(name: string, categorySlug: string): 
     return MAZDUTIDE_IMAGES;
   }
 
-  // 27. Melanotan & Melanotan 1 & PT-141 & Melatonin
-  if (lower.includes("melanotan") || lower.includes("pt-141") || lower.includes("pt141") || lower.includes("bremelanotide")) {
+  // 27. Melanotan (II) - Melanotan-1/PT-141 already handled above
+  if (lower.includes("melanotan")) {
     return MELANOTAN_IMAGES;
   }
 
@@ -1733,23 +1744,11 @@ export function getProductImagesForProduct(name: string, categorySlug: string): 
   }
 
   // 36. Cosmetic, Skin & Anti-Aging Peptides (Argireline, SNAP-8)
-  if (lower.includes("argireline") || lower.includes("snap-8") || lower.includes("snap8")) {
-    return [
-      {
-        src: "/images/products/ghk-cu/ghk-cu-1.jpg",
-        alt: `${name} - High Purity Research Cosmetic Peptide`,
-        title: `${name} - Lyophilized Cosmetic Research Vial`,
-        width: 1200,
-        height: 1200,
-      },
-      {
-        src: "/images/products/ghk-cu/ghk-cu-2.jpg",
-        alt: `${name} - Laboratory Sealed Glass Vial`,
-        title: `${name} - Third-Party Tested Compound`,
-        width: 1200,
-        height: 1200,
-      },
-    ];
+  if (lower.includes("argireline")) {
+    return ARGIRELINE_IMAGES;
+  }
+  if (lower.includes("snap-8") || lower.includes("snap8")) {
+    return SNAP_8_IMAGES;
   }
 
   // 37. Multi-vials 10-packs generic

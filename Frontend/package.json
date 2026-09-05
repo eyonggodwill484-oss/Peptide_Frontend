@@ -12,6 +12,8 @@
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
     "@lottiefiles/dotlottie-react": "^0.19.12",
+    "@react-email/components": "^1.0.12",
+    "@react-email/render": "^2.1.0",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.6.1",
     "@sentry/nextjs": "^9.5.0",

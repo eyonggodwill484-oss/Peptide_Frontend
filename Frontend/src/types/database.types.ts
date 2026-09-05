@@ -1,5 +1,6 @@
-// Hand-written to match supabase/migrations/20260717000001_init_schema.sql
-// and 20260717000002_orders_customers_reviews.sql.
+// Hand-written to match supabase/migrations/20260717000001_init_schema.sql,
+// 20260717000002_orders_customers_reviews.sql, 20260905000001_baseline_orders_customers_reviews.sql
+// and 20260905000002_email_system_tables.sql.
 // Regenerate once the Supabase CLI is available:
 //   npx supabase gen types typescript --project-id xdannklctxudwrpwqlki > src/types/database.types.ts
 
@@ -217,11 +218,15 @@ export type Database = {
           customer_id: string;
           status: OrderStatus;
           payment_status: PaymentStatus;
+          payment_method: string | null;
           subtotal: number;
           shipping_fee: number;
+          discount_code: string | null;
+          discount_amount: number;
           total: number;
           shipping_address: ShippingAddress | null;
           notes: string | null;
+          crypto_tx_hash: string | null;
           created_at: string;
           updated_at: string;
         };
@@ -231,11 +236,15 @@ export type Database = {
           customer_id: string;
           status?: OrderStatus;
           payment_status?: PaymentStatus;
+          payment_method?: string | null;
           subtotal?: number;
           shipping_fee?: number;
+          discount_code?: string | null;
+          discount_amount?: number;
           total?: number;
           shipping_address?: ShippingAddress | null;
           notes?: string | null;
+          crypto_tx_hash?: string | null;
           created_at?: string;
           updated_at?: string;
         };
@@ -245,11 +254,15 @@ export type Database = {
           customer_id?: string;
           status?: OrderStatus;
           payment_status?: PaymentStatus;
+          payment_method?: string | null;
           subtotal?: number;
           shipping_fee?: number;
+          discount_code?: string | null;
+          discount_amount?: number;
           total?: number;
           shipping_address?: ShippingAddress | null;
           notes?: string | null;
+          crypto_tx_hash?: string | null;
           created_at?: string;
           updated_at?: string;
         };
@@ -368,9 +381,150 @@ export type Database = {
           },
         ];
       };
+      cart_sessions: {
+        Row: {
+          id: string;
+          email: string;
+          items: CartSnapshotItem[];
+          subtotal: number;
+          currency: string;
+          last_active_at: string;
+          recovery_stage: number;
+          last_recovery_sent_at: string | null;
+          recovered_at: string | null;
+          unsubscribed_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          email: string;
+          items?: CartSnapshotItem[];
+          subtotal?: number;
+          currency?: string;
+          last_active_at?: string;
+          recovery_stage?: number;
+          last_recovery_sent_at?: string | null;
+          recovered_at?: string | null;
+          unsubscribed_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          email?: string;
+          items?: CartSnapshotItem[];
+          subtotal?: number;
+          currency?: string;
+          last_active_at?: string;
+          recovery_stage?: number;
+          last_recovery_sent_at?: string | null;
+          recovered_at?: string | null;
+          unsubscribed_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      discount_codes: {
+        Row: {
+          id: string;
+          code: string;
+          type: DiscountType;
+          value: number;
+          scope: DiscountScope;
+          max_uses: number | null;
+          used_count: number;
+          active: boolean;
+          expires_at: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          code: string;
+          type: DiscountType;
+          value: number;
+          scope?: DiscountScope;
+          max_uses?: number | null;
+          used_count?: number;
+          active?: boolean;
+          expires_at?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          code?: string;
+          type?: DiscountType;
+          value?: number;
+          scope?: DiscountScope;
+          max_uses?: number | null;
+          used_count?: number;
+          active?: boolean;
+          expires_at?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      email_events: {
+        Row: {
+          id: string;
+          type: string;
+          recipient: string;
+          related_type: string | null;
+          related_id: string | null;
+          resend_message_id: string | null;
+          status: "sent" | "failed";
+          error: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          type: string;
+          recipient: string;
+          related_type?: string | null;
+          related_id?: string | null;
+          resend_message_id?: string | null;
+          status?: "sent" | "failed";
+          error?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          type?: string;
+          recipient?: string;
+          related_type?: string | null;
+          related_id?: string | null;
+          resend_message_id?: string | null;
+          status?: "sent" | "failed";
+          error?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
-    Functions: Record<string, never>;
+    Functions: {
+      redeem_discount_code: {
+        Args: { p_code: string };
+        Returns: Database["public"]["Tables"]["discount_codes"]["Row"] | null;
+      };
+      peek_discount_code: {
+        Args: { p_code: string };
+        Returns: Database["public"]["Tables"]["discount_codes"]["Row"] | null;
+      };
+    };
     Enums: Record<string, never>;
   };
+};
+
+export type DiscountType = "percent" | "fixed";
+export type DiscountScope = "general" | "abandoned_cart";
+
+export type CartSnapshotItem = {
+  productId: string;
+  slug: string;
+  name: string;
+  price: number;
+  quantity: number;
+  image?: string | null;
 };

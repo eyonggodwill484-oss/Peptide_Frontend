@@ -10,9 +10,6 @@ import {
   Truck,
   ArrowRight,
   AlertCircle,
-  HelpCircle,
-  Clock,
-  Sparkles,
   Lock
 } from "lucide-react";
 
@@ -39,6 +36,8 @@ import { trackAnalytics } from "@/lib/posthog";
 import { useLocale } from "@/lib/i18n-client";
 import { cn } from "@/lib/utils";
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export function CheckoutClient() {
   const router = useRouter();
   const locale = useLocale();
@@ -59,15 +58,64 @@ export function CheckoutClient() {
   const [country, setCountry] = useState(locale === "de" ? "Deutschland" : "Germany");
   const [paymentMethod, setPaymentMethod] = useState<"crypto" | "remitly">("crypto");
   const [selectedCoin, setSelectedCoin] = useState<"btc" | "usdt_trc20" | "eth">("btc");
+  const [discountCodeInput, setDiscountCodeInput] = useState("");
+  const [appliedDiscount, setAppliedDiscount] = useState<{ code: string; amount: number } | null>(null);
+  const [discountStatus, setDiscountStatus] = useState<"idle" | "checking" | "invalid">("idle");
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
   const activeWallet = CRYPTO_WALLETS[selectedCoin];
-  const cryptoAmount = calculateCryptoAmount(summary.total, selectedCoin);
+  const orderTotal = Math.max(0, summary.total - (appliedDiscount?.amount ?? 0));
+  const cryptoAmount = calculateCryptoAmount(orderTotal, selectedCoin);
 
-  function handleSubmit(e: React.FormEvent) {
+  function trackCartEmail(candidateEmail: string) {
+    if (!EMAIL_RE.test(candidateEmail) || items.length === 0) return;
+    fetch("/api/cart/track", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: candidateEmail,
+        items: items.map((item) => ({
+          productId: item.productId,
+          slug: item.slug,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          image: item.image?.src,
+        })),
+        subtotal: summary.subtotal,
+      }),
+    }).catch(() => {
+      // Best-effort tracking only — never surface this to the shopper.
+    });
+  }
+
+  async function handleApplyDiscount() {
+    if (!discountCodeInput.trim()) return;
+    setDiscountStatus("checking");
+    try {
+      const res = await fetch("/api/discount/validate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code: discountCodeInput.trim(), subtotal: summary.subtotal }),
+      });
+      const data = await res.json();
+      if (data.valid) {
+        setAppliedDiscount({ code: data.code, amount: data.discountAmount });
+        setDiscountStatus("idle");
+        toast.success(locale === "de" ? "Rabattcode angewendet!" : "Discount code applied!");
+      } else {
+        setAppliedDiscount(null);
+        setDiscountStatus("invalid");
+      }
+    } catch {
+      setDiscountStatus("invalid");
+    }
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
     if (!summary.isMinMet) {
@@ -80,7 +128,37 @@ export function CheckoutClient() {
     }
 
     setSubmitting(true);
-    const orderNumber = `MPS-${Math.floor(100000 + Math.random() * 900000)}`;
+
+    // Ask the server to persist the order (Supabase) and send the confirmation email.
+    // Falls back to a client-generated order number if that fails so checkout still
+    // completes — a sale should never be blocked by our own email infrastructure.
+    let orderNumber = `MPS-${Math.floor(100000 + Math.random() * 900000)}`;
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customer: { fullName, email, phone, address1, city, state, postalCode, country },
+          items: items.map((item) => ({
+            productId: item.productId,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity,
+          })),
+          subtotal: summary.subtotal,
+          shipping: { name: summary.selectedShipping.name, price: summary.selectedShipping.price },
+          discountCode: appliedDiscount?.code,
+          total: orderTotal,
+          paymentMethod,
+        }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.orderNumber) orderNumber = data.orderNumber;
+      }
+    } catch (err) {
+      console.error("Order persistence failed, continuing with local order only:", err);
+    }
 
     const storedOrder: StoredOrder = {
       orderNumber,
@@ -103,7 +181,7 @@ export function CheckoutClient() {
         duration: summary.selectedShipping.duration,
         price: summary.selectedShipping.price,
       },
-      total: summary.total,
+      total: orderTotal,
       paymentMethod,
       cryptoDetails:
         paymentMethod === "crypto"
@@ -126,7 +204,7 @@ export function CheckoutClient() {
     // Track analytics event
     trackAnalytics.orderPlaced({
       orderNumber,
-      total: summary.total,
+      total: orderTotal,
       paymentMethod,
       shippingMethod: summary.selectedShipping.name,
     });
@@ -135,7 +213,7 @@ export function CheckoutClient() {
     if (paymentMethod === "remitly") {
       const cleanPhone = DEFAULT_WHATSAPP_NUMBER.replace(/[^0-9]/g, "");
       const waMsg = encodeURIComponent(
-        `Hello! I just placed Order #${orderNumber} for ${formatPrice(summary.total)} on Wardiere Peptide Sciences using Remitly.\n\nCustomer: ${fullName}\nEmail: ${email}\nShipping: ${summary.selectedShipping.name}\n\nPlease send me the Remitly receiver name and transfer instructions to complete my payment.`
+        `Hello! I just placed Order #${orderNumber} for ${formatPrice(orderTotal)} on Wardiere Peptide Sciences using Remitly.\n\nCustomer: ${fullName}\nEmail: ${email}\nShipping: ${summary.selectedShipping.name}\n\nPlease send me the Remitly receiver name and transfer instructions to complete my payment.`
       );
       const waUrl = `https://wa.me/${cleanPhone}?text=${waMsg}`;
       if (typeof window !== "undefined") {
@@ -232,6 +310,7 @@ export function CheckoutClient() {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    onBlur={(e) => trackCartEmail(e.target.value)}
                     placeholder="dr.mueller@lab.de"
                     className="rounded-xl h-11"
                   />
@@ -537,6 +616,52 @@ export function CheckoutClient() {
                 })}
               </div>
 
+              {/* Discount Code */}
+              <div className="flex flex-col gap-2">
+                <div className="flex gap-2">
+                  <Input
+                    value={discountCodeInput}
+                    onChange={(e) => {
+                      setDiscountCodeInput(e.target.value);
+                      if (discountStatus === "invalid") setDiscountStatus("idle");
+                    }}
+                    placeholder={locale === "de" ? "Rabattcode" : "Discount code"}
+                    className="rounded-xl h-10 text-xs uppercase"
+                    disabled={!!appliedDiscount}
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="rounded-xl h-10 shrink-0 text-xs font-bold"
+                    disabled={!!appliedDiscount || discountStatus === "checking"}
+                    onClick={
+                      appliedDiscount
+                        ? () => {
+                            setAppliedDiscount(null);
+                            setDiscountCodeInput("");
+                          }
+                        : handleApplyDiscount
+                    }
+                  >
+                    {appliedDiscount
+                      ? (locale === "de" ? "Entfernen" : "Remove")
+                      : discountStatus === "checking"
+                        ? (locale === "de" ? "Prüfen…" : "Checking…")
+                        : (locale === "de" ? "Anwenden" : "Apply")}
+                  </Button>
+                </div>
+                {discountStatus === "invalid" && (
+                  <p className="text-[11px] font-semibold text-destructive">
+                    {locale === "de" ? "Ungültiger oder abgelaufener Code." : "Invalid or expired code."}
+                  </p>
+                )}
+                {appliedDiscount && (
+                  <p className="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">
+                    {locale === "de" ? "Code" : "Code"} {appliedDiscount.code} {locale === "de" ? "angewendet" : "applied"}
+                  </p>
+                )}
+              </div>
+
               {/* Totals */}
               <div className="border-t border-border pt-4 flex flex-col gap-2 text-xs">
                 <div className="flex justify-between text-muted-foreground">
@@ -547,9 +672,15 @@ export function CheckoutClient() {
                   <span>{locale === "de" ? "Versand" : "Shipping"} ({summary.selectedShipping.name})</span>
                   <span className="font-mono font-bold text-foreground">{formatPrice(summary.selectedShipping.price)}</span>
                 </div>
+                {appliedDiscount && (
+                  <div className="flex justify-between text-emerald-600 dark:text-emerald-400">
+                    <span>{locale === "de" ? "Rabatt" : "Discount"}</span>
+                    <span className="font-mono font-bold">-{formatPrice(appliedDiscount.amount)}</span>
+                  </div>
+                )}
                 <div className="border-t border-border pt-3 flex justify-between items-baseline text-base font-black text-foreground">
                   <span>{locale === "de" ? "Gesamtbetrag" : "Total Amount"}</span>
-                  <span className="text-xl font-extrabold text-primary font-mono">{formatPrice(summary.total)}</span>
+                  <span className="text-xl font-extrabold text-primary font-mono">{formatPrice(orderTotal)}</span>
                 </div>
                 {paymentMethod === "crypto" && (
                   <div className="rounded-xl bg-primary/10 p-2.5 text-center mt-1">

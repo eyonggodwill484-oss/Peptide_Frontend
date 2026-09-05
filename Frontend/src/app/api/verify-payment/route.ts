@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { CRYPTO_WALLETS } from "@/constants/payment";
+import { createAdminSupabaseClient } from "@/lib/supabase/admin";
 
 export async function POST(req: Request) {
   try {
@@ -18,6 +19,18 @@ export async function POST(req: Request) {
 
     if (!wallet) {
       return NextResponse.json({ error: "Invalid cryptocurrency specified." }, { status: 400 });
+    }
+
+    // Best-effort: record the submitted tx hash against the real order so it shows up
+    // in the admin view. Payment isn't verified here (no blockchain check) — an admin
+    // still has to mark it paid, which is what actually triggers the confirmation email.
+    if (cleanTx) {
+      try {
+        const admin = createAdminSupabaseClient();
+        await admin.from("orders").update({ crypto_tx_hash: cleanTx }).eq("order_number", orderNumber);
+      } catch (err) {
+        console.error("Failed to record submitted tx hash:", err);
+      }
     }
 
     // Attempt live blockchain verification if TxID is provided
