@@ -7,6 +7,12 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
+    // Vercel's Image Optimization quota (counts every unique source image, local and
+    // remote) is far smaller than this catalog's image count — once exceeded, image
+    // requests return 402 and even the onError fallback image fails the same way.
+    // Serving images unoptimized removes that dependency entirely; the local product
+    // photos are already reasonably sized and the Cloudinary ones are pre-optimized.
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",

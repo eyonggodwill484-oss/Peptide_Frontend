@@ -206,7 +206,6 @@ export function ProductDetail({ product, variants = [] }: { product: Product; va
                 src={imgSrc}
                 alt={image.alt}
                 fill
-                unoptimized={imgSrc.startsWith("http")}
                 sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover transition-transform duration-500 hover:scale-105"
                 priority
@@ -235,7 +234,7 @@ export function ProductDetail({ product, variants = [] }: { product: Product; va
                     activeImage === i && "ring-2 ring-primary shadow-md scale-105"
                   )}
                 >
-                  <Image src={img.src} alt={img.alt} fill unoptimized={img.src.startsWith("http")} sizes="80px" className="object-cover" />
+                  <Image src={img.src} alt={img.alt} fill sizes="80px" className="object-cover" />
                 </button>
               ))}
             </div>
