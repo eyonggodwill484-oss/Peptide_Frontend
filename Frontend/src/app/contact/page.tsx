@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 
 import { PageHeader } from "@/components/page-header";
 import { Reveal } from "@/components/motion/reveal";
-import { COMPANY_ADDRESS, CONTACT_EMAIL, CONTACT_PHONE, SUPPORT_HOURS } from "@/constants/site";
+import { COMPANY_ADDRESS, CONTACT_EMAIL, CONTACT_PHONE, CONTACT_WHATSAPP, CONTACT_WHATSAPP_URL, SUPPORT_HOURS } from "@/constants/site";
 import { ContactForm } from "./contact-form";
 import { getServerLocale } from "@/lib/i18n";
 
@@ -53,6 +53,20 @@ export default async function ContactPage() {
                 <p className="text-sm font-medium text-foreground">{locale === "de" ? "Telefon" : "Phone"}</p>
                 <a href={`tel:${CONTACT_PHONE.replace(/[^+\d]/g, "")}`} className="text-sm text-muted-foreground hover:text-foreground">
                   {CONTACT_PHONE}
+                </a>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <MessageCircle className="mt-0.5 size-5 shrink-0 text-primary" />
+              <div>
+                <p className="text-sm font-medium text-foreground">WhatsApp</p>
+                <a
+                  href={CONTACT_WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-muted-foreground hover:text-foreground"
+                >
+                  {CONTACT_WHATSAPP}
                 </a>
               </div>
             </div>
