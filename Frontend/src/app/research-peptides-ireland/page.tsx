@@ -4,6 +4,7 @@ import { ShieldCheck, Truck, Snowflake, HelpCircle, FileText } from "lucide-reac
 import { PageHeader } from "@/components/page-header";
 import { RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { getServerLocale } from "@/lib/i18n";
+import { buildAlternates } from "@/lib/seo/alternates";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getServerLocale();
@@ -11,7 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const description = locale === "de"
     ? "Zuverlässiger Versand von hochreinen Forschungspeptiden nach Irland und in die EU. Inklusive Kühlkettenverpackung, HPLC-Analysen und vollständiger Dokumentation."
     : "Reliable shipping of high-purity research peptides to Ireland and the EU. Includes cold-chain packaging, HPLC verification, and full batch documentation.";
-  return { title, description };
+  return { title, description, alternates: buildAlternates("/research-peptides-ireland") };
 }
 
 export default async function IrelandSupplierPage() {

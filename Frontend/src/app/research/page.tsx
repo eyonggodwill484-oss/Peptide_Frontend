@@ -5,16 +5,18 @@ import { Snowflake, ThermometerSnowflake } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { RESEARCH_USE_DISCLAIMER } from "@/constants/site";
+import { ROUTES } from "@/constants/routes";
+import { buildAlternates } from "@/lib/seo/alternates";
 import { CERTIFICATES } from "@/lib/data/content";
 import { getServerLocale } from "@/lib/i18n";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getServerLocale();
   const title = locale === "de" ? "Forschung & Qualität" : "Research & Quality";
-  const description = locale === "de" 
+  const description = locale === "de"
     ? "Unsere Qualitätsstandards, Richtlinien zur Lagerung und unabhängigen Analysezertifikate."
     : "Our quality standards, storage guidelines, and independent certificates of analysis.";
-  return { title, description };
+  return { title, description, alternates: buildAlternates(ROUTES.research) };
 }
 
 export default async function ResearchPage() {

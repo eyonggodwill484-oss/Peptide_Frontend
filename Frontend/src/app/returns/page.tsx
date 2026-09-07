@@ -3,10 +3,13 @@ import type { Metadata } from "next";
 import { PageHeader } from "@/components/page-header";
 import { RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { CONTACT_EMAIL } from "@/constants/site";
+import { ROUTES } from "@/constants/routes";
+import { buildAlternates } from "@/lib/seo/alternates";
 
 export const metadata: Metadata = {
   title: "Returns Policy",
   description: "Our returns policy for temperature-sensitive research compounds.",
+  alternates: buildAlternates(ROUTES.returns),
 };
 
 export default function ReturnsPage() {

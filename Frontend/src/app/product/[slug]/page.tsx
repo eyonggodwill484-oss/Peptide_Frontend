@@ -7,6 +7,8 @@ import { ProductJsonLd } from "@/components/structured-data";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { getProductBySlug, getProducts, getRelatedProducts, getSiblingVariants } from "@/lib/data/products";
 import { groupProductsByLine } from "@/lib/product-grouping";
+import { ROUTES } from "@/constants/routes";
+import { buildAlternates } from "@/lib/seo/alternates";
 import type { Product } from "@/types";
 import { ProductDetail } from "./product-detail";
 
@@ -35,7 +37,7 @@ export async function generateMetadata({
   return {
     title: product.name,
     description: product.shortDescription,
-    alternates: { canonical: `/product/${product.slug}` },
+    alternates: buildAlternates(ROUTES.product(product.slug)),
     openGraph: {
       title: product.name,
       description: product.shortDescription,

@@ -43,13 +43,6 @@ export async function generateMetadata(): Promise<Metadata> {
     twitter: {
       card: "summary_large_image",
     },
-    alternates: {
-      canonical: SITE_URL,
-      languages: {
-        de: SITE_URL,
-        en: `${SITE_URL}/en`,
-      },
-    },
   };
 }
 

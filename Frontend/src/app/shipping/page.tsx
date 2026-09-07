@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { PageHeader } from "@/components/page-header";
 import { RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { getServerLocale } from "@/lib/i18n";
+import { ROUTES } from "@/constants/routes";
+import { buildAlternates } from "@/lib/seo/alternates";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getServerLocale();
@@ -10,7 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const description = locale === "de"
     ? "Informationen zu Kühlketten-Versand, diskreter Verpackung, Lieferzeiten und internationalem Versand von Wardiere."
     : "Details on cold-chain shipping, discreet packaging, delivery timelines, and international transit from Wardiere.";
-  return { title, description };
+  return { title, description, alternates: buildAlternates(ROUTES.shipping) };
 }
 
 export default async function ShippingPage() {

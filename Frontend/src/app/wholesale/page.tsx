@@ -21,16 +21,17 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
 import { getServerLocale } from "@/lib/i18n";
 import { CONTACT_EMAIL, CONTACT_PHONE, COMPANY_ADDRESS } from "@/constants/site";
+import { buildAlternates } from "@/lib/seo/alternates";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getServerLocale();
-  const title = locale === "de" 
-    ? "Großhandel & B2B Peptid-Lieferung | Wardiere Peptide Sciences" 
+  const title = locale === "de"
+    ? "Großhandel & B2B Peptid-Lieferung | Wardiere Peptide Sciences"
     : "Bulk Wholesale & B2B Peptides | Wardiere Peptide Sciences";
   const description = locale === "de"
     ? "Exklusive Mengenrabatte und B2B-Konditionen für Universitäten, Forschungsinstitute und Labore. Geprüfte HPLC-Qualität aus München mit Kühlkettenversand."
     : "Exclusive volume discounts and institutional procurement for universities, research facilities, and clinical laboratories. Munich fulfillment with verified CoA.";
-  return { title, description };
+  return { title, description, alternates: buildAlternates("/wholesale") };
 }
 
 export default async function WholesalePage() {

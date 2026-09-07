@@ -23,6 +23,7 @@ import { TrustBadgesGrid } from "@/components/trust-badges-grid";
 import { B2BWholesaleShowcase } from "@/components/b2b-wholesale-showcase";
 import { getServerLocale, getServerTranslations } from "@/lib/i18n";
 import { PRODUCT_TRANSLATIONS, CATEGORY_TRANSLATIONS } from "@/constants/translations";
+import { buildAlternates } from "@/lib/seo/alternates";
 import type { Category } from "@/types";
 
 export const revalidate = 60;
@@ -36,7 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     description,
-    alternates: { canonical: "/" },
+    alternates: buildAlternates(ROUTES.home),
     openGraph: {
       title,
       description,

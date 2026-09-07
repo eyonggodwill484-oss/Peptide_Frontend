@@ -6,16 +6,18 @@ import { PageHeader } from "@/components/page-header";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { CountUpStat } from "@/components/motion/count-up-stat";
 import { COMPANY_ADDRESS, SITE_NAME } from "@/constants/site";
+import { ROUTES } from "@/constants/routes";
+import { buildAlternates } from "@/lib/seo/alternates";
 import { BENEFITS, COMPANY_STATS } from "@/lib/data/content";
 import { getServerLocale } from "@/lib/i18n";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getServerLocale();
   const title = locale === "de" ? "Über uns" : "About Us";
-  const description = locale === "de" 
+  const description = locale === "de"
     ? "Erfahren Sie mehr über das Engagement von Wardiere Peptide Sciences für drittanbieter-verifizierte Peptide in Forschungsqualität."
     : "Learn about Wardiere Peptide Sciences' commitment to third-party verified, research-grade peptides.";
-  return { title, description };
+  return { title, description, alternates: buildAlternates(ROUTES.about) };
 }
 
 const BENEFIT_ICONS: Record<string, typeof ShieldCheck> = {
