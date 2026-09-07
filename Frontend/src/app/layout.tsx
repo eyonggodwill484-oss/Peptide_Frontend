@@ -6,6 +6,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Toaster } from "@/components/ui/sonner";
 import { TawkChatWidget } from "@/components/tawk-chat-widget";
+import { WhatsAppFloatButton } from "@/components/whatsapp-float-button";
 import { FomoSalesPopup } from "@/components/fomo-sales-popup";
 import { SiteJsonLd } from "@/components/structured-data";
 import { LenisProvider } from "@/components/motion/lenis-provider";
@@ -86,6 +87,7 @@ export default async function RootLayout({
               <Toaster position="bottom-right" />
             </LenisProvider>
             <FomoSalesPopup locale={locale} />
+            <WhatsAppFloatButton />
             <TawkChatWidget />
             <Analytics />
           </ThemeProvider>
