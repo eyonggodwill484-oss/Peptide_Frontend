@@ -4,6 +4,8 @@ import { ShieldCheck, HelpCircle, FileText, BadgeCheck } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { getServerLocale } from "@/lib/i18n";
+import { ROUTES } from "@/constants/routes";
+import { buildAlternates } from "@/lib/seo/alternates";
 import { QaRequestForm } from "./qa-request-form";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -12,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const description = locale === "de"
     ? "Fordern Sie chargenspezifische Analysezertifikate (CoA) für Ihre Forschungspeptide an. HPLC- und massenspektrometrische Verifizierungsberichte."
     : "Request batch-specific Certificates of Analysis (CoA) for your research compounds. Access HPLC and mass spectrometry verification reports.";
-  return { title, description };
+  return { title, description, alternates: buildAlternates(ROUTES.qualityDocumentation) };
 }
 
 export default async function QualityDocumentationPage() {

@@ -11,6 +11,8 @@ import { groupProductsByLine } from "@/lib/product-grouping";
 
 import { getServerLocale, getServerTranslations } from "@/lib/i18n";
 import { CATEGORY_TRANSLATIONS } from "@/constants/translations";
+import { ROUTES } from "@/constants/routes";
+import { buildAlternates } from "@/lib/seo/alternates";
 
 export const revalidate = 60;
 
@@ -36,7 +38,7 @@ export async function generateMetadata({
   return {
     title: name,
     description,
-    alternates: { canonical: `/categories/${rawCategory.slug}` },
+    alternates: buildAlternates(ROUTES.category(rawCategory.slug)),
     openGraph: {
       title: name,
       description,

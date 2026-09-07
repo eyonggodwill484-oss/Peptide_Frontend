@@ -14,6 +14,8 @@ import {
 
 import { Badge } from "@/components/ui/badge";
 import { SITE_NAME, SITE_URL } from "@/constants/site";
+import { ROUTES } from "@/constants/routes";
+import { buildAlternates } from "@/lib/seo/alternates";
 import { BLOG_POSTS } from "@/lib/data/blog-posts";
 import { getServerLocale } from "@/lib/i18n";
 import { SocialShareButtons } from "./social-share";
@@ -39,13 +41,7 @@ export async function generateMetadata({
     title,
     description,
     keywords: post.tags,
-    alternates: {
-      canonical: `/blog/${post.slug}`,
-      languages: {
-        en: `${SITE_URL}/en/blog/${post.slug}`,
-        de: `${SITE_URL}/blog/${post.slug}`,
-      },
-    },
+    alternates: buildAlternates(ROUTES.blogPost(post.slug)),
     openGraph: {
       title,
       description,

@@ -8,6 +8,7 @@ import { ROUTES } from "@/constants/routes";
 import { getCategories } from "@/lib/data/categories";
 import { getServerLocale, getServerTranslations } from "@/lib/i18n";
 import { CATEGORY_TRANSLATIONS } from "@/constants/translations";
+import { buildAlternates } from "@/lib/seo/alternates";
 
 export const revalidate = 60;
 
@@ -16,6 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: t.nav.categories,
     description: "Browse research peptide categories including growth factor, metabolic, cognitive, and recovery research compounds.",
+    alternates: buildAlternates(ROUTES.categories),
   };
 }
 

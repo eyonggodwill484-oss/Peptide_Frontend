@@ -5,6 +5,8 @@ import { Clock, Calendar, ArrowRight, Sparkles } from "lucide-react";
 
 import { PageHeader } from "@/components/page-header";
 import { SITE_NAME, SITE_URL } from "@/constants/site";
+import { ROUTES } from "@/constants/routes";
+import { buildAlternates } from "@/lib/seo/alternates";
 import { BLOG_POSTS } from "@/lib/data/blog-posts";
 import { getServerLocale } from "@/lib/i18n";
 import { BlogSearchAndFilter } from "./blog-search-filter";
@@ -25,13 +27,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title,
     description,
-    alternates: {
-      canonical: "/blog",
-      languages: {
-        en: `${SITE_URL}/en/blog`,
-        de: `${SITE_URL}/blog`,
-      },
-    },
+    alternates: buildAlternates(ROUTES.blog),
     openGraph: {
       title,
       description,

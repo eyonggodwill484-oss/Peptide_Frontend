@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
-import { SITE_URL } from "@/constants/site";
 import { ROUTES } from "@/constants/routes";
+import { localeUrls } from "@/lib/seo/alternates";
 import { BLOG_POSTS } from "@/lib/data/blog-posts";
 import { getCategories } from "@/lib/data/categories";
 import { getProducts } from "@/lib/data/products";
@@ -19,6 +19,8 @@ const STATIC_ROUTES: { path: string; changeFrequency: ChangeFrequency; priority:
   { path: ROUTES.about, changeFrequency: "monthly", priority: 0.5 },
   { path: ROUTES.research, changeFrequency: "monthly", priority: 0.6 },
   { path: ROUTES.qualityDocumentation, changeFrequency: "monthly", priority: 0.6 },
+  { path: "/wholesale", changeFrequency: "monthly", priority: 0.6 },
+  { path: "/research-peptides-ireland", changeFrequency: "monthly", priority: 0.5 },
   { path: ROUTES.contact, changeFrequency: "yearly", priority: 0.4 },
   { path: ROUTES.faq, changeFrequency: "monthly", priority: 0.4 },
   { path: ROUTES.shipping, changeFrequency: "yearly", priority: 0.3 },
@@ -42,27 +44,25 @@ function toLastModified(value: string | Date | null | undefined): Date | undefin
   return Number.isNaN(date.getTime()) ? undefined : date;
 }
 
-/** The site serves German at the root and English under an `/en` prefix (see middleware.ts). */
-function enPath(path: string): string {
-  return path === "/" ? "/en" : `/en${path}`;
-}
-
 /**
  * Emits one <url> entry per locale for a given path, each carrying a full,
- * self-referencing hreflang alternates map — the format Google's docs
- * require for multi-language sitemaps (a partial/one-sided map is ignored).
+ * self-referencing hreflang alternates map (de-DE / en / x-default) — the
+ * format Google's docs require for multi-language sitemaps, and the same
+ * map every page's own <head> declares via buildAlternates(). Germany is
+ * the primary market, so the German entry keeps the full priority weight
+ * and the English variant is weighted down (Google mostly ignores
+ * <priority> as a cross-site ranking signal, but it's still the sitemap's
+ * one lever to say "this version is the one we care about most").
  */
 function localizedEntries(
   path: string,
   options: { lastModified?: Date; changeFrequency: ChangeFrequency; priority: number }
 ): MetadataRoute.Sitemap {
-  const deUrl = `${SITE_URL}${path}`;
-  const enUrl = `${SITE_URL}${enPath(path)}`;
-  const languages = { de: deUrl, en: enUrl };
+  const languages = localeUrls(path);
 
   return [
-    { url: deUrl, alternates: { languages }, ...options },
-    { url: enUrl, alternates: { languages }, ...options },
+    { url: languages["de-DE"], alternates: { languages }, ...options },
+    { url: languages.en, alternates: { languages }, ...options, priority: Number((options.priority * 0.7).toFixed(2)) },
   ];
 }
 

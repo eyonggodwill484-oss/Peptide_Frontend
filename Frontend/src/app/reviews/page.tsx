@@ -5,6 +5,8 @@ import { PageHeader } from "@/components/page-header";
 import { RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { GoogleReviewsSection } from "@/components/google-reviews-section";
 import { getServerLocale } from "@/lib/i18n";
+import { ROUTES } from "@/constants/routes";
+import { buildAlternates } from "@/lib/seo/alternates";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getServerLocale();
@@ -12,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const description = locale === "de"
     ? "Verifizierte Rückmeldungen von akkreditierten europäischen und internationalen Labors zur Qualität, Reinheit und Liefergeschwindigkeit unserer Forschungspeptide."
     : "Verified feedback from accredited European and international laboratories regarding the quality, purity, and shipping reliability of our research-grade peptides.";
-  return { title, description };
+  return { title, description, alternates: buildAlternates(ROUTES.reviews) };
 }
 
 interface Testimonial {

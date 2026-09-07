@@ -4,6 +4,8 @@ import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
 import { Reveal } from "@/components/motion/reveal";
 import { COMPANY_ADDRESS, CONTACT_EMAIL, CONTACT_PHONE, CONTACT_WHATSAPP, CONTACT_WHATSAPP_URL, SUPPORT_HOURS } from "@/constants/site";
+import { ROUTES } from "@/constants/routes";
+import { buildAlternates } from "@/lib/seo/alternates";
 import { ContactForm } from "./contact-form";
 import { getServerLocale } from "@/lib/i18n";
 
@@ -13,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const description = locale === "de"
     ? "Nehmen Sie Kontakt mit unserem wissenschaftlich geschulten Support-Team auf. Wir helfen bei Fragen zu Forschungspeptiden."
     : "Get in touch with our science-trained research support team. We assist with peptide inquiries.";
-  return { title, description };
+  return { title, description, alternates: buildAlternates(ROUTES.contact) };
 }
 
 export default async function ContactPage() {
