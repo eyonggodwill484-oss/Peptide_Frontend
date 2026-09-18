@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { SITE_URL } from "@/constants/site";
+import { getServerLocale } from "@/lib/i18n";
 
 /**
  * The absolute URL for each locale variant of a root-relative path.
@@ -17,7 +18,18 @@ export function localeUrls(path: string): Record<"de-DE" | "en" | "x-default", s
   return { "de-DE": de, en, "x-default": de };
 }
 
-/** Self-referencing canonical + hreflang alternates for a page's <head> metadata. */
-export function buildAlternates(path: string): Metadata["alternates"] {
-  return { canonical: path, languages: localeUrls(path) };
+/**
+ * Self-referencing canonical + hreflang alternates for a page's <head> metadata.
+ *
+ * `path` is always the bare (German) route — e.g. `/shop`, never `/en/shop` —
+ * because middleware.ts rewrites `/en/*` requests down to their bare path
+ * before the page ever sees them. Without reading the locale here, every
+ * page would emit a canonical pointing at the German URL even when serving
+ * the English one, which tells Google the `/en/*` pages are duplicates and
+ * keeps them out of the index despite being listed in the sitemap.
+ */
+export async function buildAlternates(path: string): Promise<Metadata["alternates"]> {
+  const languages = localeUrls(path);
+  const locale = await getServerLocale();
+  return { canonical: locale === "en" ? languages.en : languages["de-DE"], languages };
 }

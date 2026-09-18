@@ -12,7 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const description = locale === "de"
     ? "Zuverlässiger Versand von hochreinen Forschungspeptiden nach Irland und in die EU. Inklusive Kühlkettenverpackung, HPLC-Analysen und vollständiger Dokumentation."
     : "Reliable shipping of high-purity research peptides to Ireland and the EU. Includes cold-chain packaging, HPLC verification, and full batch documentation.";
-  return { title, description, alternates: buildAlternates("/research-peptides-ireland") };
+  return { title, description, alternates: await buildAlternates("/research-peptides-ireland") };
 }
 
 export default async function IrelandSupplierPage() {

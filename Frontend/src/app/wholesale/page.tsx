@@ -31,7 +31,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const description = locale === "de"
     ? "Exklusive Mengenrabatte und B2B-Konditionen für Universitäten, Forschungsinstitute und Labore. Geprüfte HPLC-Qualität aus München mit Kühlkettenversand."
     : "Exclusive volume discounts and institutional procurement for universities, research facilities, and clinical laboratories. Munich fulfillment with verified CoA.";
-  return { title, description, alternates: buildAlternates("/wholesale") };
+  return { title, description, alternates: await buildAlternates("/wholesale") };
 }
 
 export default async function WholesalePage() {

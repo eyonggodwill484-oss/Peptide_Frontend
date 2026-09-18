@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: t.nav.categories,
     description: "Browse research peptide categories including growth factor, metabolic, cognitive, and recovery research compounds.",
-    alternates: buildAlternates(ROUTES.categories),
+    alternates: await buildAlternates(ROUTES.categories),
   };
 }
 

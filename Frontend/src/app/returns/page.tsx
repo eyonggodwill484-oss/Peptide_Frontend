@@ -6,11 +6,13 @@ import { CONTACT_EMAIL } from "@/constants/site";
 import { ROUTES } from "@/constants/routes";
 import { buildAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
-  title: "Returns Policy",
-  description: "Our returns policy for temperature-sensitive research compounds.",
-  alternates: buildAlternates(ROUTES.returns),
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Returns Policy",
+    description: "Our returns policy for temperature-sensitive research compounds.",
+    alternates: await buildAlternates(ROUTES.returns),
+  };
+}
 
 export default function ReturnsPage() {
   return (

@@ -41,7 +41,7 @@ export async function generateMetadata({
     title,
     description,
     keywords: post.tags,
-    alternates: buildAlternates(ROUTES.blogPost(post.slug)),
+    alternates: await buildAlternates(ROUTES.blogPost(post.slug)),
     openGraph: {
       title,
       description,

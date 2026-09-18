@@ -8,11 +8,13 @@ import { FAQ_ITEMS } from "@/lib/data/content";
 import { ROUTES } from "@/constants/routes";
 import { buildAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
-  title: "FAQ",
-  description: "Frequently asked questions about ordering, shipping, storage, and quality verification.",
-  alternates: buildAlternates(ROUTES.faq),
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "FAQ",
+    description: "Frequently asked questions about ordering, shipping, storage, and quality verification.",
+    alternates: await buildAlternates(ROUTES.faq),
+  };
+}
 
 export default function FaqPage() {
   const categories = Array.from(new Set(FAQ_ITEMS.map((item) => item.category ?? "General")));

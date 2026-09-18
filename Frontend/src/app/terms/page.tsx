@@ -6,11 +6,13 @@ import { RESEARCH_USE_DISCLAIMER, SITE_NAME } from "@/constants/site";
 import { ROUTES } from "@/constants/routes";
 import { buildAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
-  title: "Terms of Service",
-  description: `Terms governing use of the ${SITE_NAME} website and purchase of research products.`,
-  alternates: buildAlternates(ROUTES.terms),
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Terms of Service",
+    description: `Terms governing use of the ${SITE_NAME} website and purchase of research products.`,
+    alternates: await buildAlternates(ROUTES.terms),
+  };
+}
 
 export default function TermsPage() {
   return (

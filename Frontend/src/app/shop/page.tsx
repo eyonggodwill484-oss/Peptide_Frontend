@@ -6,11 +6,13 @@ import { ROUTES } from "@/constants/routes";
 import { buildAlternates } from "@/lib/seo/alternates";
 import { ShopClient } from "./shop-client";
 
-export const metadata: Metadata = {
-  title: "Shop Research Peptides",
-  description: "Browse the full catalog of third-party verified research peptides, bundles, and lab accessories.",
-  alternates: buildAlternates(ROUTES.shop),
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Shop Research Peptides",
+    description: "Browse the full catalog of third-party verified research peptides, bundles, and lab accessories.",
+    alternates: await buildAlternates(ROUTES.shop),
+  };
+}
 
 export default async function ShopPage({
   searchParams,

@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const description = locale === "de"
     ? "Fordern Sie chargenspezifische Analysezertifikate (CoA) für Ihre Forschungspeptide an. HPLC- und massenspektrometrische Verifizierungsberichte."
     : "Request batch-specific Certificates of Analysis (CoA) for your research compounds. Access HPLC and mass spectrometry verification reports.";
-  return { title, description, alternates: buildAlternates(ROUTES.qualityDocumentation) };
+  return { title, description, alternates: await buildAlternates(ROUTES.qualityDocumentation) };
 }
 
 export default async function QualityDocumentationPage() {

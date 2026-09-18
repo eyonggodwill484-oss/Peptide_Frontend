@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const description = locale === "de"
     ? "Unsere Qualitätsstandards, Richtlinien zur Lagerung und unabhängigen Analysezertifikate."
     : "Our quality standards, storage guidelines, and independent certificates of analysis.";
-  return { title, description, alternates: buildAlternates(ROUTES.research) };
+  return { title, description, alternates: await buildAlternates(ROUTES.research) };
 }
 
 export default async function ResearchPage() {

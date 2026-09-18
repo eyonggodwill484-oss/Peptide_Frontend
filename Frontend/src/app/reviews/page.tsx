@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const description = locale === "de"
     ? "Verifizierte Rückmeldungen von akkreditierten europäischen und internationalen Labors zur Qualität, Reinheit und Liefergeschwindigkeit unserer Forschungspeptide."
     : "Verified feedback from accredited European and international laboratories regarding the quality, purity, and shipping reliability of our research-grade peptides.";
-  return { title, description, alternates: buildAlternates(ROUTES.reviews) };
+  return { title, description, alternates: await buildAlternates(ROUTES.reviews) };
 }
 
 interface Testimonial {

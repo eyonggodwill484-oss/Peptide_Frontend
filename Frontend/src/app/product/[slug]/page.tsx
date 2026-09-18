@@ -37,7 +37,7 @@ export async function generateMetadata({
   return {
     title: product.name,
     description: product.shortDescription,
-    alternates: buildAlternates(ROUTES.product(product.slug)),
+    alternates: await buildAlternates(ROUTES.product(product.slug)),
     openGraph: {
       title: product.name,
       description: product.shortDescription,

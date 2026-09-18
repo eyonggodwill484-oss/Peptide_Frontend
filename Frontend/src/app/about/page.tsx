@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const description = locale === "de"
     ? "Erfahren Sie mehr über das Engagement von Wardiere Peptide Sciences für drittanbieter-verifizierte Peptide in Forschungsqualität."
     : "Learn about Wardiere Peptide Sciences' commitment to third-party verified, research-grade peptides.";
-  return { title, description, alternates: buildAlternates(ROUTES.about) };
+  return { title, description, alternates: await buildAlternates(ROUTES.about) };
 }
 
 const BENEFIT_ICONS: Record<string, typeof ShieldCheck> = {

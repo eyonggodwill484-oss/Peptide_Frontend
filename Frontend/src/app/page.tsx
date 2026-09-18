@@ -37,7 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     description,
-    alternates: buildAlternates(ROUTES.home),
+    alternates: await buildAlternates(ROUTES.home),
     openGraph: {
       title,
       description,

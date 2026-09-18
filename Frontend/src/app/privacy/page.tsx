@@ -6,11 +6,13 @@ import { CONTACT_EMAIL, SITE_NAME } from "@/constants/site";
 import { ROUTES } from "@/constants/routes";
 import { buildAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy",
-  description: `How ${SITE_NAME} collects, uses, and protects your information.`,
-  alternates: buildAlternates(ROUTES.privacy),
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Privacy Policy",
+    description: `How ${SITE_NAME} collects, uses, and protects your information.`,
+    alternates: await buildAlternates(ROUTES.privacy),
+  };
+}
 
 export default function PrivacyPage() {
   return (

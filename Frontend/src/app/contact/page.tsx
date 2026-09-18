@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const description = locale === "de"
     ? "Nehmen Sie Kontakt mit unserem wissenschaftlich geschulten Support-Team auf. Wir helfen bei Fragen zu Forschungspeptiden."
     : "Get in touch with our science-trained research support team. We assist with peptide inquiries.";
-  return { title, description, alternates: buildAlternates(ROUTES.contact) };
+  return { title, description, alternates: await buildAlternates(ROUTES.contact) };
 }
 
 export default async function ContactPage() {

@@ -12,7 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const description = locale === "de"
     ? "Informationen zu Kühlketten-Versand, diskreter Verpackung, Lieferzeiten und internationalem Versand von Wardiere."
     : "Details on cold-chain shipping, discreet packaging, delivery timelines, and international transit from Wardiere.";
-  return { title, description, alternates: buildAlternates(ROUTES.shipping) };
+  return { title, description, alternates: await buildAlternates(ROUTES.shipping) };
 }
 
 export default async function ShippingPage() {
