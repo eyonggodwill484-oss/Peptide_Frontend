@@ -57,6 +57,21 @@ export interface BlogPost {
   }[];
 }
 
+/**
+ * Determines whether a blog post is written in German or English based on its text and keywords.
+ */
+export function getBlogPostLocale(post: BlogPost): "de" | "en" {
+  const text = `${post.title} ${post.excerpt} ${post.tags.join(" ")}`;
+  if (
+    /[äöüß]|kaufen|erfahrungen|dosierung|anleitung|anwendung|leitfaden|blutzucker|ratgeber|wirkung|stoffwechsel|forschung|vorteile|glukose|tabelle|kapseln|injektion|rezeptfrei|kosten/i.test(
+      text
+    )
+  ) {
+    return "de";
+  }
+  return "en";
+}
+
 export const BASE_BLOG_POSTS: BlogPost[] = [
   // 1. Keyword: welche brötchen bei diabetes typ 2
   {

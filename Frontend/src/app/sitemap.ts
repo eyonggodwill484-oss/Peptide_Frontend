@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
 
+import { SITE_URL } from "@/constants/site";
 import { ROUTES } from "@/constants/routes";
 import { localeUrls } from "@/lib/seo/alternates";
-import { BLOG_POSTS } from "@/lib/data/blog-posts";
+import { BLOG_POSTS, getBlogPostLocale } from "@/lib/data/blog-posts";
 import { getCategories } from "@/lib/data/categories";
 import { getProducts } from "@/lib/data/products";
 
@@ -88,13 +89,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
   );
 
-  const blogEntries = BLOG_POSTS.flatMap((post) =>
-    localizedEntries(ROUTES.blogPost(post.slug), {
+  // Blog posts are written in either German or English (not translated 1:1).
+  // Generating artificial duplicate locale variants causes Google to detect them
+  // as duplicate content with invalid hreflang. We emit the single canonical URL
+  // matching each article's true authored language.
+  const blogEntries: MetadataRoute.Sitemap = BLOG_POSTS.map((post) => {
+    const isEn = getBlogPostLocale(post) === "en";
+    const path = ROUTES.blogPost(post.slug);
+    const url = isEn ? `${SITE_URL}/en${path}` : `${SITE_URL}${path}`;
+
+    return {
+      url,
       lastModified: toLastModified(post.updatedAt),
       changeFrequency: "weekly",
       priority: 0.7,
-    })
-  );
+    };
+  });
 
   return [...staticEntries, ...categoryEntries, ...productEntries, ...blogEntries];
 }

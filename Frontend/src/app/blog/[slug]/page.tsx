@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import {
   Clock,
   Calendar,
@@ -15,8 +15,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { SITE_NAME, SITE_URL } from "@/constants/site";
 import { ROUTES } from "@/constants/routes";
-import { buildAlternates } from "@/lib/seo/alternates";
-import { BLOG_POSTS } from "@/lib/data/blog-posts";
+import { BLOG_POSTS, getBlogPostLocale } from "@/lib/data/blog-posts";
 import { getServerLocale } from "@/lib/i18n";
 import { SocialShareButtons } from "./social-share";
 
@@ -33,19 +32,26 @@ export async function generateMetadata({
   const post = BLOG_POSTS.find((p) => p.slug === slug);
   if (!post) return {};
 
+  const postLocale = getBlogPostLocale(post);
+  const canonicalUrl =
+    postLocale === "en"
+      ? `${SITE_URL}/en/blog/${post.slug}`
+      : `${SITE_URL}/blog/${post.slug}`;
+
   const title = `${post.title} | ${SITE_NAME} Blog`;
   const description = post.excerpt;
-  const url = `${SITE_URL}/blog/${post.slug}`;
 
   return {
     title,
     description,
     keywords: post.tags,
-    alternates: await buildAlternates(ROUTES.blogPost(post.slug)),
+    alternates: {
+      canonical: canonicalUrl,
+    },
     openGraph: {
       title,
       description,
-      url,
+      url: canonicalUrl,
       type: "article",
       publishedTime: post.publishedAt,
       modifiedTime: post.updatedAt,
@@ -138,7 +144,19 @@ export default async function BlogPostPage({
   if (!post) notFound();
 
   const locale = await getServerLocale();
-  const isDe = locale === "de";
+  const postLocale = getBlogPostLocale(post);
+
+  // If a request arrives at /en/blog/[slug] for a German post, redirect to canonical /blog/[slug]
+  if (locale === "en" && postLocale === "de") {
+    redirect(`/blog/${post.slug}`);
+  }
+  // If a request arrives at /blog/[slug] for an English post, redirect to canonical /en/blog/[slug]
+  if (locale === "de" && postLocale === "en") {
+    redirect(`/en/blog/${post.slug}`);
+  }
+
+  const isDe = postLocale === "de";
+  const canonicalUrl = isDe ? `${SITE_URL}/blog/${post.slug}` : `${SITE_URL}/en/blog/${post.slug}`;
 
   // Related posts (excluding current post)
   const relatedPosts = BLOG_POSTS.filter((p) => p.id !== post.id).slice(0, 3);
@@ -147,12 +165,12 @@ export default async function BlogPostPage({
   const blogPostingJsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "@id": `${SITE_URL}/blog/${post.slug}/#article`,
+    "@id": `${canonicalUrl}#article`,
     headline: post.title,
     description: post.excerpt,
     datePublished: post.publishedAt,
     dateModified: post.updatedAt,
-    mainEntityOfPage: `${SITE_URL}/blog/${post.slug}`,
+    mainEntityOfPage: canonicalUrl,
     inLanguage: isDe ? "de" : "en",
     author: {
       "@type": "Person",
@@ -186,13 +204,13 @@ export default async function BlogPostPage({
         "@type": "ListItem",
         position: 2,
         name: isDe ? "Forschungs-Blog" : "Research Blog",
-        item: `${SITE_URL}/blog`,
+        item: isDe ? `${SITE_URL}/blog` : `${SITE_URL}/en/blog`,
       },
       {
         "@type": "ListItem",
         position: 3,
         name: post.title,
-        item: `${SITE_URL}/blog/${post.slug}`,
+        item: canonicalUrl,
       },
     ],
   };
@@ -302,7 +320,7 @@ export default async function BlogPostPage({
 
       <article className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
         {/* Cover Image */}
-        <div className="relative mb-10 aspect-video w-full overflow-hidden rounded-3xl border border-border/80 bg-muted shadow-md">
+        <div className="relative mb-8 aspect-video w-full overflow-hidden rounded-3xl border border-border/80 bg-muted shadow-md">
           <Image
             src={post.coverImage.src}
             alt={post.coverImage.alt}
@@ -311,6 +329,23 @@ export default async function BlogPostPage({
             className="object-cover"
             priority
           />
+        </div>
+
+        {/* E-E-A-T Scientific Context & Laboratory Research Disclaimer */}
+        <div className="mb-8 rounded-2xl border border-border/80 bg-muted/30 p-4 text-xs leading-relaxed text-muted-foreground">
+          <div className="flex items-center gap-2 font-semibold text-foreground mb-1">
+            <CheckCircle2 className="size-4 text-primary shrink-0" />
+            <span>
+              {isDe
+                ? "Wissenschaftliche Dokumentation & Laborstandards"
+                : "Scientific Documentation & Analytical Quality Standards"}
+            </span>
+          </div>
+          <p>
+            {isDe
+              ? "Dieser Fachartikel dient analytischen und laborwissenschaftlichen Informationszwecken. Erwähnte Peptid- und Referenzverbindungen unterliegen pharmazeutischen Reinheitsprüfungen per HPLC und Massenspektrometrie. Nicht als persönliche medizinische Verschreibung oder Therapieempfehlung zu verstehen."
+              : "This publication is intended strictly for educational, analytical, and laboratory research evaluation. Referenced compounds undergo third-party batch-specific HPLC and mass spectrometry testing. Not intended as medical or clinical prescribing advice."}
+          </p>
         </div>
 
         {/* AI-Optimized TL;DR / Key Takeaways Box (Featured Snippet Format) */}

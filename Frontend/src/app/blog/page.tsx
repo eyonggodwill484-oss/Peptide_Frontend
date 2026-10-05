@@ -72,7 +72,7 @@ export default async function BlogIndexPage() {
       url: SITE_URL,
       logo: `${SITE_URL}/logo.svg`,
     },
-    blogPost: BLOG_POSTS.map((post) => ({
+    blogPost: BLOG_POSTS.slice(0, 20).map((post) => ({
       "@type": "BlogPosting",
       headline: post.title,
       description: post.excerpt,
